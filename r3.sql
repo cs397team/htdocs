@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 02, 2012 at 01:03 AM
+-- Generation Time: Nov 04, 2012 at 05:11 PM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `event` (
   `foodOption` tinyint(1) DEFAULT NULL,
   `typeOfEvent` varchar(256) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -162,6 +162,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `Name` varchar(20) DEFAULT NULL,
   `Email` varchar(20) DEFAULT NULL,
   `isAdmin` tinyint(1) NOT NULL,
+  `password_SHA256_hash` char(64) NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -179,8 +180,8 @@ ALTER TABLE `building`
 -- Constraints for table `member_of`
 --
 ALTER TABLE `member_of`
-  ADD CONSTRAINT `member_of_ibfk_4` FOREIGN KEY (`org_name`) REFERENCES `organization` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `member_of_ibfk_3` FOREIGN KEY (`UserID`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `member_of_ibfk_3` FOREIGN KEY (`UserID`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `member_of_ibfk_4` FOREIGN KEY (`org_name`) REFERENCES `organization` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `organization`
@@ -192,10 +193,10 @@ ALTER TABLE `organization`
 -- Constraints for table `reservation`
 --
 ALTER TABLE `reservation`
-  ADD CONSTRAINT `reservation_ibfk_8` FOREIGN KEY (`backupRoomNumber`) REFERENCES `room` (`roomNumber`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `reservation_ibfk_5` FOREIGN KEY (`user`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `reservation_ibfk_6` FOREIGN KEY (`eventId`) REFERENCES `event` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `reservation_ibfk_7` FOREIGN KEY (`primaryRoomNumber`) REFERENCES `room` (`roomNumber`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `reservation_ibfk_7` FOREIGN KEY (`primaryRoomNumber`) REFERENCES `room` (`roomNumber`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `reservation_ibfk_8` FOREIGN KEY (`backupRoomNumber`) REFERENCES `room` (`roomNumber`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `room`
