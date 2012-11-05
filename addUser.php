@@ -58,16 +58,23 @@ if($_SERVER['SERVER_PORT'] != '443')
 	</form>
 	
 <?php
+    function clean($str) {
+		$str = @trim($str);
+		if(get_magic_quotes_gpc()) {
+			$str = stripslashes($str);
+		}
+		return mysql_real_escape_string($str);
+	}
 	// The following will NOT execute if the form is blank. (The user just entered the page)
 	if(isset($_POST["submit"]))// == "Submit Query")
 	{
 
 	    // Initialize variables with user entered information
-	    $studentNumber = mysql_real_escape_string($_POST["studentNumber"]);
-		$name = mysql_real_escape_string($_POST["name"]);
-		$emailAddr = mysql_real_escape_string($_POST["emailAddr"]);
-	    $passwdHash = hash("sha256", mysql_real_escape_string($_POST["passwd"]));
-		$isAdmin = mysql_real_escape_string($_POST["isAdmin"]);
+	    $studentNumber = clean($_POST["studentNumber"]);
+		$name = clean($_POST["name"]);
+		$emailAddr = clean($_POST["emailAddr"]);
+	    $passwdHash = hash("sha256", clean($_POST["passwd"]));
+		$isAdmin = clean($_POST["isAdmin"]);
 		
 		// Connect to the sql database
 	    $con = mysql_connect("localhost","root");
