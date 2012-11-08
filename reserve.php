@@ -1,8 +1,5 @@
 <!-- HTML room reservation form -->
 <html>
-<head>
-<script language="javascript" src="calendar/calendar.js"></script>
-</head>
 
 <body>
 <h3>Reservation Time!</h3>
@@ -32,21 +29,7 @@
 		<option value="informationTable">Information Table</option>
 		<option value="other">Other</option>
 	</select></td></tr>
-<tr><td>Event Date:</td><td> 
-<?php
-//get class into the page
-require_once('calendar/classes/tc_calendar.php');
-
-//instantiate class and set properties
-$myCalendar = new tc_calendar("date2");
-	  $myCalendar->setIcon("calendar/images/iconCalendar.gif");
-	  $myCalendar->setDate(date('d'), date('m'), date('Y'));
-	  $myCalendar->setPath("calendar/");
-	  $myCalendar->setYearInterval(1970, 2020);
-	  $myCalendar->dateAllow('2008-05-13', '2015-03-01', false);
-	  $myCalendar->startDate(0);
-	  $myCalendar->writeScript(); 
-?> </td></tr>
+<tr><td>Event Date:</td><td> <input type="date" name="date"></td></tr>
 <tr><td>Access Time:</td><td> <input type="time" name="accessStart"> to <input type="time" name="accessEnd"></td></tr>
 <tr><td>Event Time:</td><td> <input type="time" name="startTime"> to <input type="time" name="endTime"></td></tr>
 <tr><td>Event Description:</td><td> </br> <textarea rows="10" cols="50"></textarea></td></tr>
