@@ -89,7 +89,6 @@ Enter Information
         {
             $sql = "SELECT * FROM user WHERE Email='$emailAddr' AND password_SHA256_hash='$passwdHash'";
             $result=mysql_query($sql);
-             echo "$emailAddr<br>$passwdHash";
             if($result)
             {echo "<p>1</p>";
                 if(mysql_num_rows($result) == 1) 
