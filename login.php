@@ -102,7 +102,16 @@ Enter Information
                     $_SESSION['SESS_ISADMIN'] = $member['isAdmin'];
                     $_SESSION['SESS_EMAIL'] = $member['Email'];
                     session_write_close();
-                    header("location: member-index.php");
+                    
+		    if( $member['isAdmin'] == 1 )
+		    {
+			header("location: admin-index.php");
+		    }
+		    else
+		    {
+			header("location: member-index.php");
+		    }
+		    
                     exit();
                 }
                 else 
