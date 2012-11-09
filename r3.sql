@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 04, 2012 at 05:11 PM
+-- Generation Time: Nov 09, 2012 at 01:39 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -35,6 +35,13 @@ CREATE TABLE IF NOT EXISTS `building` (
   KEY `campusName` (`campusName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `building`
+--
+
+INSERT INTO `building` (`campusName`, `latitude`, `longitude`, `name`) VALUES
+('121', 121, 12, '12212112');
+
 -- --------------------------------------------------------
 
 --
@@ -48,6 +55,13 @@ CREATE TABLE IF NOT EXISTS `campus` (
   PRIMARY KEY (`campusName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `campus`
+--
+
+INSERT INTO `campus` (`campusName`, `longitude`, `latitude`) VALUES
+('121', 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -58,7 +72,8 @@ CREATE TABLE IF NOT EXISTS `department` (
   `Name` varchar(20) NOT NULL,
   `ChairID` int(11) NOT NULL,
   PRIMARY KEY (`Name`),
-  KEY `Name` (`Name`)
+  KEY `Name` (`Name`),
+  KEY `ChairID` (`ChairID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -84,7 +99,14 @@ CREATE TABLE IF NOT EXISTS `event` (
   `foodOption` tinyint(1) DEFAULT NULL,
   `typeOfEvent` varchar(256) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=122 ;
+
+--
+-- Dumping data for table `event`
+--
+
+INSERT INTO `event` (`id`, `title`, `eventTimeStart`, `eventTimeEnd`, `accessTimeStart`, `accessTimeEnd`, `date`, `numAttendees`, `decorations`, `alcohol`, `prizes`, `tickets`, `outsideVendors`, `foodOption`, `typeOfEvent`) VALUES
+(121, '1221', '2012-11-14 06:00:00', '2012-11-21 06:00:00', '2012-11-29 06:00:00', '2012-11-14 06:00:00', '2012-11-14', 12, 1, 1, 1, 1, 1, NULL, 'fgsfsdfsdfds');
 
 -- --------------------------------------------------------
 
@@ -151,6 +173,14 @@ CREATE TABLE IF NOT EXISTS `room` (
   KEY `buildingName` (`buildingName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `room`
+--
+
+INSERT INTO `room` (`buildingName`, `roomNumber`, `capacity`, `roomName`, `type`) VALUES
+('12212112', 121, 121, '1', '121'),
+('12212112', 13131, 3131, '131', '133');
+
 -- --------------------------------------------------------
 
 --
@@ -167,6 +197,15 @@ CREATE TABLE IF NOT EXISTS `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`ID`, `Name`, `Email`, `isAdmin`, `password_SHA256_hash`) VALUES
+(12269597, 'Andrew Schrader', 'arstk8@mst.edu', 0, '2fe93ebff8af32d75b4de8283b8e2bfecc725336cfc37b09b06a629ea49c24a9'),
+(12344567, 'Bobby', 'bobby@mst.edu', 1, '2fe93ebff8af32d75b4de8283b8e2bfecc725336cfc37b09b06a629ea49c24a9'),
+(14456654, 'Bob', 'bob@mst.edu', 1, '9a125785bef6c04b1847934facfb53854f8acf04ead8bb6fb5ee1cb0cf68953c');
+
+--
 -- Constraints for dumped tables
 --
 
@@ -175,6 +214,12 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 ALTER TABLE `building`
   ADD CONSTRAINT `building_ibfk_4` FOREIGN KEY (`campusName`) REFERENCES `campus` (`campusName`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `department`
+--
+ALTER TABLE `department`
+  ADD CONSTRAINT `department_ibfk_1` FOREIGN KEY (`ChairID`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `member_of`
