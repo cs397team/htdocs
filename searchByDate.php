@@ -46,6 +46,14 @@ mysql_select_db("r3", $con);
     <tr><td>Event Date:</td><td> <input type="date" name="date"></td></tr>
     <tr><td>Access Time:</td><td> <input type="time" name="accessStart"> to <input type="time" name="accessEnd"></td></tr>
     <tr><td>Event Time:</td><td> <input type="time" name="startTime"> to <input type="time" name="endTime"></td></tr>
+    <tr><td>How often will this event occur?</td><td>
+    <select name="recurrence">
+	    <option value="once">Once</option>
+	    <option value="daily">Daily</option>
+	    <option value="weekly">Weekly</option>
+	    <option value="biWeekly">Bi-Weekly</option>
+	    <option value="monthly">Monthly</option>
+    </select></td></tr>
     <tr><td>Building:</td><td>
     <?php
 
@@ -81,6 +89,7 @@ mysql_select_db("r3", $con);
         $accessEnd   = $_POST["accessEnd"];
 		$startTime   = $_POST["startTime"];
         $endTime     = $_POST["endTime"];
+        $recurrence  = $_POST["recurrence"];
 	    $building    = $_POST["building"];
 		
 		$failure = 0;
