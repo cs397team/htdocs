@@ -42,10 +42,5 @@ else if($_SESSION['SESS_ISADMIN'] == 0)
 
 <p>Click <a href="logout.php">here</a> to logout.</p>
 
-<a href="viewRequests.php>
-<form action=viewRequests.php method = "post">
-	<input type = "submit" name = "viewRequests" style="width:200px; height:32px; font-size:22px;" value = "View Requests" />
-</form>
-
 </body>
 </html>
