@@ -33,32 +33,6 @@ if(!isset($_SESSION['SESS_STUDENT_ID']) || (trim($_SESSION['SESS_STUDENT_ID']) =
 	}
 	
 	mysql_select_db("r3", $con);
-	/*
-	$sql = "SELECT ID, user, primaryRoomNumber
-		FROM reservation
-		WHERE approval = 'Pending'";
-
-	$result = mysql_query($sql);
-	if( $result )
-	{
-		echo "<table border='1'>";
-		echo "<tr>";
-			echo "<td>Reservation ID</td>";
-			echo "<td>User ID</td>";
-			echo "<td>Room #</td>";
-		echo "</tr>";
-		
-		while( $row = mysql_fetch_array($result) )
-		{
-			echo "<tr>";
-				echo "<td>".$row['ID']."</td>";
-				echo "<td>".$row['user']."</td>";
-				echo "<td>".$row['primaryRoomNumber']."</td>";
-				
-			echo "</tr>";
-		}
-		echo "</table>";
-	}*/
 
 	$result = mysql_query("SELECT r1.id, r1.primaryRoomNumber, u1.name, e1.title FROM reservation AS r1, user AS u1, event AS e1 WHERE r1.Approval IS NULL AND r1.user = u1.id AND r1.eventid = e1.id");
 		
