@@ -69,6 +69,7 @@ if(!isset($_SESSION['SESS_STUDENT_ID']) || (trim($_SESSION['SESS_STUDENT_ID']) =
 					SET approval = 'Approved'
 					WHERE ID = {$id}";
 		$result = mysql_query( $approve );
+        header("location: viewRequests.php");
 	}
 	if( isset($_POST["deny"] ) )
 	{
@@ -77,6 +78,7 @@ if(!isset($_SESSION['SESS_STUDENT_ID']) || (trim($_SESSION['SESS_STUDENT_ID']) =
 					SET approval = 'Denied'
 					WHERE ID = {$id}";
 		$result = mysql_query( $deny );
+        header("location: viewRequests.php");
 	}
 ?>
 </body>
