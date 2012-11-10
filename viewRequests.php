@@ -33,7 +33,7 @@ if(!isset($_SESSION['SESS_STUDENT_ID']) || (trim($_SESSION['SESS_STUDENT_ID']) =
 	}
 	
 	mysql_select_db("r3", $con);
-	
+	/*
 	$sql = "SELECT ID, user, primaryRoomNumber
 		FROM reservation
 		WHERE approval = 'Pending'";
@@ -58,22 +58,36 @@ if(!isset($_SESSION['SESS_STUDENT_ID']) || (trim($_SESSION['SESS_STUDENT_ID']) =
 			echo "</tr>";
 		}
 		echo "</table>";
+	}*/
+
+	$result = mysql_query("SELECT r1.id, r1.primaryRoomNumber, u1.name, e1.title FROM reservation AS r1, user AS u1, event AS e1 WHERE r1.Approval IS NULL AND r1.user = u1.id AND r1.eventid = e1.id");
+		
+	while($row = mysql_fetch_array($result))
+	{
+        echo "<form method=\"post\"><p><table border=\"1\">
+              <tr>
+              <td>Reservation ID</td>
+              <td>{$row['id']}</td>
+              </tr>
+              <tr>
+              <td>Event Title</td>
+              <td>{$row['title']}</td>
+              </tr>
+              <tr>
+              <td>Room Number</td>
+              <td>{$row['primaryRoomNumber']}</td>
+              </tr>
+              <tr>
+              <td>Organizer's Name</td>
+              <td>{$row['name']}</td>
+              </tr>
+              </table>
+              <input type=\"hidden\" name=\"reservationID\" value=\"{$row['id']}\" />
+              <input type=\"submit\" name=\"approve\" value=\"Approve Request\" />
+              <input type=\"submit\" name = \"deny\" value = \"Deny Request\" /></p></form>";
+	 
 	}
-?>
-<br><br><br><br>
-<form method="post">
-	<table border ='1'>
-	
-	<tr>
-	<td>Reservation # </td> <td><input type="ID" name="reservationID" /> </td>
-	</tr>
-	
-	</table>
-	
-	<input type="submit" name = "approve" value = "Approve Request" /> 
-	<input type="submit" name = "deny" value = "Deny Request" /> 
-</form>
-<?php
+
 	if( isset($_POST["approve"] ) )
 	{
 		$id = $_POST["reservationID"];
