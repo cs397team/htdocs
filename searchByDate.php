@@ -55,13 +55,12 @@ mysql_select_db("r3", $con);
 	    <option value="monthly">Monthly</option>
     </select></td></tr>
     <tr><td>Building:</td><td>
+    <select id="buildingSelect" name="building" onChange="changeToBuildingMap()">
+        <option value="campusMap">Select a Building</option>
     <?php
 
 	$result = mysql_query("SELECT name FROM building");
-	
-	echo "<select id=\"buildingSelect\" name=\"building\" onChange=\"changeToBuildingMap()\">
-	          <option value=\"campusMap\">Select a Building</option>";
-	
+		
 	while($row = mysql_fetch_array($result))
 	{
 	    echo "<option value=\"".$row['name']."\">".$row['name']."</option>";
