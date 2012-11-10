@@ -3,11 +3,7 @@
 <head>
 <title>Admin Area</title>
 </head>
-
-<body bgcolor = "black" link = "white" vlink = "white" text="white">
-
-<div align="center">
-
+<body>
 <?php
 if($_SERVER['SERVER_PORT'] != '443') 
 { 
@@ -31,7 +27,7 @@ else if($_SESSION['SESS_ISADMIN'] == 0)
 }
 ?>
 	
-<h1 align="center" >Administrator Area</h1>
+<h1>Administrator Area</h1>
 <hr />
 <form action=viewRequests.php method = "post">
 	<input type = "submit" name = "viewRequests" style="width:200px; height:32px; font-size:22px;" value = "View Requests" />

@@ -2,10 +2,7 @@
 <head>
 <title>Current Requests</title>
 </head>
-
-<body bgcolor = "black" link = "white" vlink = "white" text="white">
-
-<div align="center">
+<body>
 <?php
 if($_SERVER['SERVER_PORT'] != '443') 
 { 
@@ -24,7 +21,7 @@ if(!isset($_SESSION['SESS_STUDENT_ID']) || (trim($_SESSION['SESS_STUDENT_ID']) =
 ?>
 
 	
-<h1 align="center" >Current Requests</h1>
+<h1>Current Requests</h1>
 <hr />
 
 <?php

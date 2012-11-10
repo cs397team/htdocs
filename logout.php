@@ -14,15 +14,11 @@
 <head>
 <title>Logout of the R3 System</title>
 </head>
-
-<body bgcolor = "black" link = "white" vlink = "white" text="white">
-
-<div align="center">
-
-<h1 align="center" >Logout of the R3 System</h1>
+<body>
+<h1>Logout of the R3 System</h1>
 <hr />
-<p align="center">&nbsp;</p>
-<h4 align="center" class="err">You have been logged out.</h4>
-<p align="center">Click here to <a href="login.php">Login</a></p>
+<p>&nbsp;</p>
+<h4 class="err">You have been logged out.</h4>
+<p>Click here to <a href="login.php">Login</a></p>
 </body>
 </html>

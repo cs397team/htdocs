@@ -10,18 +10,15 @@ if($_SERVER['SERVER_PORT'] != '443')
 <title>Login to the R3 System</title>
 </head>
 
-<body bgcolor = "black" link = "white" vlink = "white" text="white">
 
-<div align="center">
-	
-<h1 align="center" >Login to the R3 System</h1>
+<body>
+<h1>Login to the R3 System</h1>
 <hr />
 
-<br><br><br><br>
 <!-- *************** -->
 <!-- GENERATE A FORM -->
 <!-- *************** -->
-Enter Information
+<p>Enter Information</p>
 
 <form method="post">
 	<table border ='1'>
@@ -90,9 +87,9 @@ Enter Information
             $sql = "SELECT * FROM user WHERE Email='$emailAddr' AND password_SHA256_hash='$passwdHash'";
             $result=mysql_query($sql);
             if($result)
-            {echo "<p>1</p>";
+            {
                 if(mysql_num_rows($result) == 1) 
-                {echo "<p>2</p>";
+                {
                     //Login Successful
                     session_regenerate_id();
                     $member = mysql_fetch_assoc($result);

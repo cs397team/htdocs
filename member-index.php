@@ -2,12 +2,8 @@
 <head>
 <title>Member Area</title>
 </head>
-
-<body bgcolor = "black" link = "white" vlink = "white" text="white">
-
-<div align="center">
-
-<h1 align="center" >Member Area</h1>
+<body>
+<h1>Member Area</h1>
 <hr />
 <?php
     if($_SERVER['SERVER_PORT'] != '443') 

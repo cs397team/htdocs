@@ -8,14 +8,8 @@ if($_SERVER['SERVER_PORT'] != '443')
 	<head>
 	<title>Add a User to the R3 System</title>
 	</head>
-
-
-
-	<body bgcolor = "black" link = "white" vlink = "white" text="white">
-
-	<div align="center">
-	
-	<h1 align="center" >Add a User to the R3 System</h1>
+	<body>
+	<h1>Add a User to the R3 System</h1>
 	<hr />
 
 	<br><br><br><br>
