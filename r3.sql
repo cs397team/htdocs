@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 09, 2012 at 01:39 AM
+-- Generation Time: Nov 10, 2012 at 11:51 PM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `building` (
 --
 
 INSERT INTO `building` (`campusName`, `latitude`, `longitude`, `name`) VALUES
-('121', 121, 12, '12212112');
+('121', 121, 12, 'Computer Science');
 
 -- --------------------------------------------------------
 
@@ -75,6 +75,14 @@ CREATE TABLE IF NOT EXISTS `department` (
   KEY `Name` (`Name`),
   KEY `ChairID` (`ChairID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `department`
+--
+
+INSERT INTO `department` (`Name`, `ChairID`) VALUES
+('Computer Science', 12269597),
+('ECE', 12344567);
 
 -- --------------------------------------------------------
 
@@ -136,6 +144,14 @@ CREATE TABLE IF NOT EXISTS `organization` (
   KEY `department` (`department`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `organization`
+--
+
+INSERT INTO `organization` (`Name`, `department`, `description`) VALUES
+('ACM', 'Computer Science', 'Association for Computing Machinery'),
+('IEEE', 'ECE', 'IEEE');
+
 -- --------------------------------------------------------
 
 --
@@ -149,12 +165,21 @@ CREATE TABLE IF NOT EXISTS `reservation` (
   `eventId` int(10) unsigned NOT NULL,
   `primaryRoomNumber` int(10) unsigned NOT NULL,
   `backupRoomNumber` int(10) unsigned NOT NULL,
+  `Approval` varchar(8) DEFAULT NULL,
   PRIMARY KEY (`ID`),
   KEY `user` (`user`),
   KEY `eventId` (`eventId`),
   KEY `primaryRoomNumber` (`primaryRoomNumber`),
   KEY `backupRoomNumber` (`backupRoomNumber`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `reservation`
+--
+
+INSERT INTO `reservation` (`ID`, `user`, `equipmentNeeded`, `eventId`, `primaryRoomNumber`, `backupRoomNumber`, `Approval`) VALUES
+(1, 12269597, 'Transparency Projector', 121, 121, 13131, 'Approved'),
+(2, 12344567, 'Transparency Projector', 121, 13131, 121, 'Denied');
 
 -- --------------------------------------------------------
 
@@ -178,8 +203,8 @@ CREATE TABLE IF NOT EXISTS `room` (
 --
 
 INSERT INTO `room` (`buildingName`, `roomNumber`, `capacity`, `roomName`, `type`) VALUES
-('12212112', 121, 121, '1', '121'),
-('12212112', 13131, 3131, '131', '133');
+('Computer Science', 121, 121, '1', '121'),
+('Computer Science', 13131, 3131, '131', '133');
 
 -- --------------------------------------------------------
 
