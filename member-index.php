@@ -20,6 +20,11 @@
         echo "<p>Click <a href=\"login.php\">here</a> to get logged in.</p>";
 		exit();
 	}
+    else if($_SESSION['SESS_ISADMIN'] == 1)
+    {
+        //If the admin trys to access the normal member-index, just forward him to his own index
+        header("location: admin-index.php");
+    }
     
     echo "<p>Welcome back to the system, ".$_SESSION['SESS_NAME']."!</p>";
 ?>
