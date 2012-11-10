@@ -4,6 +4,8 @@
 <title>Admin Area</title>
 </head>
 <body>
+<h1>Admin Area</h1>
+<hr />
 <?php
 if($_SERVER['SERVER_PORT'] != '443') 
 { 
@@ -26,9 +28,21 @@ else if($_SESSION['SESS_ISADMIN'] == 0)
 	exit();
 }
 ?>
-	
-<h1>Administrator Area</h1>
-<hr />
+<p>
+<table border='1'>
+<tr><td>
+<h3>Menu</h3>
+</td></tr>
+
+<tr><td>
+<a href="viewRequests.php">View Requests</a>
+</td></tr>
+</table>
+</p>
+
+<p>Click <a href="logout.php">here</a> to logout.</p>
+
+<a href="viewRequests.php>
 <form action=viewRequests.php method = "post">
 	<input type = "submit" name = "viewRequests" style="width:200px; height:32px; font-size:22px;" value = "View Requests" />
 </form>

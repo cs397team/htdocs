@@ -22,8 +22,28 @@
 	}
     
     echo "<p>Welcome back to the system, ".$_SESSION['SESS_NAME']."!</p>";
-    echo "<p>Click <a href=\"logout.php\">here</a> to logout.</p>"
 ?>
+<p>
+<table border='1'>
+<tr><td>
+<h3>Menu</h3>
+</td></tr>
+
+<tr><td>
+<a href="searchByDate.php">Search for Room by Date</a>
+</td></tr>
+
+<tr><td>
+<a href="addUser.php">Add a User</a>
+</td></tr>
+
+<tr><td>
+<a href="reserve.php">Freakishly Long/Incomplete Form</a>
+</td></tr>
+</table>
+</p>
+<p>Click <a href="logout.php">here</a> to logout.</p>
+
 
 </body>
 </html>
