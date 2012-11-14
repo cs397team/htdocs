@@ -35,6 +35,14 @@
 </td></tr>
 
 <tr><td>
+<a href="reservations.php">Current Reservations</a>
+</td></tr>
+
+<tr><td>
+<a href="pending.php">Pending Reservations</a>
+</td></tr>
+
+<tr><td>
 <a href="searchByDate.php">Search for Room by Date</a>
 </td></tr>
 
