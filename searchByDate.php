@@ -54,6 +54,7 @@ mysql_select_db("r3", $con);
 	    <option value="biWeekly">Bi-Weekly</option>
 	    <option value="monthly">Monthly</option>
     </select></td></tr>
+	<tr><td>Until:</td><td><input type="date" name="stopDate"></td></tr>
     <tr><td>Building:</td><td>
     <select id="buildingSelect" name="building" onChange="changeToBuildingMap()">
         <option value="campusMap">Select a Building</option>
