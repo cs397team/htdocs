@@ -1,11 +1,9 @@
 <html>
-<html>
 <head>
 <title>Admin Area</title>
 </head>
-<body>
-<h1>Admin Area</h1>
-<hr />
+
+<div align="center">
 <?php
 if($_SERVER['SERVER_PORT'] != '443') 
 { 
@@ -28,17 +26,22 @@ else if($_SESSION['SESS_ISADMIN'] == 0)
 	exit();
 }
 ?>
-<p>
-<table border='1'>
-<tr><td>
-<h3>Menu</h3>
-</td></tr>
-
-<tr><td>
-<a href="viewRequests.php">View Requests</a>
-</td></tr>
-</table>
-</p>
+	
+<h1 align="center" >Administrator Area</h1>
+<hr />
+<form action=viewPending.php method = "post">
+	<input type = "submit" name = "viewPending" style="width:200px; height:32px; font-size:22px;" value = "View Pending" /><br>
+</form>
+<form action=viewAccepted.php method = "post">
+	<input type = "submit" name = "viewAccepted" style="width:200px; height:32px; font-size:22px;" value = "View Accepted" /><br>
+</form>
+<form action=viewDenied.php method = "post">
+	<input type = "submit" name = "viewDenied" style="width:200px; height:32px; font-size:22px;" value = "View Denied" />
+</form>
+Search For Event
+<form action=searchForEvent.php method = "post">
+	<input type = "text" name = "searchName" style="width:200px; height:32px; font-size:22px;" />
+</form>
 
 <p>Click <a href="logout.php">here</a> to logout.</p>
 
