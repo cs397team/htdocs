@@ -95,7 +95,7 @@ mysql_select_db("r3", $con);
      
     echo "</select></td></tr>";
     
-    if( isset($_POST['building']) )
+    if( isset($_POST['building']) && $_POST['building'] != "campusMap.png" )
     {
         echo " <tr><td>Floor:</td> <td><select name=\"floor\" onChange=\"this.form.submit()\">";
         
