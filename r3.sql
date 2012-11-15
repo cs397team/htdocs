@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 10, 2012 at 11:51 PM
+-- Generation Time: Nov 15, 2012 at 08:13 PM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -165,21 +165,13 @@ CREATE TABLE IF NOT EXISTS `reservation` (
   `eventId` int(10) unsigned NOT NULL,
   `primaryRoomNumber` int(10) unsigned NOT NULL,
   `backupRoomNumber` int(10) unsigned NOT NULL,
-  `Approval` varchar(8) DEFAULT NULL,
+  `Approval` enum('Pending','Approved','Denied') NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `user` (`user`),
   KEY `eventId` (`eventId`),
   KEY `primaryRoomNumber` (`primaryRoomNumber`),
   KEY `backupRoomNumber` (`backupRoomNumber`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
-
---
--- Dumping data for table `reservation`
---
-
-INSERT INTO `reservation` (`ID`, `user`, `equipmentNeeded`, `eventId`, `primaryRoomNumber`, `backupRoomNumber`, `Approval`) VALUES
-(1, 12269597, 'Transparency Projector', 121, 121, 13131, 'Approved'),
-(2, 12344567, 'Transparency Projector', 121, 13131, 121, 'Denied');
 
 -- --------------------------------------------------------
 
