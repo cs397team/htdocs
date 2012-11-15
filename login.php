@@ -33,7 +33,7 @@ if($_SERVER['SERVER_PORT'] != '443')
 	
 	</table>
 	
-	<input type="submit" name = "submit" value = "Submit Query" /> 
+	<input type="submit" name = "submit" value = "Log In" /> 
 </form>
 	
 <?php
@@ -50,7 +50,7 @@ if($_SERVER['SERVER_PORT'] != '443')
     session_start();
     
 	// The following will NOT execute if the form is blank. (The user just entered the page)
-	if(isset($_POST["submit"]))// == "Submit Query")
+	if(isset($_POST["submit"]))
 	{
 
 	    // Initialize variables with user entered information
