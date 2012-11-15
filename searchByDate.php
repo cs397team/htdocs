@@ -40,15 +40,35 @@ mysql_select_db("r3", $con);
     <tr><td>Access Time:</td><td> <input type="time" name="accessStart"> to <input type="time" name="accessEnd"></td></tr>
     <tr><td>Event Time:</td><td> <input type="time" name="startTime"> to <input type="time" name="endTime"></td></tr>
     <tr><td>How often will this event occur?</td><td>
-    <select name="recurrence">
-	    <option value="once">Once</option>
-	    <option value="daily">Daily</option>
-	    <option value="weekly">Weekly</option>
-	    <option value="biWeekly">Bi-Weekly</option>
+    <select name="recurrence" onChange="this.form.submit()">
+    <?php
+        echo "<option ";
+        if(isset($_POST['recurrence']) && $_POST['recurrence'] == "once")
+            echo "selected=\"selected\" ";
+        echo "value=\"once\">Once</option>";
+           
+        echo "<option ";
+        if(isset($_POST['recurrence']) && $_POST['recurrence'] == "daily")
+               echo "selected=\"selected\" ";
+        echo "value=\"daily\">Daily</option>";
+           
+        echo "<option ";
+        if(isset($_POST['recurrence']) && $_POST['recurrence'] == "weekly")
+            echo "selected=\"selected\" ";
+        echo "value=\"weekly\">Weekly</option>";
+           
+        echo "<option ";
+        if(isset($_POST['recurrence']) && $_POST['recurrence'] == "biWeekly")
+            echo "selected=\"selected\" ";
+        echo "value=\"biWeekly\">Bi-Weekly</option>";
+    ?>
     </select></td></tr>
-	<tr><td>Until:</td><td><input type="date" name="stopDate"></td></tr>
+    <?php
+        if( isset($_POST['recurrence']) && $_POST['recurrence'] != "once")
+	        echo "<tr><td>Until:</td><td><input type=\"date\" name=\"stopDate\"></td></tr>";
+    ?>
     <tr><td>Building:</td><td>
-    <select id="buildingSelect" name="building" onChange="this.form.submit()">
+    <select name="building" onChange="this.form.submit()">
         <option value="campusMap.png">Select a Building</option>
     <?php
 
@@ -61,7 +81,7 @@ mysql_select_db("r3", $con);
         {
             if($row2['floorNum'] == "2" /*!!!!!REPLACE WITH 1 WHEN WE COMPLETE THE DATABASE!!!!!*/)
             {
-                if( $_POST['building'] == $row['name'] )
+                if( isset($_POST['building']) && $_POST['building'] == $row['name'] )
                 {
                     echo "<option selected=\"selected\" value=\"".$row['name']."\">".$row['name']."</option>";
                 }
@@ -77,7 +97,7 @@ mysql_select_db("r3", $con);
     
     if( isset($_POST['building']) )
     {
-        echo " <tr><td>Floor:</td> <td><select id=\"floorSelect\" name=\"floor\" onChange=\"this.form.submit()\">";
+        echo " <tr><td>Floor:</td> <td><select name=\"floor\" onChange=\"this.form.submit()\">";
         
         $result = mysql_query("SELECT floorImageURL, floorNum FROM floor WHERE buildingName = '{$_POST['building']}'");
         while($row = mysql_fetch_array($result))
@@ -113,7 +133,7 @@ mysql_select_db("r3", $con);
 <div style="position: relative; left: 0; top: 0;">
 <?php
     
-    if(isset($_POST['building']))
+    if(isset($_POST['building']) && $_POST['building'] != "campusMap.png")
     {
         $result = mysql_query("SELECT floorNum, floorImageURL FROM floor WHERE buildingName = '{$_POST['building']}'");
         
