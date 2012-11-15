@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 15, 2012 at 09:50 PM
+-- Generation Time: Nov 16, 2012 at 12:06 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `floor` (
 --
 
 INSERT INTO `floor` (`floorNum`, `buildingName`, `floorImageURL`) VALUES
-(1, 'Computer Science', 'JUNK'),
+(1, 'Computer Science', 'images/dummyImage.jpg'),
 (2, 'Computer Science', 'images/cs_second_floor.png');
 
 -- --------------------------------------------------------
