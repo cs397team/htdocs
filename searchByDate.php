@@ -1,13 +1,6 @@
 <html>
 <title>Search by Date</title>
-<script type="text/javascript">
-function changeToBuildingMap()
-{
-    var selectBox = document.getElementById("buildingSelect");
-    var selectedValue = selectBox.options[selectBox.selectedIndex].value;
-    document.getElementById('theImage').src="/" + selectedValue + ".png";
-}
-</script>
+
 <?php
 if($_SERVER['SERVER_PORT'] != '443') 
 { 
@@ -39,7 +32,7 @@ mysql_select_db("r3", $con);
 <body>
 <h1>Time and Place for Reservation<h1>
 <hr />
-<form method="post">
+<form action="searchByDate.php" method="post">
 <table border='0'>
 <td>
 <table border='0'>
@@ -52,28 +45,105 @@ mysql_select_db("r3", $con);
 	    <option value="daily">Daily</option>
 	    <option value="weekly">Weekly</option>
 	    <option value="biWeekly">Bi-Weekly</option>
-	    <option value="monthly">Monthly</option>
     </select></td></tr>
 	<tr><td>Until:</td><td><input type="date" name="stopDate"></td></tr>
     <tr><td>Building:</td><td>
-    <select id="buildingSelect" name="building" onChange="changeToBuildingMap()">
-        <option value="campusMap">Select a Building</option>
+    <select id="buildingSelect" name="building" onChange="this.form.submit()">
+        <option value="campusMap.png">Select a Building</option>
     <?php
 
 	$result = mysql_query("SELECT name FROM building");
 		
 	while($row = mysql_fetch_array($result))
 	{
-	    echo "<option value=\"".$row['name']."\">".$row['name']."</option>";
+        $result2 = mysql_query("SELECT f1.floorImageURL, f1.floorNum FROM floor AS f1, building AS b1 WHERE f1.buildingName = b1.name");
+        while($row2 = mysql_fetch_array($result2))
+        {
+            if($row2['floorNum'] == "2" /*!!!!!REPLACE WITH 1 WHEN WE COMPLETE THE DATABASE!!!!!*/)
+            {
+                if( $_POST['building'] == $row['name'] )
+                {
+                    echo "<option selected=\"selected\" value=\"".$row['name']."\">".$row['name']."</option>";
+                }
+                else
+                {
+                    echo "<option value=\"".$row['name']."\">".$row['name']."</option>";
+                }
+            }
+        }
 	}
-    ?>
-    </select></td></tr>
+     
+    echo "</select></td></tr>";
+    
+    if( isset($_POST['building']) )
+    {
+        echo " <tr><td>Floor:</td> <td><select id=\"floorSelect\" name=\"floor\" onChange=\"this.form.submit()\">";
+        
+        $result = mysql_query("SELECT floorImageURL, floorNum FROM floor WHERE buildingName = '{$_POST['building']}'");
+        while($row = mysql_fetch_array($result))
+        {
+            if(isset($_POST['floor']))
+            {
+                $floor = $_POST['floor'];
+            }
+            else
+            {
+                $floor = 2; /*CHANGE TO 1 WHEN DATABASE IS COMPLETE*/
+            }
+            
+            if( $row['floorNum'] == $floor /*CHANGE TO 1 WHEN DATABASE IS COMPLETE*/)
+            {
+                echo "<option selected=\"selected\" value=\"".$row['floorNum']."\">".$row['floorNum']."</option>";
+            }
+            else
+            {
+                echo "<option value=\"".$row['floorNum']."\">".$row['floorNum']."</option>";
+            }
+        }
+    
+            
+        echo "</select></td></tr>";
+    }
+?>
     <tr><td><input type="submit" name = "checkRoomAvailability" value = "Check Room Availability" /></td></tr>
     
 </table>
 </td>
 <td>
-<img id="theImage" src="campusMap.png" alt="Campus Map">
+<div style="position: relative; left: 0; top: 0;">
+<?php
+    
+    if(isset($_POST['building']))
+    {
+        $result = mysql_query("SELECT floorNum, floorImageURL FROM floor WHERE buildingName = '{$_POST['building']}'");
+        
+        if(isset($_POST['floor']))
+        {
+            $floor = $_POST['floor'];
+        }
+        else
+        {
+            $floor = 2; /*CHANGE TO 1 WHEN DATABASE IS COMPLETE*/
+        }
+        
+        while($row = mysql_fetch_array($result))
+        {
+            if( $row['floorNum'] == $floor)
+            {
+                echo "<img id=\"theImage\" src=\"{$row['floorImageURL']}\" style=\"position: relative; top: 0; left: 0;\" alt=\"Campus Map\" />";
+                break;
+            }
+        }
+    }
+    else
+    {
+        echo "<img id=\"theImage\" src=\"images/campusMap.png\" style=\"position: relative; top: 0; left: 0;\" alt=\"Campus Map\" />";
+    }
+?>
+<!-- TODO: Implement scheduling shading -->
+<img hidden="hidden" src="images/cs_208_pending.png" style="position: absolute; top: 0; left: 0;" />
+<img hidden="hidden" src="images/cs_209_pending.png" style="position: absolute; top: 0; left: 0;" />
+</div>
 </td>
 </table>
 
