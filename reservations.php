@@ -1,5 +1,5 @@
 <html>
-<title>Current Reservations</title>
+<title>Approved Reservations</title>
 
 <?php
 if($_SERVER['SERVER_PORT'] != '443') 
@@ -27,24 +27,42 @@ if(!$con)
 	
 mysql_select_db("r3", $con);
 
-$result = mysql_query("SELECT * FROM reservation WHERE r1.Approval IS TRUE AND r1.user = u1.id");
+$result = mysql_query("SELECT r1.id, r2.buildingName, r2.roomNumber, e1.title, e1.date, e1.eventTimeStart, e1.eventTimeEnd 
+						FROM reservation AS r1, event AS e1, room AS r2 
+						WHERE r1.Approval = 'Approved' AND r1.user = {$_SESSION['SESS_STUDENT_ID']} 
+						AND r1.eventid = e1.id AND ((r1.primaryRoomNumber = r2.roomNumber AND r1.primaryRoomNumber IS NOT NULL) OR 
+													(r1.backupRoomNumber = r2.roomNumber AND r1.backupRoomNumber IS NOT NULL))");						
+			
+echo	"<table border=\"1\">
+		<tr>
+		<td>Reservation ID</td>
+		<td>Event Title</td>
+		<td>Date</td>
+		<td>Time Start</td>
+		<td>Time End</td>
+		<td>Building</td>
+		<td>Room</td>
+		</tr>";
+			
+while($row = mysql_fetch_array($result))
+{
+	echo	"<tr>
+			<td>{$row['id']}</td>
+			<td>{$row['title']}</td>
+			<td>{$row['date']}</td>
+			<td>{$row['eventTimeStart']}</td>
+			<td>{$row['eventTimeEnd']}</td>
+			<td>{$row['buildingName']}</td>
+			<td>{$row['roomNumber']}</td>
+			</tr>";
+}
+
+echo "</table>";
 
 ?>
 
 <p>
-<table border="1">
-<tr>
-<td>Reservation ID</td>
-<td>Event Title</td>
-<td>Date</td>
-<td>Time Start</td>
-<td>Time End</td>
-<td>Building</td>
-<td>Room</td>
-</tr>
-<tr>
-</tr>
-</table>
+
 </p>
 
 
