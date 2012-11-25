@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 15, 2012 at 08:13 PM
+-- Generation Time: Nov 16, 2012 at 12:06 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -70,7 +70,7 @@ INSERT INTO `campus` (`campusName`, `longitude`, `latitude`) VALUES
 
 CREATE TABLE IF NOT EXISTS `department` (
   `Name` varchar(20) NOT NULL,
-  `ChairID` int(11) NOT NULL,
+  `ChairID` int(8) unsigned zerofill NOT NULL,
   PRIMARY KEY (`Name`),
   KEY `Name` (`Name`),
   KEY `ChairID` (`ChairID`)
@@ -119,11 +119,33 @@ INSERT INTO `event` (`id`, `title`, `eventTimeStart`, `eventTimeEnd`, `accessTim
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `floor`
+--
+
+CREATE TABLE IF NOT EXISTS `floor` (
+  `floorNum` int(11) NOT NULL,
+  `buildingName` varchar(50) NOT NULL,
+  `floorImageURL` varchar(128) NOT NULL,
+  PRIMARY KEY (`floorNum`),
+  KEY `buildingName` (`buildingName`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `floor`
+--
+
+INSERT INTO `floor` (`floorNum`, `buildingName`, `floorImageURL`) VALUES
+(1, 'Computer Science', 'images/dummyImage.jpg'),
+(2, 'Computer Science', 'images/cs_second_floor.png');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `member_of`
 --
 
 CREATE TABLE IF NOT EXISTS `member_of` (
-  `UserID` int(11) NOT NULL,
+  `UserID` int(8) unsigned zerofill NOT NULL,
   `org_name` varchar(20) NOT NULL,
   `rank` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`UserID`,`org_name`),
@@ -160,7 +182,7 @@ INSERT INTO `organization` (`Name`, `department`, `description`) VALUES
 
 CREATE TABLE IF NOT EXISTS `reservation` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `user` int(11) NOT NULL,
+  `user` int(8) unsigned zerofill NOT NULL,
   `equipmentNeeded` set('Transparency Projector','Multimedia Projector','TV / DVD','Microphones','Easel','Dry-Erase Board','Tabletop Podium','Floor Podium','Dance Floor','Carousel Projector','Piano','U.S. Flag','MO Flag','University Flag','Other') DEFAULT NULL,
   `eventId` int(10) unsigned NOT NULL,
   `primaryRoomNumber` int(10) unsigned NOT NULL,
@@ -184,7 +206,10 @@ CREATE TABLE IF NOT EXISTS `room` (
   `roomNumber` int(10) unsigned NOT NULL,
   `capacity` int(10) unsigned NOT NULL,
   `roomName` varchar(20) DEFAULT NULL,
-  `type` varchar(20) NOT NULL,
+  `type` varchar(20) DEFAULT NULL,
+  `availableImageURL` varchar(128) NOT NULL,
+  `notAvailableImageURL` varchar(128) NOT NULL,
+  `pendingAvailableImageURL` varchar(128) NOT NULL,
   PRIMARY KEY (`roomNumber`),
   KEY `name` (`buildingName`),
   KEY `buildingName` (`buildingName`)
@@ -194,9 +219,10 @@ CREATE TABLE IF NOT EXISTS `room` (
 -- Dumping data for table `room`
 --
 
-INSERT INTO `room` (`buildingName`, `roomNumber`, `capacity`, `roomName`, `type`) VALUES
-('Computer Science', 121, 121, '1', '121'),
-('Computer Science', 13131, 3131, '131', '133');
+INSERT INTO `room` (`buildingName`, `roomNumber`, `capacity`, `roomName`, `type`, `availableImageURL`, `notAvailableImageURL`, `pendingAvailableImageURL`) VALUES
+('Computer Science', 121, 121, '1', '121', '', '', ''),
+('Computer Science', 208, 54, NULL, 'Classroom', 'images/cs_208_available.png', 'images/cs_208_notavailable.png', 'images/cs_208_pending.png'),
+('Computer Science', 13131, 3131, '131', '133', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -205,7 +231,7 @@ INSERT INTO `room` (`buildingName`, `roomNumber`, `capacity`, `roomName`, `type`
 --
 
 CREATE TABLE IF NOT EXISTS `user` (
-  `ID` int(11) NOT NULL,
+  `ID` int(8) unsigned zerofill NOT NULL,
   `Name` varchar(20) DEFAULT NULL,
   `Email` varchar(20) DEFAULT NULL,
   `isAdmin` tinyint(1) NOT NULL,
@@ -239,10 +265,16 @@ ALTER TABLE `department`
   ADD CONSTRAINT `department_ibfk_1` FOREIGN KEY (`ChairID`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `floor`
+--
+ALTER TABLE `floor`
+  ADD CONSTRAINT `floor_ibfk_1` FOREIGN KEY (`buildingName`) REFERENCES `building` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `member_of`
 --
 ALTER TABLE `member_of`
-  ADD CONSTRAINT `member_of_ibfk_3` FOREIGN KEY (`UserID`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `member_of_ibfk_5` FOREIGN KEY (`UserID`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `member_of_ibfk_4` FOREIGN KEY (`org_name`) REFERENCES `organization` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
@@ -255,7 +287,7 @@ ALTER TABLE `organization`
 -- Constraints for table `reservation`
 --
 ALTER TABLE `reservation`
-  ADD CONSTRAINT `reservation_ibfk_5` FOREIGN KEY (`user`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `reservation_ibfk_9` FOREIGN KEY (`user`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `reservation_ibfk_6` FOREIGN KEY (`eventId`) REFERENCES `event` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `reservation_ibfk_7` FOREIGN KEY (`primaryRoomNumber`) REFERENCES `room` (`roomNumber`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `reservation_ibfk_8` FOREIGN KEY (`backupRoomNumber`) REFERENCES `room` (`roomNumber`) ON DELETE CASCADE ON UPDATE CASCADE;
