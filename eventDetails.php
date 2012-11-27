@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Admin Area</title>
+<title>Edit Event</title>
 </head>
 
 <div align="center">
@@ -45,75 +45,112 @@ else if($_SESSION['SESS_ISADMIN'] == 0)
 	{
 	$row = mysql_fetch_array($result);
 
+		if( isset( $_POST["submit"] ) )
+		{
+			$title	 = $_POST["title"];
+			$eventTimeStart = $_POST["eventStart"];
+			$eventTimeEnd = $_POST["eventEnd"];
+			$accessTimeStart = $_POST["accessStart"];
+			$accessTimeEnd = $_POST["accessEnd"];
+			$date = $_POST["date"];
+			$numAttendees = $_POST["numAttend"];
+			$decorations = isset( $_POST["decorations"] ) ? 1 : 0;
+			$alcohol = isset( $_POST["alcohol"] ) ? 1 : 0;
+			$prizes = isset( $_POST["prizes"] ) ? 1 : 0;
+			$tickets = isset( $_POST["tickets"] ) ? 1 : 0;
+			$outsideVendors = isset( $_POST["outsideVendors"] ) ? 1 : 0;
+			$foodOption = $_POST["food"];
+			$typeEvent = $_POST["typeEvent"];
+			$sql = "UPDATE event, reservation
+					SET title = '$title', eventTimeStart = '$eventTimeStart', 
+					eventTimeEnd = '$eventTimeEnd', accessTimeStart = '$accessTimeStart',
+					accessTimeEnd = '$accessTimeEnd', date = '$date', numAttendees = $numAttendees,
+					decorations = $decorations, alcohol = $alcohol,
+					prizes = $prizes, tickets = $tickets, outsideVendors = $outsideVendors,
+					foodOption = $foodOption, typeOfEvent = '$typeEvent'
+					WHERE reservation.id = {$_GET['reserveID']} AND reservation.eventID = event.id ";
+			$result = mysql_query($sql);
+			
+			if(!$result)
+			{
+				echo $sql;
+				echo mysql_error();
+			}
+			header('Location: '.$_SERVER['REQUEST_URI']);
+		}
 		if( isset($_POST['editEvent']) )
 		{
 	?>
-			<form action="" method="post">
+			<form method="post">
 			<table border='1'>
 				<tr align='center'>
 					<td>Event ID:</td>
-					<td><input type="text" name="eventID" value="<?=($row['id'])?>"></td>
+					<td><?php echo $row['id']; ?></td>
 				</tr>
 				<tr align='center'>
 					<td>Title</td>
-					<td><input type="text" name="eventID" value="<?=($row['title'])?>"></td>
+					<td><input type="text" name="title" value="<?=($row['title'])?>"></td>
 				</tr>
 				<tr align='center'>
 					<td>Event start time</td>
-					<td><input type="time" name="eventID" value="<?=($row['eventTimeStart'])?>"></td>
+					<td><input type="time" name="eventStart" value="<?= $row['eventTimeStart']?>"></td>
 				</tr>
 				<tr align='center'>
 					<td>Event end time</td>
-					<td><input type="time" name="eventID" value="<?=($row['eventTimeEnd'])?>"></td>
+					<td><input type="time" name="eventEnd" value="<?= $row['eventTimeEnd']?>"></td>
 				</tr>
 				<tr align='center'>
 					<td>Access start time</td>
-					<td><?php echo $row['accessTimeStart']; ?></td>
+					<td><input type="time" name="accessStart" value="<?= $row['accessTimeStart']?>"></td>
 				</tr>
 				<tr align='center'>
 					<td>Access end time</td>
-					<td><?php echo $row['accessTimeEnd']; ?></td>
+					<td><input type="time" name="accessEnd" value="<?= $row['accessTimeEnd']?>"></td>
 				</tr>
 				<tr align='center'>
 					<td>Date</td>
-					<td><input type="date" name="eventID" value="<?=($row['date'])?>"></td
+					<td><input type="date" name="date" value="<?=($row['date'])?>"></td
 				</tr>
 				<tr align='center'>
 					<td>Number of Attendees</td>
-					<td><input type="text" name="eventID" value="<?=($row['numAttendees'])?>"></td>
+					<td><input type="text" name="numAttend" value="<?=($row['numAttendees'])?>"></td>
 				</tr>
 				<tr align='center'>
 					<td>Decorations?</td>
-					<td><input type="checkbox" name="eventID" <?=( ($row['decorations']) ? ' checked="checked"' : '')?>></td>
+					<td><input type="checkbox" name="decorations" <?=( ($row['decorations']) ? ' checked="checked"' : '')?>></td>
 				</tr>
 				<tr align='center'>
 					<td>Alcohol?</td>
-					<td><input type="checkbox" name="eventID" <?=( ($row['alcohol']) ? ' checked="checked"' : '')?>></td>
+					<td><input type="checkbox" name="alcohol" <?=( ($row['alcohol']) ? ' checked="checked"' : '')?>></td>
 				</tr>
 				<tr align='center'>
 					<td>Prizes?</td>
-					<td><input type="checkbox" name="eventID" <?=( ($row['prizes']) ? ' checked="checked"' : '')?>></td>
+					<td><input type="checkbox" name="prizes" <?=( ($row['prizes']) ? ' checked="checked"' : '')?>></td>
 				</tr>
 				<tr align='center'>
 					<td>Tickets?</td>
-					<td><input type="checkbox" name="eventID" <?=( ($row['tickets']) ? ' checked="checked"' : '')?>></td>
+					<td><input type="checkbox" name="tickets" <?=( ($row['tickets']) ? ' checked="checked"' : '')?>></td>
 				</tr>
 				<tr align='center'>
 					<td>Outside Vendors?</td>
-					<td><input type="checkbox" name="eventID" <?=( ($row['outsideVendors']) ? ' checked="checked"' : '')?>></td>
+					<td><input type="checkbox" name="outsideVendors" <?=( ($row['outsideVendors']) ? ' checked="checked"' : '')?>></td>
 				</tr>
+				
 				<tr align='center'>
 					<td>Food Option</td>
-					<td><?php echo $row['foodOption']; ?></td>
+					<td><select name="food">
+						<option value="0" <?=( $row['foodOption'] == '0' ? ' selected="selected" ' : '' )?>">Chartwell's Catering</option>
+						<option value="1" <?=( $row['foodOption'] == '1' ? ' selected="selected" ' : '' )?>">Bringing in Food</option>
+						<option value="2" <?=( $row['foodOption'] == '2' ? ' selected="selected" ' : '' )?>">No Food will be served</option>
+					</select></td>
 				</tr>
+				
 				<tr align='center'>
 					<td>Type of Event</td>
-					<td><input type="text" name="eventID" value="<?=($row['typeOfEvent'])?>"></td>
+					<td><input type="text" name="typeEvent" value="<?=($row['typeOfEvent'])?>"></td>
 				</tr>
 				<tr align='center'>
-					<form action="" method="post">
-						<td><input type="submit" name="editEvent" value="Edit Event"></td>
-					</form>
+					<td><input type="submit" name="submit" value="Submit Event"></td>
 				</tr>
 			</table>
 			</form>
@@ -133,23 +170,43 @@ else if($_SESSION['SESS_ISADMIN'] == 0)
 				</tr>
 				<tr align='center'>
 					<td>Event start time</td>
-					<td><?php echo $row['eventTimeStart']; ?></td>
+					<?php
+					$sql = "SELECT TIME_FORMAT( '{$row['eventTimeStart']}','%l:%i:%S %p' )";
+					$timeFrmt = mysql_query( $sql );
+					$rowFrmt = mysql_fetch_array($timeFrmt);
+					?>
+					<td><?php echo $rowFrmt[0]; ?></td>
 				</tr>
 				<tr align='center'>
 					<td>Event end time</td>
-					<td><?php echo $row['eventTimeEnd']; ?></td>
+					<?php
+					$sql = "SELECT TIME_FORMAT( '{$row['eventTimeEnd']}','%l:%i:%S %p' )";
+					$timeFrmt = mysql_query( $sql );
+					$rowFrmt = mysql_fetch_array($timeFrmt);
+					?>
+					<td><?php echo $rowFrmt[0]; ?></td>
 				</tr>
 				<tr align='center'>
 					<td>Access start time</td>
-					<td><?php echo $row['accessTimeStart']; ?></td>
+					<?php
+					$sql = "SELECT TIME_FORMAT( '{$row['accessTimeStart']}','%l:%i:%S %p' )";
+					$timeFrmt = mysql_query( $sql );
+					$rowFrmt = mysql_fetch_array($timeFrmt);
+					?>
+					<td><?php echo $rowFrmt[0]; ?></td>
 				</tr>
 				<tr align='center'>
 					<td>Access end time</td>
-					<td><?php echo $row['accessTimeEnd']; ?></td>
+					<?php
+					$sql = "SELECT TIME_FORMAT( '{$row['accessTimeEnd']}','%l:%i:%S %p' )";
+					$timeFrmt = mysql_query( $sql );
+					$rowFrmt = mysql_fetch_array($timeFrmt);
+					?>
+					<td><?php echo $rowFrmt[0]; ?></td>
 				</tr>
 				<tr align='center'>
 					<td>Date</td>
-					<td><?php echo $row['date']; ?></td>
+					<td><?php echo date_format(date_create($row['date']), 'F jS Y'); ?></td>
 				</tr>
 				<tr align='center'>
 					<td>Number of Attendees</td>
@@ -160,7 +217,7 @@ else if($_SESSION['SESS_ISADMIN'] == 0)
 					<td><?php echo $row['decorations'] ? 'Yes' : 'No'; ?></td>
 				</tr>
 				<tr align='center'>
-					<td>Alchohol?</td>
+					<td>Alcohol?</td>
 					<td><?php echo $row['alcohol'] ? 'Yes' : 'No'; ?></td>
 				</tr>
 				<tr align='center'>
@@ -177,7 +234,20 @@ else if($_SESSION['SESS_ISADMIN'] == 0)
 				</tr>
 				<tr align='center'>
 					<td>Food Option</td>
-					<td><?php echo $row['foodOption']; ?></td>
+					<td><?php 
+						switch( $row['foodOption'] ) {
+							case 0:
+								echo "Chartwell's Catering";
+								break;
+							case 1:
+								echo "Bringing in Food";
+								break;
+							case 2:
+								echo "No food will be served";
+								break;
+						} 
+						
+						?></td>
 				</tr>
 				<tr align='center'>
 					<td>Type of Event</td>

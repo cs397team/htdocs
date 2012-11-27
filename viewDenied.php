@@ -35,35 +35,46 @@ if(!isset($_SESSION['SESS_STUDENT_ID']) || (trim($_SESSION['SESS_STUDENT_ID']) =
 	
 	mysql_select_db("r3", $con);
 	
-	$sql = "SELECT event.title, reservation.primaryRoomNumber, event.eventTimeStart, user.name
+	$sql = "SELECT event.title, reservation.primaryRoomNumber, event.eventTimeStart, reservation.id, user.name
 		FROM reservation, event, building, room, user
 		WHERE reservation.eventId = event.id AND approval = 'Denied' AND 
 		reservation.primaryRoomNumber = room.roomNumber AND room.buildingName = building.name AND
 		user.id = reservation.user";
-
+		
 	$result = mysql_query($sql);
 	if( $result )
 	{
-		echo "<table border='1'>";
-		echo "<tr>";
-			echo "<td>Event title</td>";
-			echo "<td>Event Location </td>";
-			echo "<td>Event Start</td>";
-			echo "<td>Organizer's Name</td>";
-		echo "</tr>";
+?>
+		<table border='1' id='table'>
+		<tr align='center'>
+			<td>Event title</td>
+			<td>Event Location </td>
+			<td>Event Start</td>
+			<td>Organizer's Name</td>
+		</tr>
 		
+<?php
 		while( $row = mysql_fetch_array($result) )
 		{
-			echo "<tr>";
-				echo "<td>".$row['title']."</td>";
-				echo "<td>".$row['primaryRoomNumber']."</td>";
-				echo "<td>".$row['eventTimeStart']."</td>";
-				echo "<td>".$row['name']."</td>";
+?>
+			<tr align='center'>
+				<form action="eventDetails.php" method="post">
+					<td><a href="eventDetails.php?reserveID=<? print $row['id']?>" >
+					<?php echo $row['title']; ?>
+					</a></td>
+				</form>
 				
-			echo "</tr>";
+				<td><?php echo $row['primaryRoomNumber']; ?></td>
+				<td><?php echo date_format(date_create($row['eventTimeStart']), 'F jS Y g:ia'); ?></td>
+				<td><?php echo $row['name']; ?></td>				
+			</tr>
+<?php
 		}
-		echo "</table>";
+?>
+		</table>
+<?php
 	}
 ?>
+
 </body>
 </html>
