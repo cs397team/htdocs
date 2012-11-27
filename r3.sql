@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.2.2
+-- version 3.4.5
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Nov 16, 2012 at 12:06 AM
--- Server version: 5.5.27
--- PHP Version: 5.4.7
+-- Host: localhost
+-- Generation Time: Nov 27, 2012 at 06:57 PM
+-- Server version: 5.5.16
+-- PHP Version: 5.3.8
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -93,10 +93,10 @@ INSERT INTO `department` (`Name`, `ChairID`) VALUES
 CREATE TABLE IF NOT EXISTS `event` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(20) DEFAULT NULL,
-  `eventTimeStart` timestamp NULL DEFAULT NULL,
-  `eventTimeEnd` timestamp NULL DEFAULT NULL,
-  `accessTimeStart` timestamp NULL DEFAULT NULL,
-  `accessTimeEnd` timestamp NULL DEFAULT NULL,
+  `eventTimeStart` time DEFAULT NULL,
+  `eventTimeEnd` time DEFAULT NULL,
+  `accessTimeStart` time DEFAULT NULL,
+  `accessTimeEnd` time DEFAULT NULL,
   `date` date NOT NULL,
   `numAttendees` int(10) unsigned DEFAULT NULL,
   `decorations` tinyint(1) DEFAULT NULL,
@@ -107,14 +107,16 @@ CREATE TABLE IF NOT EXISTS `event` (
   `foodOption` tinyint(1) DEFAULT NULL,
   `typeOfEvent` varchar(256) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=122 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=124 ;
 
 --
 -- Dumping data for table `event`
 --
 
 INSERT INTO `event` (`id`, `title`, `eventTimeStart`, `eventTimeEnd`, `accessTimeStart`, `accessTimeEnd`, `date`, `numAttendees`, `decorations`, `alcohol`, `prizes`, `tickets`, `outsideVendors`, `foodOption`, `typeOfEvent`) VALUES
-(121, '1221', '2012-11-14 06:00:00', '2012-11-21 06:00:00', '2012-11-29 06:00:00', '2012-11-14 06:00:00', '2012-11-14', 12, 1, 1, 1, 1, 1, NULL, 'fgsfsdfsdfds');
+(121, '1221', '04:00:00', '07:00:00', '03:00:00', '07:00:00', '2012-11-21', 12111111, 1, 1, 1, 1, 1, 0, 'test'),
+(122, 'Event 2', NULL, NULL, NULL, NULL, '0000-00-00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, ''),
+(123, 'Event 3', '03:00:00', '04:00:00', '02:30:00', '04:30:00', '2012-11-21', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '');
 
 -- --------------------------------------------------------
 
@@ -193,7 +195,17 @@ CREATE TABLE IF NOT EXISTS `reservation` (
   KEY `eventId` (`eventId`),
   KEY `primaryRoomNumber` (`primaryRoomNumber`),
   KEY `backupRoomNumber` (`backupRoomNumber`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+--
+-- Dumping data for table `reservation`
+--
+
+INSERT INTO `reservation` (`ID`, `user`, `equipmentNeeded`, `eventId`, `primaryRoomNumber`, `backupRoomNumber`, `Approval`) VALUES
+(3, 12269597, 'Transparency Projector', 121, 121, 208, 'Pending'),
+(4, 12344567, 'Microphones', 122, 13131, 121, 'Pending'),
+(5, 14456654, 'TV / DVD', 123, 208, 13131, 'Pending'),
+(6, 16016314, 'Microphones', 121, 208, 121, 'Pending');
 
 -- --------------------------------------------------------
 
@@ -246,7 +258,8 @@ CREATE TABLE IF NOT EXISTS `user` (
 INSERT INTO `user` (`ID`, `Name`, `Email`, `isAdmin`, `password_SHA256_hash`) VALUES
 (12269597, 'Andrew Schrader', 'arstk8@mst.edu', 0, '2fe93ebff8af32d75b4de8283b8e2bfecc725336cfc37b09b06a629ea49c24a9'),
 (12344567, 'Bobby', 'bobby@mst.edu', 1, '2fe93ebff8af32d75b4de8283b8e2bfecc725336cfc37b09b06a629ea49c24a9'),
-(14456654, 'Bob', 'bob@mst.edu', 1, '9a125785bef6c04b1847934facfb53854f8acf04ead8bb6fb5ee1cb0cf68953c');
+(14456654, 'Bob', 'bob@mst.edu', 1, '9a125785bef6c04b1847934facfb53854f8acf04ead8bb6fb5ee1cb0cf68953c'),
+(16016314, 'Neil Patel', 'nsp2t5@mst.edu', 1, '81b637d8fcd2c6da6359e6963113a1170de795e4b725b84d1e0b4cfd9ec58ce9');
 
 --
 -- Constraints for dumped tables
