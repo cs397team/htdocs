@@ -31,7 +31,7 @@ mysql_select_db("r3", $con);
 $result = mysql_query("SELECT r1.id, r2.buildingName, r2.roomNumber, r3.buildingName, r3.roomNumber, e1.title, e1.date, e1.eventTimeStart, e1.eventTimeEnd 
 						FROM reservation AS r1, event AS e1, room AS r2, room as r3
 						WHERE r1.Approval = 'Approved' AND r1.user = {$_SESSION['SESS_STUDENT_ID']} 
-						AND r1.eventid = e1.id AND r1.primaryRoomNumber = r2.roomNumber AND r1.backupRoomNumber = r3.roomNumber");						
+						AND r1.eventid = e1.id AND r1.primaryRoomNumber = r2.ID AND r1.backupRoomNumber = r3.ID");						
 						
 echo	"<table border=\"1\">
 			<tr>

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.5
+-- version 3.5.2.2
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Nov 27, 2012 at 06:57 PM
--- Server version: 5.5.16
--- PHP Version: 5.3.8
+-- Host: 127.0.0.1
+-- Generation Time: Nov 28, 2012 at 02:38 PM
+-- Server version: 5.5.27
+-- PHP Version: 5.4.7
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -202,10 +202,10 @@ CREATE TABLE IF NOT EXISTS `reservation` (
 --
 
 INSERT INTO `reservation` (`ID`, `user`, `equipmentNeeded`, `eventId`, `primaryRoomNumber`, `backupRoomNumber`, `Approval`) VALUES
-(3, 12269597, 'Transparency Projector', 121, 121, 208, 'Pending'),
-(4, 12344567, 'Microphones', 122, 13131, 121, 'Pending'),
-(5, 14456654, 'TV / DVD', 123, 208, 13131, 'Pending'),
-(6, 16016314, 'Microphones', 121, 208, 121, 'Pending');
+(3, 12269597, 'Transparency Projector', 121, 2, 1, 'Pending'),
+(4, 12344567, 'Microphones', 122, 3, 2, 'Pending'),
+(5, 14456654, 'TV / DVD', 123, 2, 3, 'Pending'),
+(6, 16016314, 'Microphones', 121, 3, 1, 'Pending');
 
 -- --------------------------------------------------------
 
@@ -214,7 +214,9 @@ INSERT INTO `reservation` (`ID`, `user`, `equipmentNeeded`, `eventId`, `primaryR
 --
 
 CREATE TABLE IF NOT EXISTS `room` (
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `buildingName` varchar(20) NOT NULL,
+  `floorNum` int(11) NOT NULL,
   `roomNumber` int(10) unsigned NOT NULL,
   `capacity` int(10) unsigned NOT NULL,
   `roomName` varchar(20) DEFAULT NULL,
@@ -222,19 +224,20 @@ CREATE TABLE IF NOT EXISTS `room` (
   `availableImageURL` varchar(128) NOT NULL,
   `notAvailableImageURL` varchar(128) NOT NULL,
   `pendingAvailableImageURL` varchar(128) NOT NULL,
-  PRIMARY KEY (`roomNumber`),
+  PRIMARY KEY (`ID`),
   KEY `name` (`buildingName`),
-  KEY `buildingName` (`buildingName`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  KEY `buildingName` (`buildingName`),
+  KEY `floorNum` (`floorNum`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `room`
 --
 
-INSERT INTO `room` (`buildingName`, `roomNumber`, `capacity`, `roomName`, `type`, `availableImageURL`, `notAvailableImageURL`, `pendingAvailableImageURL`) VALUES
-('Computer Science', 121, 121, '1', '121', '', '', ''),
-('Computer Science', 208, 54, NULL, 'Classroom', 'images/cs_208_available.png', 'images/cs_208_notavailable.png', 'images/cs_208_pending.png'),
-('Computer Science', 13131, 3131, '131', '133', '', '', '');
+INSERT INTO `room` (`ID`, `buildingName`, `floorNum`, `roomNumber`, `capacity`, `roomName`, `type`, `availableImageURL`, `notAvailableImageURL`, `pendingAvailableImageURL`) VALUES
+(1, 'Computer Science', 1, 121, 121, '1', '121', '', '', ''),
+(2, 'Computer Science', 2, 208, 54, NULL, 'Classroom', 'images/cs_208_available.png', 'images/cs_208_notavailable.png', 'images/cs_208_pending.png'),
+(3, 'Computer Science', 1, 13131, 3131, '131', '133', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -300,16 +303,17 @@ ALTER TABLE `organization`
 -- Constraints for table `reservation`
 --
 ALTER TABLE `reservation`
-  ADD CONSTRAINT `reservation_ibfk_9` FOREIGN KEY (`user`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `reservation_ibfk_11` FOREIGN KEY (`backupRoomNumber`) REFERENCES `room` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `reservation_ibfk_10` FOREIGN KEY (`primaryRoomNumber`) REFERENCES `room` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `reservation_ibfk_6` FOREIGN KEY (`eventId`) REFERENCES `event` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `reservation_ibfk_7` FOREIGN KEY (`primaryRoomNumber`) REFERENCES `room` (`roomNumber`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `reservation_ibfk_8` FOREIGN KEY (`backupRoomNumber`) REFERENCES `room` (`roomNumber`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `reservation_ibfk_9` FOREIGN KEY (`user`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `room`
 --
 ALTER TABLE `room`
-  ADD CONSTRAINT `room_ibfk_2` FOREIGN KEY (`buildingName`) REFERENCES `building` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `room_ibfk_2` FOREIGN KEY (`floorNum`) REFERENCES `floor` (`floorNum`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `room_ibfk_1` FOREIGN KEY (`buildingName`) REFERENCES `building` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
