@@ -199,30 +199,35 @@ mysql_select_db("r3", $con);
                         //Get times from events where event goes with room that includes current room.
                         $result3 = mysql_query("SELECT r1.Approval, e1.eventTimeStart, e1.eventTimeEnd, e1.accessTimeStart, e1.accessTimeEnd, 
                                                e1.date from event as e1, reservation as r1 where r1.eventID = e1.id AND r1.primaryRoomNumber = '{$row2['ID']}'");
-                                               
+                        $roomShaded = "Available";                       
                         while($row3 = mysql_fetch_array($result3))
                         {
-                            $roomShaded = 0;
                             if( strtotime($row3['date']) == strtotime($_POST['date']) && strtotime($row3['eventTimeStart']) >= strtotime($_POST['startTime']) &&
                                strtotime($row3['eventTimeEnd']) <= strtotime($_POST['endTime']) /*Add stuff for access time*/)
                             {
                                 if( $row3['Approval'] == "Approved" )
                                 {
-                                    echo "<img src=\"{$row2['notAvailableImageURL']}\" style=\"position: absolute; top: 0; left: 0;\" />";
-                                    $roomShaded = 1;
+                                    $roomShaded = "Not Available";
+                                    break;
                                 }
                                 else if( $row3['Approval'] == "Pending" )
                                 {
-                                    echo "<img src=\"{$row2['pendingAvailableImageURL']}\" style=\"position: absolute; top: 0; left: 0;\" />";
-                                    $roomShaded = 1;
+                                    $roomShaded = "Pending";
                                 }
                             }
-                            
-                            if( $roomShaded == 0 )
-                            {
-                                echo "<img src=\"{$row2['availableImageURL']}\" style=\"position: absolute; top: 0; left: 0;\" />";
-                            }
-                            break;
+                        }
+
+                        if( $roomShaded == "Available" )
+                        {
+                            echo "<img src=\"{$row2['availableImageURL']}\" style=\"position: absolute; top: 0; left: 0;\" />";
+                        }
+                        else if( $roomShaded == "Not Available" )
+                        {
+                            echo "<img src=\"{$row2['notAvailableImageURL']}\" style=\"position: absolute; top: 0; left: 0;\" />";
+                        }
+                        else if( $roomShaded == "Pending" )
+                        {
+                            echo "<img src=\"{$row2['pendingAvailableImageURL']}\" style=\"position: absolute; top: 0; left: 0;\" />";
                         }
                     }
                 }
