@@ -210,19 +210,11 @@ mysql_select_db("r3", $con);
                                 {
                                     echo "<img src=\"{$row2['notAvailableImageURL']}\" style=\"position: absolute; top: 0; left: 0;\" />";
                                     $roomShaded = 1;
-<<<<<<< HEAD
-=======
-                                    break;
->>>>>>> af6edc9e1f6952df3f37756b286287c4b98e011a
                                 }
                                 else if( $row3['Approval'] == "Pending" )
                                 {
                                     echo "<img src=\"{$row2['pendingAvailableImageURL']}\" style=\"position: absolute; top: 0; left: 0;\" />";
                                     $roomShaded = 1;
-<<<<<<< HEAD
-=======
-                                    break;
->>>>>>> af6edc9e1f6952df3f37756b286287c4b98e011a
                                 }
                             }
                             
@@ -230,10 +222,7 @@ mysql_select_db("r3", $con);
                             {
                                 echo "<img src=\"{$row2['availableImageURL']}\" style=\"position: absolute; top: 0; left: 0;\" />";
                             }
-<<<<<<< HEAD
                             break;
-=======
->>>>>>> af6edc9e1f6952df3f37756b286287c4b98e011a
                         }
                     }
                 }
