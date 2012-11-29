@@ -33,11 +33,38 @@ if($_SERVER['SERVER_PORT'] != '443')
 session_start();
 	
 //Check whether the session variable SESS_MEMBER_ID is present or not
-if(!isset($_SESSION['SESS_STUDENT_ID']) || (trim($_SESSION['SESS_STUDENT_ID']) == '')) {
+if(!isset($_SESSION['SESS_STUDENT_ID']) || (trim($_SESSION['SESS_STUDENT_ID']) == ''))
+{
 	echo "<p>Hey, you're not logged in!!!!</p>";
     echo "<p>Click <a href=\"login.php\">here</a> to get logged in.</p>";
 	exit();
 }
+else if(!isset($_SESSION['SESS_DATE']) || !isset($_SESSION['SESS_ACCESSSTART']) || !isset($_SESSION['SESS_ACCESSEND']) || !isset($_SESSION['SESS_STOPDATE']) ||
+        !isset($_SESSION['SESS_STARTTIME']) || !isset($_SESSION['SESS_ENDTIME']) || !isset($_SESSION['SESS_RECURRENCE']) || !isset($_SESSION['SESS_BUILDING']))
+{
+    header("location: searchByDate.php");
+}
+else
+{
+    $date = $_SESSION['SESS_DATE'];
+    $accessStart = $_SESSION['SESS_ACCESSSTART'];
+    $accessEnd = $_SESSION['SESS_ACCESSEND'];
+    $startTime = $_SESSION['SESS_STARTTIME'];
+    $endTime = $_SESSION['SESS_ENDTIME'];
+    $recurrence = $_SESSION['SESS_RECURRENCE'];
+    $stopDate = $_SESSION['SESS_STOPDATE'];
+    $building = $_SESSION['SESS_BUILDING'];
+    
+    unset($_SESSION['SESS_DATE']);
+    unset($_SESSION['SESS_ACCESSSTART']);
+    unset($_SESSION['SESS_ACCESSEND']);
+    unset($_SESSION['SESS_STARTTIME']);
+    unset($_SESSION['SESS_ENDTIME']);
+    unset($_SESSION['SESS_RECURRENCE']);
+    unset($_SESSION['SESS_STOPDATE']);
+    unset($_SESSION['SESS_BUILDING']);
+}
+
 ?>
 <body>
 <h3>Reservation Time!</h3>

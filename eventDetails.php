@@ -259,7 +259,8 @@ else if($_SESSION['SESS_ISADMIN'] == 0)
 					</form>
 				</tr>
 			</table>
-<?
+
+<?php		
 		}
 	}
 	else

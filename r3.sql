@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2012 at 02:38 PM
+-- Generation Time: Nov 29, 2012 at 11:30 PM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -98,6 +98,8 @@ CREATE TABLE IF NOT EXISTS `event` (
   `accessTimeStart` time DEFAULT NULL,
   `accessTimeEnd` time DEFAULT NULL,
   `date` date NOT NULL,
+  `recurrence` enum('Once','Daily','Weekly','Bi-Weekly') NOT NULL,
+  `recurrenceEnd` date DEFAULT NULL,
   `numAttendees` int(10) unsigned DEFAULT NULL,
   `decorations` tinyint(1) DEFAULT NULL,
   `alcohol` tinyint(1) DEFAULT NULL,
@@ -113,10 +115,10 @@ CREATE TABLE IF NOT EXISTS `event` (
 -- Dumping data for table `event`
 --
 
-INSERT INTO `event` (`id`, `title`, `eventTimeStart`, `eventTimeEnd`, `accessTimeStart`, `accessTimeEnd`, `date`, `numAttendees`, `decorations`, `alcohol`, `prizes`, `tickets`, `outsideVendors`, `foodOption`, `typeOfEvent`) VALUES
-(121, '1221', '04:00:00', '07:00:00', '03:00:00', '07:00:00', '2012-11-21', 12111111, 1, 1, 1, 1, 1, 0, 'test'),
-(122, 'Event 2', NULL, NULL, NULL, NULL, '0000-00-00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, ''),
-(123, 'Event 3', '03:00:00', '04:00:00', '02:30:00', '04:30:00', '2012-11-21', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '');
+INSERT INTO `event` (`id`, `title`, `eventTimeStart`, `eventTimeEnd`, `accessTimeStart`, `accessTimeEnd`, `date`, `recurrence`, `recurrenceEnd`, `numAttendees`, `decorations`, `alcohol`, `prizes`, `tickets`, `outsideVendors`, `foodOption`, `typeOfEvent`) VALUES
+(121, '1221', '04:00:00', '07:00:00', '03:00:00', '07:00:00', '2012-11-21', 'Once', NULL, 12111111, 1, 1, 1, 1, 1, 0, 'test'),
+(122, 'Event 2', NULL, NULL, NULL, NULL, '0000-00-00', 'Once', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, ''),
+(123, 'Event 3', '03:00:00', '04:00:00', '02:30:00', '04:30:00', '2012-11-21', 'Once', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '');
 
 -- --------------------------------------------------------
 
@@ -202,10 +204,10 @@ CREATE TABLE IF NOT EXISTS `reservation` (
 --
 
 INSERT INTO `reservation` (`ID`, `user`, `equipmentNeeded`, `eventId`, `primaryRoomNumber`, `backupRoomNumber`, `Approval`) VALUES
-(3, 12269597, 'Transparency Projector', 121, 2, 1, 'Pending'),
+(3, 12269597, 'Transparency Projector', 121, 2, 1, 'Denied'),
 (4, 12344567, 'Microphones', 122, 3, 2, 'Pending'),
 (5, 14456654, 'TV / DVD', 123, 2, 3, 'Pending'),
-(6, 16016314, 'Microphones', 121, 3, 1, 'Pending');
+(6, 16016314, 'Microphones', 121, 2, 1, 'Denied');
 
 -- --------------------------------------------------------
 
@@ -261,6 +263,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 INSERT INTO `user` (`ID`, `Name`, `Email`, `isAdmin`, `password_SHA256_hash`) VALUES
 (12269597, 'Andrew Schrader', 'arstk8@mst.edu', 0, '2fe93ebff8af32d75b4de8283b8e2bfecc725336cfc37b09b06a629ea49c24a9'),
 (12344567, 'Bobby', 'bobby@mst.edu', 1, '2fe93ebff8af32d75b4de8283b8e2bfecc725336cfc37b09b06a629ea49c24a9'),
+(12345677, 'Andrew', 'r3@mst.edu', 1, '2fe93ebff8af32d75b4de8283b8e2bfecc725336cfc37b09b06a629ea49c24a9'),
 (14456654, 'Bob', 'bob@mst.edu', 1, '9a125785bef6c04b1847934facfb53854f8acf04ead8bb6fb5ee1cb0cf68953c'),
 (16016314, 'Neil Patel', 'nsp2t5@mst.edu', 1, '81b637d8fcd2c6da6359e6963113a1170de795e4b725b84d1e0b4cfd9ec58ce9');
 

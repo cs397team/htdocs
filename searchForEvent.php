@@ -59,7 +59,7 @@ else if($_SESSION['SESS_ISADMIN'] == 0)
 		{
 ?>			<tr align='center'>
 				<form action="eventDetails.php" method="post">
-					<td><a href="eventDetails.php?reserveID=<? print $row['id']?>" >
+					<td><a href="eventDetails.php?reserveID=<?php print $row['id']?>" >
 					<?php echo $row['title']; ?>
 					</a></td>
 				</form>

@@ -81,24 +81,24 @@ mysql_select_db("r3", $con);
     <select name="recurrence" onChange="this.form.submit()">
     <?php
         echo "<option ";
-        if(isset($_POST['recurrence']) && $_POST['recurrence'] == "once")
+        if(isset($_POST['recurrence']) && $_POST['recurrence'] == "Once")
             echo "selected=\"selected\" ";
-        echo "value=\"once\">Once</option>";
+        echo "value=\"Once\">Once</option>";
            
         echo "<option ";
-        if(isset($_POST['recurrence']) && $_POST['recurrence'] == "daily")
+        if(isset($_POST['recurrence']) && $_POST['recurrence'] == "Daily")
                echo "selected=\"selected\" ";
-        echo "value=\"daily\">Daily</option>";
+        echo "value=\"Daily\">Daily</option>";
            
         echo "<option ";
-        if(isset($_POST['recurrence']) && $_POST['recurrence'] == "weekly")
+        if(isset($_POST['recurrence']) && $_POST['recurrence'] == "Weekly")
             echo "selected=\"selected\" ";
-        echo "value=\"weekly\">Weekly</option>";
+        echo "value=\"Weekly\">Weekly</option>";
            
         echo "<option ";
-        if(isset($_POST['recurrence']) && $_POST['recurrence'] == "biWeekly")
+        if(isset($_POST['recurrence']) && $_POST['recurrence'] == "Bi-Weekly")
             echo "selected=\"selected\" ";
-        echo "value=\"biWeekly\">Bi-Weekly</option>";
+        echo "value=\"Bi-Weekly\">Bi-Weekly</option>";
     ?>
     </select></td></tr>
     <?php
@@ -162,9 +162,11 @@ mysql_select_db("r3", $con);
             
         echo "</select></td></tr>";
     }
-?>
-    <tr><td><input type="submit" name = "checkRoomAvailability" value = "Check Room Availability" /></td></tr>
-    
+
+    if( isset($_POST['date']) && isset($_POST['accessStart']) && isset($_POST['accessEnd']) && isset($_POST['startTime']) && 
+        isset($_POST['endTime']) && isset($_POST['building']) && isset($_POST['recurrence']) )
+       echo "<tr><td><input type=\"submit\" name = \"checkRoomAvailability\" value = \"Go to Next Step\" /></td></tr>";
+    ?>
 </table>
 </td>
 <td>
@@ -249,51 +251,56 @@ mysql_select_db("r3", $con);
 	// The following will NOT execute if the form is blank. (The user just entered the page)
 	if(isset($_POST["checkRoomAvailability"]))// == "Submit Query")
 	{
-
-	    // Initialize variables with user entered information
-	    $date        = $_POST["date"];
-		$accessStart = $_POST["accessStart"];
-        $accessEnd   = $_POST["accessEnd"];
-		$startTime   = $_POST["startTime"];
-        $endTime     = $_POST["endTime"];
-        $recurrence  = $_POST["recurrence"];
-	    $building    = $_POST["building"];
-		
 		$failure = 0;
 		//Do validation here
-        if($accessEnd < $accessStart)
+        if(strtotime($_POST['accessEnd']) < strtotime($_POST['accessStart']))
         {
             echo "<p>Error, access end time is earlier than access start time</p>";
             $failure = 1;
         }
         
-        if($startTime > $endTime)
+        if(strtotime($_POST['startTime']) > strtotime($_POST['endTime']))
         {
             echo "<p>Error, end time is earlier than start time</p>";
             $failure = 1;
         }
         
-		if($accessEnd > $startTime)
+		if(strtotime($_POST['accessEnd']) > strtotime($_POST['startTime']))
         {
             echo "<p>Error, your access time is later than your start time</p>";
             $failure = 1;
         }
         
-        if($building == "campusMap")
+        if($_POST['building'] == "campusMap")
         {
             echo "<p>Error, you have not selected a building!</p>";
+            $failure = 1;
+        }
+        
+        if($_POST['recurrence'] != "Once" && !isset($_POST['stopDate']))
+        {
+            echo "<p>Error, recurrence is selected, but no stop date is specified{$_POST['recurrence']}</p>";
+            $failure = 1;
         }
         
 		if(!$failure)
 		{
-            //Insert data into database here
-		    /*$sql = "INSERT INTO USER VALUES ('$studentNumber', '$name', '$emailAddr', '$isAdmin', '$passwdHash')";
-			
-			if (!mysql_query($sql,$con))
- 	        {
- 	            die('Error: ' . mysql_error());
- 	        }
-	        echo "Reservation Successfully Added <br>";*/
+            session_regenerate_id();
+            $_SESSION['SESS_DATE'] = $_POST["date"];
+            $_SESSION['SESS_ACCESSSTART'] = $_POST["accessStart"];
+            $_SESSION['SESS_ACCESSEND'] = $_POST["accessEnd"];
+            $_SESSION['SESS_STARTTIME'] = $_POST["startTime"];
+            $_SESSION['SESS_ENDTIME'] = $_POST["endTime"];
+            $_SESSION['SESS_RECURRENCE'] = $_POST["recurrence"];
+            $_SESSION['SESS_BUILDING'] = $_POST["building"];
+            $_SESSION['SESS_STOPDATE'] = "";
+            if(isset($_POST['stopDate']))
+            {
+                $_SESSION['SESS_STOPDATE'] = $_POST["stopDate"];
+            }
+            
+            session_write_close();
+            header("location: reserve.php");
 		}
 		
 		mysql_close($con);
