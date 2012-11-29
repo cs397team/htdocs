@@ -35,10 +35,10 @@ if(!isset($_SESSION['SESS_STUDENT_ID']) || (trim($_SESSION['SESS_STUDENT_ID']) =
 	
 	mysql_select_db("r3", $con);
 	
-	$sql = "SELECT event.title, reservation.primaryRoomNumber, event.eventTimeStart, reservation.id, user.name
+	$sql = "SELECT room.roomNumber, event.title, reservation.primaryRoomNumber, event.eventTimeStart, reservation.id, user.name
 		FROM reservation, event, building, room, user
 		WHERE reservation.eventId = event.id AND approval = 'Pending' AND 
-		reservation.primaryRoomNumber = room.roomNumber AND room.buildingName = building.name AND
+		reservation.primaryRoomNumber = room.ID AND room.buildingName = building.name AND
 		user.id = reservation.user";
 
 	$result = mysql_query($sql);
@@ -67,7 +67,7 @@ if(!isset($_SESSION['SESS_STUDENT_ID']) || (trim($_SESSION['SESS_STUDENT_ID']) =
 					</a></td>
 				</form>
 				
-				<td rowspan="2"><?php echo $row['primaryRoomNumber']; ?></td>
+				<td rowspan="2"><?php echo $row['roomNumber']; ?></td>
 				<td rowspan="2"><?php echo date_format(date_create($row['eventTimeStart']), 'F jS Y g:ia'); ?></td>
 				<td rowspan="2"><?php echo $row['name']; ?></td>
 				<td rowspan="2" bgcolor="#000000" width="2"></td>

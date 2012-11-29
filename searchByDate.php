@@ -36,9 +36,47 @@ mysql_select_db("r3", $con);
 <table border='0'>
 <td>
 <table border='0'>
-    <tr><td>Event Date:</td><td> <input type="date" name="date"></td></tr>
-    <tr><td>Access Time:</td><td> <input type="time" name="accessStart"> to <input type="time" name="accessEnd"></td></tr>
-    <tr><td>Event Time:</td><td> <input type="time" name="startTime"> to <input type="time" name="endTime"></td></tr>
+    <tr><td>Event Date:</td>
+    <td> 
+    <?php
+        echo "<input";
+        if( isset($_POST['date']) )
+            echo " value=\"{$_POST['date']}\"";
+        echo " type=\"date\" name=\"date\">";
+    ?>
+    </td></tr>
+    <tr><td>Access Time:</td>
+    <td> 
+    <?php
+        echo "<input";
+        if( isset($_POST['accessStart']) )
+            echo " value=\"{$_POST['accessStart']}\"";
+        echo " type=\"time\" name=\"accessStart\">"; 
+        
+        echo " to ";
+        
+        echo "<input";
+        if( isset($_POST['accessEnd']) )
+            echo " value=\"{$_POST['accessEnd']}\"";
+        echo " type=\"time\" name=\"accessEnd\">";
+        ?>
+    </td></tr>
+    <tr><td>Event Time:</td>
+    <td> 
+    <?php
+        echo "<input";
+        if( isset($_POST['startTime']) )
+            echo " value=\"{$_POST['startTime']}\"";
+        echo " type=\"time\" name=\"startTime\">";
+        
+        echo " to ";
+        
+        echo "<input";
+        if( isset($_POST['endTime']) )
+            echo " value=\"{$_POST['endTime']}\"";
+        echo " type=\"time\" name=\"endTime\">";
+        ?>
+    </td></tr>
     <tr><td>How often will this event occur?</td><td>
     <select name="recurrence" onChange="this.form.submit()">
     <?php
@@ -151,6 +189,48 @@ mysql_select_db("r3", $con);
             if( $row['floorNum'] == $floor)
             {
                 echo "<img id=\"theImage\" src=\"{$row['floorImageURL']}\" style=\"position: relative; top: 0; left: 0;\" alt=\"Campus Map\" />";
+                if( isset($_POST['date']) && isset($_POST['accessStart']) && isset($_POST['accessEnd']) && isset($_POST['startTime']) && isset($_POST['endTime']) )
+                {
+                    $result2 = mysql_query("SELECT ID, availableImageURL, notAvailableImageURL, pendingAvailableImageURL FROM room WHERE 
+                                           buildingName = '{$_POST['building']}' AND floorNum = '{$floor}'");
+                    
+                    while($row2 = mysql_fetch_array($result2))
+                    {
+                        //Get times from events where event goes with room that includes current room.
+                        $result3 = mysql_query("SELECT r1.Approval, e1.eventTimeStart, e1.eventTimeEnd, e1.accessTimeStart, e1.accessTimeEnd, 
+                                               e1.date from event as e1, reservation as r1 where r1.eventID = e1.id AND r1.primaryRoomNumber = '{$row2['ID']}'");
+                        $roomShaded = "Available";                       
+                        while($row3 = mysql_fetch_array($result3))
+                        {
+                            if( strtotime($row3['date']) == strtotime($_POST['date']) && strtotime($row3['eventTimeStart']) >= strtotime($_POST['startTime']) &&
+                               strtotime($row3['eventTimeEnd']) <= strtotime($_POST['endTime']) /*Add stuff for access time*/)
+                            {
+                                if( $row3['Approval'] == "Approved" )
+                                {
+                                    $roomShaded = "Not Available";
+                                    break;
+                                }
+                                else if( $row3['Approval'] == "Pending" )
+                                {
+                                    $roomShaded = "Pending";
+                                }
+                            }
+                        }
+
+                        if( $roomShaded == "Available" )
+                        {
+                            echo "<img src=\"{$row2['availableImageURL']}\" style=\"position: absolute; top: 0; left: 0;\" />";
+                        }
+                        else if( $roomShaded == "Not Available" )
+                        {
+                            echo "<img src=\"{$row2['notAvailableImageURL']}\" style=\"position: absolute; top: 0; left: 0;\" />";
+                        }
+                        else if( $roomShaded == "Pending" )
+                        {
+                            echo "<img src=\"{$row2['pendingAvailableImageURL']}\" style=\"position: absolute; top: 0; left: 0;\" />";
+                        }
+                    }
+                }
                 break;
             }
         }
@@ -160,9 +240,6 @@ mysql_select_db("r3", $con);
         echo "<img id=\"theImage\" src=\"images/campusMap.png\" style=\"position: relative; top: 0; left: 0;\" alt=\"Campus Map\" />";
     }
 ?>
-<!-- TODO: Implement scheduling shading -->
-<img hidden="hidden" src="images/cs_208_pending.png" style="position: absolute; top: 0; left: 0;" />
-<img hidden="hidden" src="images/cs_209_pending.png" style="position: absolute; top: 0; left: 0;" />
 </div>
 </td>
 </table>
