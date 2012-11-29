@@ -1,4 +1,6 @@
+<link rel="stylesheet" type="text/css" href="mystyles.css" media="screen" />
 <html>
+
 <?php
 if($_SERVER['SERVER_PORT'] != '443') 
 { 
@@ -12,8 +14,16 @@ if($_SERVER['SERVER_PORT'] != '443')
 
 
 <body>
-<h1>Login to the R3 System</h1>
+<div id="wrap">
+<img src="images/Logo_Reverse__356.jpg" height="116" width="131" alt="S&T logo" align="left" />
+</br>
+<h1 style="color:rgb(0,133,63)">R<sup>3</sup> Reservation System</h1>
+<br clear="all">
+
+<div id="content">
 <hr />
+<h2>Login to the R3 System</h2>
+
 
 <!-- *************** -->
 <!-- GENERATE A FORM -->
@@ -32,8 +42,8 @@ if($_SERVER['SERVER_PORT'] != '443')
 	</tr>
 	
 	</table>
-	
-	<input type="submit" name = "submit" value = "Log In" /> 
+	<p>
+	<input type="submit" name = "submit" value = "Log In" /> </p>
 </form>
 	
 <?php
@@ -123,5 +133,6 @@ if($_SERVER['SERVER_PORT'] != '443')
 		mysql_close($con);
 	}
 ?>
+</div>
 </body>
 </html>

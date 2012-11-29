@@ -1,10 +1,35 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="anim_navbar_webmuch.js"></script>
+
+<html><link rel="stylesheet" type="text/css" href="mystyles.css" media="screen" />
 <head>
-<title>Member Area</title>
+<title>R3 Reservations</title>
 </head>
+
 <body>
-<h1>Member Area</h1>
-<hr />
+<div id="wrap">
+
+<img src="images/Logo_Reverse__356.jpg" height="116" width="131" alt="S&T logo" align="left" />
+</br>
+<h1 style="color:rgb(0,133,63)">R<sup>3</sup> Reservation System</h1>
+<br clear="all">
+<div class="container">
+	<div id="navbar">
+		<ul id="sprite">
+		<li id="b0" class="a0"><a class="navlink" href="member-index.php">Home</a></li>
+		<li id="b1"><a class="navlink" href="reservations.php">Approved Reservations</a></li>
+		<li id="b2"><a class="navlink" href="pending.php">Pending Reservations</a></li>
+		<li id="b3"><a class="navlink" href="searchByDate.php">Reserve</a></li>
+		<li id="b4" style="border-right:1px solid #1f1f1f;"><a class="navlink" href="logout.php">Log Out</a></li>
+		</ul>
+	</div>
+</div>
+
+<div id="content">
+
 <?php
     if($_SERVER['SERVER_PORT'] != '443') 
     { 
@@ -28,6 +53,8 @@
     
     echo "<p>Welcome back to the system, ".$_SESSION['SESS_NAME']."!</p>";
 ?>
+
+<!--
 <p>
 <table border='1'>
 <tr><td>
@@ -35,7 +62,7 @@
 </td></tr>
 
 <tr><td>
-<a href="reservations.php">Current Reservations</a>
+<a href="reservations.php">Approved Reservations</a>
 </td></tr>
 
 <tr><td>
@@ -55,8 +82,11 @@
 </td></tr>
 </table>
 </p>
+
 <p>Click <a href="logout.php">here</a> to logout.</p>
+-->
 
-
+</div>
+</div>
 </body>
 </html>

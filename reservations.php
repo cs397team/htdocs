@@ -1,5 +1,22 @@
+<style>
+#wrap {width: 900px; margin: 0 auto;}
+</style>
+
 <html>
+<head>
 <title>Approved Reservations</title>
+</head>
+
+<body>
+<div id="wrap">
+<img src="images/Logo_Reverse__356.jpg" height="116" width="131" alt="S&T logo" align="left" />
+</br>
+<h1 style="color:rgb(0,133,63)">R<sup>3</sup> Reservation System</h1>
+<br clear="all">
+<hr />
+
+<div id="content">
+<!--<h2 style="color:rgb(0,133,63)">Approved Reservations</h2>-->
 
 <?php
 if($_SERVER['SERVER_PORT'] != '443') 
@@ -25,6 +42,8 @@ if(!$con)
 	die('Could not connect: ' . mysql_error());
 }
 	
+echo "<h2 style=\"color:rgb(0,133,63)\">Approved Reservations for {$_SESSION['SESS_NAME']} </h2>";
+	
 mysql_select_db("r3", $con);
 
 $result = mysql_query("SELECT r1.id, r2.buildingName, r2.roomNumber, e1.title, e1.date, e1.eventTimeStart, e1.eventTimeEnd 
@@ -33,15 +52,15 @@ $result = mysql_query("SELECT r1.id, r2.buildingName, r2.roomNumber, e1.title, e
 						AND r1.eventid = e1.id AND ((r1.primaryRoomNumber = r2.roomNumber AND r1.primaryRoomNumber IS NOT NULL) OR 
 													(r1.backupRoomNumber = r2.roomNumber AND r1.backupRoomNumber IS NOT NULL))");						
 			
-echo	"<table border=\"1\">
+echo	"<table rules=\"all\" style=\"border:1 solid rgb(0,133,63);\" cellpadding=\"4\">
 		<tr>
-		<td>Reservation ID</td>
-		<td>Event Title</td>
-		<td>Date</td>
-		<td>Time Start</td>
-		<td>Time End</td>
-		<td>Building</td>
-		<td>Room</td>
+		<td><b>Reservation ID</b></td>
+		<td><b>Event Title</b></td>
+		<td><b>Date</b></td>
+		<td><b>Time Start</b></td>
+		<td><b>Time End</b></td>
+		<td><b>Building</b></td>
+		<td><b>Room</b></td>
 		</tr>";
 			
 while($row = mysql_fetch_array($result))
@@ -61,9 +80,7 @@ echo "</table>";
 
 ?>
 
-<p>
-
-</p>
-
-
+</div>
+</div>
+</body>
 </html>
