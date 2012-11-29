@@ -1,4 +1,5 @@
 <link rel="stylesheet" type="text/css" href="mystyles.css" media="screen" />
+<script type="text/javascript" src="fix_page_height.js"></script>
 <html>
 
 <?php
@@ -15,23 +16,23 @@ if($_SERVER['SERVER_PORT'] != '443')
 
 <body>
 <div id="wrap">
-<img src="images/Logo_Reverse__356.jpg" height="116" width="131" alt="S&T logo" align="left" />
+<img src="images/Logo_Reverse__356.jpg" height="116" width="131" alt="S&T logo" align="left" style="padding-right:30px;" />
 </br>
 <h1 style="color:rgb(0,133,63)">R<sup>3</sup> Reservation System</h1>
 <br clear="all">
 
 <div id="content">
 <hr />
-<h2>Login to the R3 System</h2>
+<h2 align="center">Login to the R3 System</h2>
 
 
 <!-- *************** -->
 <!-- GENERATE A FORM -->
 <!-- *************** -->
-<p>Enter Information</p>
+<p align="center">Please Enter Your Information:</p>
 
 <form method="post">
-	<table border ='1'>
+	<table border ='1' align="center">
 	
 	<tr>
 	<td>Email Address </td> <td><input type="email" name="emailAddr" /> </td>
@@ -42,8 +43,8 @@ if($_SERVER['SERVER_PORT'] != '443')
 	</tr>
 	
 	</table>
-	<p>
-	<input type="submit" name = "submit" value = "Log In" /> </p>
+	<p align="center">
+	<input type="submit" name="submit" value="Log In" /> </p>
 </form>
 	
 <?php
@@ -82,14 +83,14 @@ if($_SERVER['SERVER_PORT'] != '443')
         
         if($passwd == '') 
         {
-            echo "<br>Password missing!";
+            echo "<p align=\"center\" style=\"color:red;\"> Password missing! </p>";
             $failure = 1;
         }
         $passwdHash = hash("sha256", clean($_POST["passwd"]));
         
         if (!preg_match("/^[[:alnum:]][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$/i", $emailAddr)) {
             $failure = 1;
-            echo "<br>Invalid email address!";
+            echo "<p align=\"center\" style=\"color:red;\"> Invalid email address! </p>";
         }
 		
         if(!$failure)
@@ -124,7 +125,7 @@ if($_SERVER['SERVER_PORT'] != '443')
                 {
                     //Login failed
                     //header("location: login-failed.php");
-                    echo "<br>Login Failed!";
+                    echo "<p align=\"center\" style=\"color:red;\"> Login Failed! </p>";
                     exit();
                 }
             }

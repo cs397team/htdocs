@@ -1,4 +1,20 @@
-#wrap {width: 900px; margin: 0 auto;}
+#wrap {
+	width: 1200px; 
+	margin: auto;
+	
+    /*border-right: 2px solid #000000;
+    border-left: 2px solid #000000;*/
+	/*border-left: 2px solid gray;
+	border-right: 2px solid gray;
+	border-bottom: none;*/
+	border: 2px solid #000000;
+	border-radius: 0px 80px;
+	background: #DADADA;
+}
+
+html,body{
+	height: 100%;
+}
 
 h1,h2{
 	color:rgb(0,133,63);
@@ -16,8 +32,6 @@ ul, li {
 }
 
 .container{
-	width:960px;
-	margin:0px auto;
 	color:#FFFFFF;
 	font-family:Arial,sans-serif;
 	font-size:20px;
@@ -25,39 +39,42 @@ ul, li {
 }
 
 a.navlink:link{
-	color:#000000;
+	color:black;
 	text-decoration:none;
 }
-a.navlink:visited{color:#000000;
-text-decoration:none;}
-a.navlink:hover{color:#000000;
-text-decoration:none;}
-a.navlink:active{color:#000000;
-text-decoration:none;}
-
+a.navlink:visited{
+	color:black;
+	text-decoration:none;
+}
+a.navlink:hover{
+	color:white;
+	text-decoration:none;
+}
+a.navlink:active{
+	color:black;
+	text-decoration:none;
+}
 
 #navbar{
     float:left;
-    width:900px;
+    width:1200px;
     height:36px;
     font-size:14px;
     margin:20px 0 0 0;
     background:url(images/navbar_bg.png);
 }
 #navbar ul{
-    float:left;
-    width:900px;
     height:36px;
-    margin-left:0px;
+    margin-left:auto;
     color:#000000;
 }
 #navbar ul{
-    background: url(images/anim_3.png) no-repeat;
+    background: url(images/anim_2.png) no-repeat;
     background-position:1px 4px;
 }
 #navbar ul li{
     float:left;
-    width:178.6px;
+    width:178px;
     margin:3px 0 0 0;
     height:22px;
     display: inline;

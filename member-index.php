@@ -1,10 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+<link rel="stylesheet" type="text/css" href="mystyles.css" media="screen" />
+<!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js"></script>-->
+<script type="text/javascript" src="anim_navbar.js"></script>
+<script type="text/javascript" src="fix_page_height.js"></script>
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="anim_navbar_webmuch.js"></script>
-
-<html><link rel="stylesheet" type="text/css" href="mystyles.css" media="screen" />
+<html>
 <head>
 <title>R3 Reservations</title>
 </head>
@@ -12,23 +13,22 @@
 <body>
 <div id="wrap">
 
-<img src="images/Logo_Reverse__356.jpg" height="116" width="131" alt="S&T logo" align="left" />
+<img src="images/Logo_Reverse__356.jpg" height="116" width="131" alt="S&T logo" align="left" style="padding-right:30px;"/>
 </br>
 <h1 style="color:rgb(0,133,63)">R<sup>3</sup> Reservation System</h1>
 <br clear="all">
-<div class="container">
-	<div id="navbar">
-		<ul id="sprite">
-		<li id="b0" class="a0"><a class="navlink" href="member-index.php">Home</a></li>
-		<li id="b1"><a class="navlink" href="reservations.php">Approved Reservations</a></li>
-		<li id="b2"><a class="navlink" href="pending.php">Pending Reservations</a></li>
-		<li id="b3"><a class="navlink" href="searchByDate.php">Reserve</a></li>
-		<li id="b4" style="border-right:1px solid #1f1f1f;"><a class="navlink" href="logout.php">Log Out</a></li>
-		</ul>
-	</div>
+<div class="container" id="navbar">
+	<ul id="sprite">
+	<li id="b0" class="a0"><a class="navlink" href="member-index.php">Home</a></li>
+	<li id="b1"><a class="navlink" href="reservations.php">Approved Reservations</a></li>
+	<li id="b2"><a class="navlink" href="pending.php">Pending Reservations</a></li>
+	<li id="b3"><a class="navlink" href="searchByDate.php">Reserve</a></li>
+	<li id="b4" style="border-right:1px solid #1f1f1f;"><a class="navlink" href="logout.php">Log Out</a></li>
+	</ul>
 </div>
 
-<div id="content">
+<div id="content" style="padding-top:100px;">
+
 
 <?php
     if($_SERVER['SERVER_PORT'] != '443') 
@@ -41,8 +41,8 @@
 	
 	//Check whether the session variable SESS_MEMBER_ID is present or not
 	if(!isset($_SESSION['SESS_STUDENT_ID']) || (trim($_SESSION['SESS_STUDENT_ID']) == '')) {
-		echo "<p>Hey, you're not logged in!!!!</p>";
-        echo "<p>Click <a href=\"login.php\">here</a> to get logged in.</p>";
+		echo "<h2 align=\"center\">Hey, you're not logged in!!!!</h2>";
+        echo "<h2 align=\"center\">Click <a href=\"login.php\">here</a> to get logged in.</h2>";
 		exit();
 	}
     else if($_SESSION['SESS_ISADMIN'] == 1)
@@ -51,7 +51,7 @@
         header("location: admin-index.php");
     }
     
-    echo "<p>Welcome back to the system, ".$_SESSION['SESS_NAME']."!</p>";
+    echo "<h2 align=\"center\">Welcome back to the system, ".$_SESSION['SESS_NAME']."!</h2>";
 ?>
 
 <!--
