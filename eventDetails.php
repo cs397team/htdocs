@@ -89,72 +89,72 @@ else if($_SESSION['SESS_ISADMIN'] == 0)
 				</tr>
 				<tr align='center'>
 					<td>Title</td>
-					<td><input type="text" name="title" value="<?=($row['title'])?>"></td>
+					<td><input type="text" name="title" value="<?php=($row['title'])?>"></td>
 				</tr>
 				<tr align='center'>
 					<td>Event start time</td>
-					<td><input type="time" name="eventStart" value="<?= $row['eventTimeStart']?>"></td>
+					<td><input type="time" name="eventStart" value="<?php= $row['eventTimeStart']?>"></td>
 				</tr>
 				<tr align='center'>
 					<td>Event end time</td>
-					<td><input type="time" name="eventEnd" value="<?= $row['eventTimeEnd']?>"></td>
+					<td><input type="time" name="eventEnd" value="<?php= $row['eventTimeEnd']?>"></td>
 				</tr>
 				<tr align='center'>
 					<td>Access start time</td>
-					<td><input type="time" name="accessStart" value="<?= $row['accessTimeStart']?>"></td>
+					<td><input type="time" name="accessStart" value="<?php= $row['accessTimeStart']?>"></td>
 				</tr>
 				<tr align='center'>
 					<td>Access end time</td>
-					<td><input type="time" name="accessEnd" value="<?= $row['accessTimeEnd']?>"></td>
+					<td><input type="time" name="accessEnd" value="<?php= $row['accessTimeEnd']?>"></td>
 				</tr>
 				<tr align='center'>
 					<td>Date</td>
-					<td><input type="date" name="date" value="<?=($row['date'])?>"></td
+					<td><input type="date" name="date" value="<?php=($row['date'])?>"></td
 				</tr>
 				<tr align='center'>
 					<td>Number of Attendees</td>
-					<td><input type="text" name="numAttend" value="<?=($row['numAttendees'])?>"></td>
+					<td><input type="text" name="numAttend" value="<?php=($row['numAttendees'])?>"></td>
 				</tr>
 				<tr align='center'>
 					<td>Decorations?</td>
-					<td><input type="checkbox" name="decorations" <?=( ($row['decorations']) ? ' checked="checked"' : '')?>></td>
+					<td><input type="checkbox" name="decorations" <?php=( ($row['decorations']) ? ' checked="checked"' : '')?>></td>
 				</tr>
 				<tr align='center'>
 					<td>Alcohol?</td>
-					<td><input type="checkbox" name="alcohol" <?=( ($row['alcohol']) ? ' checked="checked"' : '')?>></td>
+					<td><input type="checkbox" name="alcohol" <?php=( ($row['alcohol']) ? ' checked="checked"' : '')?>></td>
 				</tr>
 				<tr align='center'>
 					<td>Prizes?</td>
-					<td><input type="checkbox" name="prizes" <?=( ($row['prizes']) ? ' checked="checked"' : '')?>></td>
+					<td><input type="checkbox" name="prizes" <?php=( ($row['prizes']) ? ' checked="checked"' : '')?>></td>
 				</tr>
 				<tr align='center'>
 					<td>Tickets?</td>
-					<td><input type="checkbox" name="tickets" <?=( ($row['tickets']) ? ' checked="checked"' : '')?>></td>
+					<td><input type="checkbox" name="tickets" <?php=( ($row['tickets']) ? ' checked="checked"' : '')?>></td>
 				</tr>
 				<tr align='center'>
 					<td>Outside Vendors?</td>
-					<td><input type="checkbox" name="outsideVendors" <?=( ($row['outsideVendors']) ? ' checked="checked"' : '')?>></td>
+					<td><input type="checkbox" name="outsideVendors" <?php=( ($row['outsideVendors']) ? ' checked="checked"' : '')?>></td>
 				</tr>
 				
 				<tr align='center'>
 					<td>Food Option</td>
 					<td><select name="food">
-						<option value="0" <?=( $row['foodOption'] == '0' ? ' selected="selected" ' : '' )?>">Chartwell's Catering</option>
-						<option value="1" <?=( $row['foodOption'] == '1' ? ' selected="selected" ' : '' )?>">Bringing in Food</option>
-						<option value="2" <?=( $row['foodOption'] == '2' ? ' selected="selected" ' : '' )?>">No Food will be served</option>
+						<option value="0" <?php=( $row['foodOption'] == '0' ? ' selected="selected" ' : '' )?>">Chartwell's Catering</option>
+						<option value="1" <?php=( $row['foodOption'] == '1' ? ' selected="selected" ' : '' )?>">Bringing in Food</option>
+						<option value="2" <?php=( $row['foodOption'] == '2' ? ' selected="selected" ' : '' )?>">No Food will be served</option>
 					</select></td>
 				</tr>
 				
 				<tr align='center'>
 					<td>Type of Event</td>
-					<td><input type="text" name="typeEvent" value="<?=($row['typeOfEvent'])?>"></td>
+					<td><input type="text" name="typeEvent" value="<?php=($row['typeOfEvent'])?>"></td>
 				</tr>
 				<tr align='center'>
 					<td><input type="submit" name="submit" value="Submit Event"></td>
 				</tr>
 			</table>
 			</form>
-	<?
+	<?php
 		}
 		else
 		{
@@ -259,7 +259,7 @@ else if($_SESSION['SESS_ISADMIN'] == 0)
 					</form>
 				</tr>
 			</table>
-<?		
+<?
 		}
 	}
 	else
