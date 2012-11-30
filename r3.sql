@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 29, 2012 at 11:30 PM
+-- Generation Time: Nov 30, 2012 at 04:33 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -40,7 +40,8 @@ CREATE TABLE IF NOT EXISTS `building` (
 --
 
 INSERT INTO `building` (`campusName`, `latitude`, `longitude`, `name`) VALUES
-('121', 121, 12, 'Computer Science');
+('121', 121, 12, 'Computer Science'),
+('121', NULL, NULL, 'EECH');
 
 -- --------------------------------------------------------
 
@@ -130,7 +131,7 @@ CREATE TABLE IF NOT EXISTS `floor` (
   `floorNum` int(11) NOT NULL,
   `buildingName` varchar(50) NOT NULL,
   `floorImageURL` varchar(128) NOT NULL,
-  PRIMARY KEY (`floorNum`),
+  PRIMARY KEY (`floorNum`,`buildingName`),
   KEY `buildingName` (`buildingName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -140,7 +141,8 @@ CREATE TABLE IF NOT EXISTS `floor` (
 
 INSERT INTO `floor` (`floorNum`, `buildingName`, `floorImageURL`) VALUES
 (1, 'Computer Science', 'images/dummyImage.jpg'),
-(2, 'Computer Science', 'images/cs_second_floor.png');
+(2, 'Computer Science', 'images/cs_second_floor.png'),
+(15, 'EECH', '');
 
 -- --------------------------------------------------------
 
@@ -227,8 +229,8 @@ CREATE TABLE IF NOT EXISTS `room` (
   `notAvailableImageURL` varchar(128) NOT NULL,
   `pendingAvailableImageURL` varchar(128) NOT NULL,
   PRIMARY KEY (`ID`),
+  UNIQUE KEY `uniqueIDByBuildingFloorRoomNum` (`buildingName`,`floorNum`,`roomNumber`),
   KEY `name` (`buildingName`),
-  KEY `buildingName` (`buildingName`),
   KEY `floorNum` (`floorNum`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
