@@ -1,7 +1,48 @@
 <html>
 <title>Search by Date</title>
+<script>
+function selectAndSubmitForm(value)
+{
+    var chosenSelect = document.getElementById('floor');
+    
+    for(var i = 0, j = chosenSelect.options.length; i < j; i++)
+    {
+        if(chosenSelect.options[i].innerHTML == value)
+        {
+            chosenSelect.selectedIndex = i;
+            break;
+        }
+    }
+    document.forms["searchByDate"].submit();
+}
+</script>
 
-<?php
+<?php //"First Choice of Facility", "firstChoiceRoom", "Room", "Name", "ID"
+function populateOptionList($labelString, $keyName) {
+
+    if(isset($_POST['firstChoiceRoom']) && isset($_POST['alternateChoiceRoom'])) {
+        $result = mysql_query("SELECT ID, buildingName, roomNumber FROM room WHERE ID <> 
+                              '{$_POST['firstChoiceRoom']}' AND ID <> '{$_POST['alternateChoiceRoom']}' AND floorNum = '{$_POST['floor']}' AND buildingName = '{$_POST['building']}'");
+    } else if(isset($_POST['firstChoiceRoom'])) {
+        $result = mysql_query("SELECT ID, buildingName, roomNumber FROM room WHERE ID <> '{$_POST['firstChoiceRoom']}' AND floorNum = '{$_POST['floor']}' AND buildingName = '{$_POST['building']}'");
+    } else if(isset($_POST['alternateChoiceRoom'])) {
+        $result = mysql_query("SELECT ID, buildingName, roomNumber FROM room WHERE ID <> '{$_POST['alternateChoiceRoom']}' AND floorNum = '{$_POST['floor']}' AND buildingName = '{$_POST['building']}'");
+    } else {
+        $result = mysql_query("SELECT ID, buildingName, roomNumber FROM room WHERE floorNum = '{$_POST['floor']}' AND buildingName = '{$_POST['building']}'");
+    }
+		
+    echo "<tr><td>".$labelString.":</td>
+    <td><select name=\"".$keyName."\">
+    <option value=\"default\">Select a value</option>";
+                              
+    while($row = mysql_fetch_array($result))
+    {
+        echo "<option value=\"".$row['ID']."\"";
+        echo">{$row['buildingName']} {$row['roomNumber']}</option>";
+    }
+    echo "</select></td></tr>";
+}
+    
 if($_SERVER['SERVER_PORT'] != '443') 
 { 
     header('Location: https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
@@ -32,7 +73,7 @@ mysql_select_db("r3", $con);
 <body>
 <h1>Time and Place for Reservation<h1>
 <hr />
-<form action="searchByDate.php" method="post">
+<form id="searchByDate" action="searchByDate.php" method="post">
 <table border='0'>
 <td>
 <table border='0'>
@@ -102,8 +143,13 @@ mysql_select_db("r3", $con);
     ?>
     </select></td></tr>
     <?php
-        if( isset($_POST['recurrence']) && $_POST['recurrence'] != "once")
-	        echo "<tr><td>Until:</td><td><input type=\"date\" name=\"stopDate\"></td></tr>";
+        if( isset($_POST['recurrence']) && $_POST['recurrence'] != "Once")
+        {
+            echo "<tr><td>Until:</td><td><input";
+            if( isset($_POST['stopDate']) )
+                echo " value=\"{$_POST['stopDate']}\"";
+            echo " type=\"date\" name=\"stopDate\"></td></tr>";
+        }
     ?>
     <tr><td>Building:</td><td>
     <select name="building" onChange="this.form.submit()">
@@ -114,20 +160,13 @@ mysql_select_db("r3", $con);
 		
 	while($row = mysql_fetch_array($result))
 	{
-        $result2 = mysql_query("SELECT f1.floorImageURL, f1.floorNum FROM floor AS f1, building AS b1 WHERE f1.buildingName = b1.name");
-        while($row2 = mysql_fetch_array($result2))
+        if( isset($_POST['building']) && $_POST['building'] == $row['name'] )
         {
-            if($row2['floorNum'] == "2" /*!!!!!REPLACE WITH 1 WHEN WE COMPLETE THE DATABASE!!!!!*/)
-            {
-                if( isset($_POST['building']) && $_POST['building'] == $row['name'] )
-                {
-                    echo "<option selected=\"selected\" value=\"".$row['name']."\">".$row['name']."</option>";
-                }
-                else
-                {
-                    echo "<option value=\"".$row['name']."\">".$row['name']."</option>";
-                }
-            }
+            echo "<option selected=\"selected\" value=\"".$row['name']."\">".$row['name']."</option>";
+        }
+        else
+        {
+            echo "<option value=\"".$row['name']."\">".$row['name']."</option>";
         }
 	}
      
@@ -135,7 +174,7 @@ mysql_select_db("r3", $con);
     
     if( isset($_POST['building']) && $_POST['building'] != "campusMap.png" )
     {
-        echo " <tr><td>Floor:</td> <td><select name=\"floor\" onChange=\"this.form.submit()\">";
+        echo " <tr><td>Floor:</td> <td>{$_POST['floor']}<select id=\"floor\" name=\"floor\" onChange=\"this.form.submit()\">";
         
         $result = mysql_query("SELECT floorImageURL, floorNum FROM floor WHERE buildingName = '{$_POST['building']}'");
         while($row = mysql_fetch_array($result))
@@ -143,6 +182,7 @@ mysql_select_db("r3", $con);
             if(isset($_POST['floor']))
             {
                 $floor = $_POST['floor'];
+                
             }
             else
             {
@@ -162,10 +202,17 @@ mysql_select_db("r3", $con);
             
         echo "</select></td></tr>";
     }
-
+        
+    if(isset($_POST["checkRoomAvailability"])  )
+    {
+        populateOptionList("First Choice of Facility", "firstChoiceRoom");
+    }
+        
     if( isset($_POST['date']) && isset($_POST['accessStart']) && isset($_POST['accessEnd']) && isset($_POST['startTime']) && 
         isset($_POST['endTime']) && isset($_POST['building']) && isset($_POST['recurrence']) )
-       echo "<tr><td><input type=\"submit\" name = \"checkRoomAvailability\" value = \"Go to Next Step\" /></td></tr>";
+       echo "<tr><td><input type=\"submit\" name = \"checkRoomAvailability\" value = \"Check Availability\" /></td></tr>";
+       //echo "<tr><td><input type=\"submit\" name = \"checkRoomAvailability\" value = \"Go to Next Step\" /></td></tr>";
+
     ?>
 </table>
 </td>
@@ -179,7 +226,18 @@ mysql_select_db("r3", $con);
         
         if(isset($_POST['floor']))
         {
-            $floor = $_POST['floor'];
+            $doesFloorExist = mysql_query("SELECT floorNum FROM floor WHERE buildingName = '{$_POST['building']}' AND floorNum = '{$_POST['floor']}'");
+            if(mysql_num_rows($doesFloorExist))
+            {
+                $floor = $_POST['floor'];
+            }
+            else
+            {
+                $floor = 1; /*CHANGE TO 1 WHEN DATABASE IS COMPLETE*/
+                echo "<script>selectAndSubmitForm({$floor});</script>";
+                
+                
+            }
         }
         else
         {
@@ -249,8 +307,9 @@ mysql_select_db("r3", $con);
 </form>
 <?php
 	// The following will NOT execute if the form is blank. (The user just entered the page)
-	if(isset($_POST["checkRoomAvailability"]))// == "Submit Query")
-	{
+
+    if(isset($_POST["goToNextStep"]))
+    {
 		$failure = 0;
 		//Do validation here
         if(strtotime($_POST['accessEnd']) < strtotime($_POST['accessStart']))
