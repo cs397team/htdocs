@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2012 at 04:33 AM
+-- Generation Time: Dec 02, 2012 at 12:35 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -141,7 +141,9 @@ CREATE TABLE IF NOT EXISTS `floor` (
 
 INSERT INTO `floor` (`floorNum`, `buildingName`, `floorImageURL`) VALUES
 (1, 'Computer Science', 'images/dummyImage.jpg'),
+(1, 'EECH', ''),
 (2, 'Computer Science', 'images/cs_second_floor.png'),
+(2, 'EECH', ''),
 (15, 'EECH', '');
 
 -- --------------------------------------------------------
@@ -167,18 +169,22 @@ CREATE TABLE IF NOT EXISTS `member_of` (
 CREATE TABLE IF NOT EXISTS `organization` (
   `Name` varchar(20) NOT NULL,
   `department` varchar(20) NOT NULL,
+  `president` int(8) unsigned zerofill NOT NULL,
+  `advisor` int(8) unsigned zerofill NOT NULL,
   `description` varchar(160) DEFAULT NULL,
   PRIMARY KEY (`Name`),
-  KEY `department` (`department`)
+  KEY `department` (`department`),
+  KEY `president` (`president`),
+  KEY `advisor` (`advisor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `organization`
 --
 
-INSERT INTO `organization` (`Name`, `department`, `description`) VALUES
-('ACM', 'Computer Science', 'Association for Computing Machinery'),
-('IEEE', 'ECE', 'IEEE');
+INSERT INTO `organization` (`Name`, `department`, `president`, `advisor`, `description`) VALUES
+('ACM', 'Computer Science', 12269597, 12344567, NULL),
+('IEEE', 'ECE', 12345677, 14456654, NULL);
 
 -- --------------------------------------------------------
 
@@ -206,7 +212,7 @@ CREATE TABLE IF NOT EXISTS `reservation` (
 --
 
 INSERT INTO `reservation` (`ID`, `user`, `equipmentNeeded`, `eventId`, `primaryRoomNumber`, `backupRoomNumber`, `Approval`) VALUES
-(3, 12269597, 'Transparency Projector', 121, 2, 1, 'Denied'),
+(3, 12269597, 'Transparency Projector', 121, 2, 1, 'Approved'),
 (4, 12344567, 'Microphones', 122, 3, 2, 'Pending'),
 (5, 14456654, 'TV / DVD', 123, 2, 3, 'Pending'),
 (6, 16016314, 'Microphones', 121, 2, 1, 'Denied');
@@ -302,7 +308,9 @@ ALTER TABLE `member_of`
 -- Constraints for table `organization`
 --
 ALTER TABLE `organization`
-  ADD CONSTRAINT `organization_ibfk_2` FOREIGN KEY (`department`) REFERENCES `department` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `organization_ibfk_4` FOREIGN KEY (`advisor`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `organization_ibfk_2` FOREIGN KEY (`department`) REFERENCES `department` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `organization_ibfk_3` FOREIGN KEY (`president`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `reservation`
