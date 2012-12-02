@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2012 at 12:35 AM
+-- Generation Time: Dec 02, 2012 at 01:42 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -195,6 +195,8 @@ INSERT INTO `organization` (`Name`, `department`, `president`, `advisor`, `descr
 CREATE TABLE IF NOT EXISTS `reservation` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `user` int(8) unsigned zerofill NOT NULL,
+  `alternateUser` int(8) unsigned zerofill NOT NULL,
+  `organization` varchar(20) NOT NULL,
   `equipmentNeeded` set('Transparency Projector','Multimedia Projector','TV / DVD','Microphones','Easel','Dry-Erase Board','Tabletop Podium','Floor Podium','Dance Floor','Carousel Projector','Piano','U.S. Flag','MO Flag','University Flag','Other') DEFAULT NULL,
   `eventId` int(10) unsigned NOT NULL,
   `primaryRoomNumber` int(10) unsigned NOT NULL,
@@ -204,18 +206,20 @@ CREATE TABLE IF NOT EXISTS `reservation` (
   KEY `user` (`user`),
   KEY `eventId` (`eventId`),
   KEY `primaryRoomNumber` (`primaryRoomNumber`),
-  KEY `backupRoomNumber` (`backupRoomNumber`)
+  KEY `backupRoomNumber` (`backupRoomNumber`),
+  KEY `alternateUser` (`alternateUser`),
+  KEY `organization` (`organization`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `reservation`
 --
 
-INSERT INTO `reservation` (`ID`, `user`, `equipmentNeeded`, `eventId`, `primaryRoomNumber`, `backupRoomNumber`, `Approval`) VALUES
-(3, 12269597, 'Transparency Projector', 121, 2, 1, 'Approved'),
-(4, 12344567, 'Microphones', 122, 3, 2, 'Pending'),
-(5, 14456654, 'TV / DVD', 123, 2, 3, 'Pending'),
-(6, 16016314, 'Microphones', 121, 2, 1, 'Denied');
+INSERT INTO `reservation` (`ID`, `user`, `alternateUser`, `organization`, `equipmentNeeded`, `eventId`, `primaryRoomNumber`, `backupRoomNumber`, `Approval`) VALUES
+(3, 12269597, 12344567, 'ACM', 'Transparency Projector', 121, 2, 1, 'Approved'),
+(4, 12344567, 12269597, 'ACM', 'Microphones', 122, 3, 2, 'Pending'),
+(5, 14456654, 12269597, 'ACM', 'TV / DVD', 123, 2, 3, 'Pending'),
+(6, 16016314, 12269597, 'ACM', 'Microphones', 121, 2, 1, 'Denied');
 
 -- --------------------------------------------------------
 
@@ -316,8 +320,10 @@ ALTER TABLE `organization`
 -- Constraints for table `reservation`
 --
 ALTER TABLE `reservation`
-  ADD CONSTRAINT `reservation_ibfk_11` FOREIGN KEY (`backupRoomNumber`) REFERENCES `room` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `reservation_ibfk_13` FOREIGN KEY (`organization`) REFERENCES `organization` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `reservation_ibfk_10` FOREIGN KEY (`primaryRoomNumber`) REFERENCES `room` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `reservation_ibfk_11` FOREIGN KEY (`backupRoomNumber`) REFERENCES `room` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `reservation_ibfk_12` FOREIGN KEY (`alternateUser`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `reservation_ibfk_6` FOREIGN KEY (`eventId`) REFERENCES `event` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `reservation_ibfk_9` FOREIGN KEY (`user`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
