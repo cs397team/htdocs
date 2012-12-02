@@ -179,10 +179,10 @@ mysql_select_db("r3", $con);
             }
             else
             {
-                $floor = 2; /*CHANGE TO 1 WHEN DATABASE IS COMPLETE*/
+                $floor = 1;
             }
             
-            if( $row['floorNum'] == $floor /*CHANGE TO 1 WHEN DATABASE IS COMPLETE*/)
+            if( $row['floorNum'] == $floor)
             {
                 echo "<option selected=\"selected\" value=\"".$row['floorNum']."\">".$row['floorNum']."</option>";
             }
@@ -204,6 +204,11 @@ mysql_select_db("r3", $con);
     {
         populateOptionList("First Choice of Facility", "firstChoiceRoom", $floor);
     }
+    else
+    {
+        echo "<tr><td>First Choice of Facility:</td><td><select><option>*Still Need to Fill Out All Fields</option></select></td></tr>";
+    }
+    
     if( isset($_POST['building']) && isset($_POST['recurrence']) && (isset($_POST['stopDate']) || $_POST['recurrence'] == "Once") &&
         isset($_POST['floor']) && isset($_POST['firstChoiceRoom']) && $_POST['firstChoiceRoom'] != "default")
     {
@@ -234,13 +239,13 @@ mysql_select_db("r3", $con);
             }
             else
             {
-                $floor = 1; /*CHANGE TO 1 WHEN DATABASE IS COMPLETE*/
+                $floor = 1;
                 echo "<script>selectAndSubmitForm({$floor});</script>";
             }
         }
         else
         {
-            $floor = 2; /*CHANGE TO 1 WHEN DATABASE IS COMPLETE*/
+            $floor = 1;
         }
         
         while($row = mysql_fetch_array($result))
@@ -358,10 +363,9 @@ mysql_select_db("r3", $con);
                 $_SESSION['SESS_STARTTIME'] = $_POST["startTime"];
                 $_SESSION['SESS_ENDTIME'] = $_POST["endTime"];
                 $_SESSION['SESS_RECURRENCE'] = $_POST["recurrence"];
-                $_SESSION['SESS_BUILDING'] = $_POST["building"];
                 $_SESSION['SESS_STOPDATE'] = "";
-                $_SESSION['SESS_FLOOR'] = $_POST["floor"];
                 $_SESSION['SESS_FIRSTCHOICEROOM'] = $_POST["firstChoiceRoom"];
+                
                 if(isset($_POST['stopDate']))
                 {
                     $_SESSION['SESS_STOPDATE'] = $_POST["stopDate"];
