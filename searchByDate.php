@@ -1,3 +1,5 @@
+<link rel="stylesheet" type="text/css" href="mystyles.css" media="screen" />
+<script type="text/javascript" src="fix_page_height.js"></script>
 <html>
 <title>Search by Date</title>
 <script>
@@ -46,8 +48,8 @@ session_start();
 	
 //Check whether the session variable SESS_MEMBER_ID is present or not
 if(!isset($_SESSION['SESS_STUDENT_ID']) || (trim($_SESSION['SESS_STUDENT_ID']) == '')) {
-	echo "<p>Hey, you're not logged in!!!!</p>";
-    echo "<p>Click <a href=\"login.php\">here</a> to get logged in.</p>";
+	echo "<p align=\"center\">Hey, you're not logged in!!!!</p>";
+    echo "<p align=\"center\">Click <a href=\"login.php\">here</a> to get logged in.</p>";
 	exit();
 }
 
@@ -64,8 +66,13 @@ mysql_select_db("r3", $con);
 ?>
 
 <body>
-<h1>Time and Place for Reservation<h1>
+<div id="wrap">
+<img src="images/Logo_Reverse__356.jpg" height="116" width="131" alt="S&T logo" align="left" style="padding-right:30px;" />
+</br>
+<h1 style="color:rgb(0,133,63)">R<sup>3</sup> Reservation System</h1>
+<br clear="all">
 <hr />
+
 <form id="searchByDate" action="searchByDate.php" method="post">
 <table border='0'>
 <td>
@@ -307,12 +314,14 @@ mysql_select_db("r3", $con);
     {
         echo "<img id=\"theImage\" src=\"images/campusMap.png\" style=\"position: relative; top: 0; left: 0;\" alt=\"Campus Map\" />";
     }
+        
 ?>
 </div>
 </td>
 </table>
 
 </form>
+<br/>
 <?php
 	// The following will NOT execute if the form is blank. (The user just entered the page)
 
@@ -326,31 +335,31 @@ mysql_select_db("r3", $con);
             //Do validation here
             if(strtotime($_POST['accessEnd']) < strtotime($_POST['accessStart']))
             {
-                echo "<p>Error, access end time is earlier than access start time</p>";
+                echo "<p align=\"center\">Error, access end time is earlier than access start time</p>";
                 $failure = 1;
             }
         
             if(strtotime($_POST['startTime']) > strtotime($_POST['endTime']))
             {
-                echo "<p>Error, end time is earlier than start time</p>";
+                echo "<p align=\"center\">Error, end time is earlier than start time</p>";
                 $failure = 1;
             }
         
             if(strtotime($_POST['accessEnd']) > strtotime($_POST['startTime']))
             {
-                echo "<p>Error, your access time is later than your start time</p>";
+                echo "<p align=\"center\">Error, your access time is later than your start time</p>";
                 $failure = 1;
             }
         
             if($_POST['building'] == "campusMap")
             {
-                echo "<p>Error, you have not selected a building!</p>";
+                echo "<p align=\"center\">Error, you have not selected a building!</p>";
                 $failure = 1;
             }
         
             if($_POST['recurrence'] != "Once" && !isset($_POST['stopDate']))
             {
-                echo "<p>Error, recurrence is selected, but no stop date is specified{$_POST['recurrence']}</p>";
+                echo "<p align=\"center\">Error, recurrence is selected, but no stop date is specified{$_POST['recurrence']}</p>";
                 $failure = 1;
             }
         
@@ -378,12 +387,12 @@ mysql_select_db("r3", $con);
 		}
         else
         {
-            echo "<p>You are missing some information!  Review the form and insure everything is filled out.</p>";
+            echo "<p align=\"center\">You are missing some information!  Review the form and insure everything is filled out.</p>";
         }
 		
 	}
     mysql_close($con);
 ?>
-
+</div>
 </body>
 </html>
