@@ -39,21 +39,21 @@ if(!isset($_SESSION['SESS_STUDENT_ID']) || (trim($_SESSION['SESS_STUDENT_ID']) =
     echo "<p>Click <a href=\"login.php\">here</a> to get logged in.</p>";
 	exit();
 }
-else if(!isset($_SESSION['SESS_DATE']) || !isset($_SESSION['SESS_ACCESSSTART']) || !isset($_SESSION['SESS_ACCESSEND']) || !isset($_SESSION['SESS_STOPDATE']) ||
-        !isset($_SESSION['SESS_STARTTIME']) || !isset($_SESSION['SESS_ENDTIME']) || !isset($_SESSION['SESS_RECURRENCE']) || !isset($_SESSION['SESS_BUILDING']))
+else if(!isset($_POST['submit']) && (!isset($_SESSION['SESS_DATE']) || !isset($_SESSION['SESS_ACCESSSTART']) || !isset($_SESSION['SESS_ACCESSEND']) || !isset($_SESSION['SESS_STOPDATE']) ||
+        !isset($_SESSION['SESS_STARTTIME']) || !isset($_SESSION['SESS_ENDTIME']) || !isset($_SESSION['SESS_RECURRENCE']) || !isset($_SESSION['SESS_FIRSTCHOICEROOM'])))
 {
     header("location: searchByDate.php");
 }
-else
+else if(!isset($_POST['submit']))
 {
-    $date = $_SESSION['SESS_DATE'];
-    $accessStart = $_SESSION['SESS_ACCESSSTART'];
-    $accessEnd = $_SESSION['SESS_ACCESSEND'];
-    $startTime = $_SESSION['SESS_STARTTIME'];
-    $endTime = $_SESSION['SESS_ENDTIME'];
-    $recurrence = $_SESSION['SESS_RECURRENCE'];
-    $stopDate = $_SESSION['SESS_STOPDATE'];
-    $building = $_SESSION['SESS_BUILDING'];
+    $date                = $_SESSION['SESS_DATE'];
+    $accessStart         = $_SESSION['SESS_ACCESSSTART'];
+    $accessEnd           = $_SESSION['SESS_ACCESSEND'];
+    $startTime           = $_SESSION['SESS_STARTTIME'];
+    $endTime             = $_SESSION['SESS_ENDTIME'];
+    $recurrence          = $_SESSION['SESS_RECURRENCE'];
+    $stopDate            = $_SESSION['SESS_STOPDATE'];
+    $firstChoiceRoom     = $_SESSION['SESS_FIRSTCHOICEROOM'];
     
     unset($_SESSION['SESS_DATE']);
     unset($_SESSION['SESS_ACCESSSTART']);
@@ -62,15 +62,35 @@ else
     unset($_SESSION['SESS_ENDTIME']);
     unset($_SESSION['SESS_RECURRENCE']);
     unset($_SESSION['SESS_STOPDATE']);
-    unset($_SESSION['SESS_BUILDING']);
+    unset($_SESSION['SESS_FIRSTCHOICEROOM']);
+}
+else
+{
+    $date                = $_POST['date'];
+    $accessStart         = $_POST['accessStart'];
+    $accessEnd           = $_POST['accessEnd'];
+    $startTime           = $_POST['startTime'];
+    $endTime             = $_POST['endTime'];
+    $recurrence          = $_POST['recurrence'];
+    $stopDate            = $_POST['stopDate'];
+    $firstChoiceRoom     = $_POST['firstChoiceRoom'];
 }
 
 ?>
 <body>
 <h3>Reservation Time!</h3>
 <form method="post">
+
 <table border ='0'>
 <?php
+    echo "<input name=\"date\" hidden=\"hidden\" value=\"{$date}\" />";
+    echo "<input name=\"accessStart\" hidden=\"hidden\" value=\"{$accessStart}\" />";
+    echo "<input name=\"accessEnd\" hidden=\"hidden\" value=\"{$accessEnd}\" />";
+    echo "<input name=\"startTime\" hidden=\"hidden\" value=\"{$startTime}\" />";
+    echo "<input name=\"endTime\" hidden=\"hidden\" value=\"{$endTime}\" />";
+    echo "<input name=\"recurrence\" hidden=\"hidden\" value=\"{$recurrence}\" />";
+    echo "<input name=\"stopDate\" hidden=\"hidden\" value=\"{$stopDate}\" />";
+    echo "<input name=\"firstChoiceRoom\" hidden=\"hidden\" value=\"{$firstChoiceRoom}\" />";
     // Connect to the sql database
 	$con = mysql_connect("localhost","root");
 	
@@ -82,18 +102,6 @@ else
 	mysql_select_db("r3", $con);
     //****************************
 
-	/*
-	// Create and populate the Organziation field
-	$result = mysql_query("SELECT Name FROM organization");
-	echo "<tr><td>Organization:</td>
-	          <td><select name=\"organization\">
-			      <option value=\"default\">Select an Organization</option>";
-	
-	while($row = mysql_fetch_array($result))
-	{
-	    echo "<option value=\"".$row['Name']."\">".$row['Name']."</option>";
-	}
-	echo "</td></tr>";*/
 	populateOptionList("Organization", "organization", "organization", "Name", "Name");
 	populateOptionList("Primary Contact", "primaryContact", "User", "Name", "ID");
 	populateOptionList("Alternate Contact", "altContact", "User", "Name", "ID");
@@ -101,18 +109,6 @@ else
 	
 	
 ?>
-
-
-<!-- <tr><td>Organization:</td><td><input type="text" name="organization"></td></tr> 
-<tr><td>Organization President:</td><td><input type="text" name="orgPres"></td></tr>
-<tr><td>Oranization Advisor:</td><td><input type="text" name="orgAdvisor"></td></tr> 
-<tr><td>Contact Name:</td><td><input type="text" name="name"></td></tr>
-<tr><td>Phone Number:</td><td><input type="tel" name="phone"></td></tr>
-<tr><td>Email:</td><td><input type="email" name="email"></td></tr>
-<tr><td>Alternate Contact Name:</td><td> <input type="text" name="name2"></td></tr>
-<tr><td>Phone Number:</td><td> <input type="tel" name="phone2"></td></tr>
-<tr><td>Email:</td><td> <input type="email" name="email2"></td></tr> -->
-
 
 <tr><td>Event Title:</td><td> <input type="text" name="eventTitle" maxlength="40"></td></tr>
 <tr><td>Event Type:</td><td> <select name="eventType">
@@ -128,21 +124,23 @@ else
 		<option value="informationTable">Information Table</option>
 		<option value="other">Other</option>
 	</select></td></tr>
-<tr><td>Event Date:</td><td> <input type="date" name="date"></td></tr>
-<tr><td>Access Time:</td><td> <input type="time" name="accessStart"> to <input type="time" name="accessEnd"></td></tr>
-<tr><td>Event Time:</td><td> <input type="time" name="startTime"> to <input type="time" name="endTime"></td></tr>
-<tr><td>Event Description:</td><td> </br> <textarea rows="10" cols="50" name="eventDesc"></textarea></td></tr>
-
 <tr><td>&nbsp;</td></tr>
+<tr><td>2nd Choice of Facility</td>
 <?php
-populateOptionList("First Choice of Facility", "firstChoiceRoom", "Room", "Name", "ID");
-?>
-<tr><td>Building:</td><td> <input type="text" name="building"></td></tr>
-<tr><td>Room Number/Name:</td><td> <input type="text" name="room"></td></tr>
-<tr><td>&nbsp;</td></tr>
-<tr><td>2nd Choice of Facility</td></tr>
-<tr><td>Building:</td><td> <input type="text" name="room"></td></tr>
-<tr><td>Room Number/Name:</td><td> <input type="text" name="room"></td></tr>
+    $result = mysql_query("SELECT ID, buildingName, roomNumber FROM room WHERE ID <> {$firstChoiceRoom}");
+    
+    echo "<td><select name=\"secondChoiceRoom\">
+    <option value=\"default\">Select a value</option>";
+    
+    while($row = mysql_fetch_array($result))
+    {
+        echo "<option value=\"{$row['ID']}\"";
+        echo">{$row['buildingName']} {$row['roomNumber']}</option>";
+    }
+    echo "</select></td></tr>";
+
+    ?>
+
 <tr><td>&nbsp;</td></tr>
 <tr><td>Expected Number of Participants:</td><td> <input type="number" name="participants"></td></tr>
 <tr><td>Will tickets be sold?</td><td> 
@@ -160,6 +158,25 @@ populateOptionList("First Choice of Facility", "firstChoiceRoom", "Room", "Name"
 <tr><td>Will you have decorations?</td><td>
 	<input type="radio" name="decorationsCheck" value=1> Yes 
 	<input type="radio" name="decorationsCheck" value=0 checked="true"> No</td></tr>
+<tr><td>Will you have food?</td><td>
+<input type="radio" name="foodCheck" value=1> Yes 
+<input type="radio" name="foodCheck" value=0 checked="true"> No</td></tr>
+<tr><td>Equiment Needed</td><td>
+<select name = "equipmentNeeded" multiple="multiple">
+<option value="Transparency Projector">Transparency Projector</option>
+<option value="TV / DVD">TV / DVD</option>
+<option value="Microphones">Microphones</option>
+<option value="Easel">Easel</option>
+<option value="Dry-Erase Board">Dry-Erase Board</option>
+<option value="Tabletop Podium">Tabletop Podium</option>
+<option value="Floor Podium">Floor Podium</option>
+<option value="Dance Floor">Dance Floor</option>
+<option value="Carousel Projector">Carousel Projector</option>
+<option value="U.S. Flag">U.S. Flag</option>
+<option value="MO Flag">MO Flag</option>
+<option value="University Flag">University Flag</option></td></tr>
+</select>
+
 
 </table>
 <input type="submit" name = "submit" value = "Submit Request" />
@@ -177,33 +194,93 @@ populateOptionList("First Choice of Facility", "firstChoiceRoom", "Room", "Name"
 	// The following will NOT execute if the form is blank. (The user just entered the page)
 	if(isset($_POST["submit"]))// == "Submit Query")
 	{
-        $userID = $_POST["primaryContact"];
+        if(!isset($_POST["primaryContact"]) || $_POST["primaryContact"] == "default")
+        {
+            $userID = "NULL";
+        }
+        else
+        {
+            $userID = clean($_POST["primaryContact"]);
+            $userID = "'{$userID}'";
+        }
+        
+        if(!isset($_POST["altContact"]) || $_POST["altContact"] == "default")
+        {
+            $altUserID = "NULL";
+        }
+        else
+        {
+            $altUserID = clean($_POST["altContact"]);
+            $altUserID = "'{$altUserID}'";
+        }
 
 	    // Initialize variables with user entered information
-	    /*$organization = clean($_POST["organization"]);
-		$orgPres = clean($_POST["orgPres"]);
-		$orgAdvisor = clean($_POST["orgAdvisor"]);
-	    $name = clean($_POST["name"]);
-		$phone = clean($_POST["phone"]);
-		$email = clean($_POST["email"]);
-		$name2 = clean($_POST["name2"]);
-		$phone2 = clean($_POST["phone2"]);
-		$email2 = clean($_POST["email2"]);
-		$eventTitle = clean($_POST["eventTitle"]);
+        if(!isset($_POST["organization"]) || $_POST["organization"] == "default")
+        {
+            $organization = "NULL";
+        }
+        else
+        {
+            $organization = clean($_POST["organization"]);
+            $organization = "'{$organization}'";
+        }
+        
+        if(!isset($_POST["eventTitle"]) || $_POST["eventTitle"] == "")
+        {
+            $eventTitle = "NULL";
+        }
+        else
+        {
+            $eventTitle = clean($_POST["eventTitle"]);
+            $eventTitle = "'{$eventTitle}'";
+        }
+        
 		$eventType = clean($_POST["eventType"]);
-		$date = clean($_POST["date"]);
-		$accessStart = clean($_POST["accessStart"]);
-		$startTime = clean($_POST["startTime"]);
-		$eventDesc = clean($_POST["eventDesc"]);
-		$building = clean($_POST["building"]);
-		$room = clean($_POST["room"]);
-		$participants = clean($_POST["participants"]);
+
+        if( $stopDate == "" )
+        {
+            $stopDate = "NULL";
+        }
+        else
+        {
+            $stopDate = "'{$stopDate}'";
+        }
+        
+        if( !isset($_POST['secondChoiceRoom']) || $_POST['secondChoiceRoom'] == "default" )
+        {
+            $secondChoiceRoom = "NULL";
+        }
+        else
+        {
+            $secondChoiceRoom = "'{$_POST['secondChoiceRoom']}'";
+        }
+        
+        if(!isset($_POST["participants"]) || $_POST["participants"] == "")
+        {
+            $participants = "NULL";
+        }
+        else
+        {
+            $participants = clean($_POST["participants"]);
+            $participants = "'{$participants}'";
+        }
 		$ticketsCheck = clean($_POST["ticketsCheck"]);
 		$prizesCheck = clean($_POST["prizesCheck"]);
 		$vendorsCheck = clean($_POST["vendorsCheck"]);
 		$alcoholCheck = clean($_POST["alcoholCheck"]);
-		$descriptionsCheck = clean($_POST["descriptionCheck"]);*/
-		/*
+        $foodCheck = clean($_POST["foodCheck"]);
+		$decorationsCheck = clean($_POST["decorationsCheck"]);
+        
+        if(!isset($_POST["equipmentNeeded"]) || $_POST["equipmentNeeded"] == "")
+        {
+            $equipmentNeeded = "NULL";
+        }
+        else
+        {
+            $equipmentNeeded = "'{$_POST['equipmentNeeded']}'";
+        }
+        
+		
 		// Connect to the sql database
 	    $con = mysql_connect("localhost","root");
 		
@@ -219,16 +296,26 @@ populateOptionList("First Choice of Facility", "firstChoiceRoom", "Room", "Name"
 		
 		if(!$failure)
 		{
-		    $sql = "INSERT INTO USER VALUES ('$studentNumber', '$name', '$emailAddr', '$isAdmin', '$passwdHash')";
-			
+		    $sql = "INSERT INTO event VALUES (NULL, {$eventTitle}, '{$startTime}', '{$endTime}', '{$accessStart}', '{$accessEnd}', '{$date}', '{$recurrence}', {$stopDate}, {$participants}, 
+                     '{$decorationsCheck}', '{$alcoholCheck}', '{$prizesCheck}', '{$ticketsCheck}', '{$vendorsCheck}', '{$foodCheck}', '{$eventType}' )";
+
 			if (!mysql_query($sql,$con))
  	        {
- 	            die('Error: ' . mysql_error());
+ 	            die('Error on Insert into Event: ' . mysql_error());
  	        }
-	        echo "User Successfully Added <br>";
+
+            $result = mysql_query("SELECT MAX(ID) AS ID FROM event");
+            $row = mysql_fetch_array($result);
+            
+            $sql = "INSERT INTO reservation VALUE ( NULL, {$userID}, {$altUserID}, {$organization}, {$equipmentNeeded}, '{$row['ID']}', '{$firstChoiceRoom}', {$secondChoiceRoom}, 'Pending')";
+            if (!mysql_query($sql,$con))
+ 	        {
+ 	            die('Error on Insert into Reservation: ' . mysql_error());
+ 	        }
+	        echo "Reservation Successfully Added <br>";
 		}
 		
-		mysql_close($con);*/
+		mysql_close($con);
 	}
 ?>
 </body>
