@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 03, 2012 at 06:34 PM
+-- Generation Time: Dec 03, 2012 at 07:04 PM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -216,7 +216,7 @@ CREATE TABLE IF NOT EXISTS `reservation` (
 --
 
 INSERT INTO `reservation` (`ID`, `user`, `alternateUser`, `organization`, `equipmentNeeded`, `eventId`, `primaryRoomNumber`, `backupRoomNumber`, `Approval`) VALUES
-(3, 12269597, 12344567, 'ACM', 'Transparency Projector', 121, 2, 1, 'Approved'),
+(3, 12269597, 12344567, 'ACM', 'Transparency Projector', 121, 2, 1, 'Pending'),
 (4, 12344567, 12269597, 'ACM', 'Microphones', 122, 3, 2, 'Pending'),
 (5, 14456654, 12269597, 'ACM', 'TV / DVD', 123, 2, 3, 'Pending'),
 (6, 16016314, 12269597, 'ACM', 'Microphones', 121, 2, 1, 'Denied');
@@ -250,9 +250,9 @@ CREATE TABLE IF NOT EXISTS `room` (
 
 INSERT INTO `room` (`ID`, `buildingName`, `floorNum`, `roomNumber`, `capacity`, `roomName`, `type`, `availableImageURL`, `notAvailableImageURL`, `pendingAvailableImageURL`) VALUES
 (1, 'Computer Science', 1, 121, 121, '1', '121', '', '', ''),
-(2, 'Computer Science', 2, 208, 54, NULL, 'Classroom', 'images/cs_building/second floor/exported/available/cs_208_available.png', 'images/cs_building/second floor/exported/pending/cs_208_pending.png', 'images/cs_building/second floor/exported/unavailable/cs_208_unavailable.png'),
+(2, 'Computer Science', 2, 208, 54, NULL, 'Classroom', 'images/cs_building/second floor/exported/available/cs_208_available.png', 'images/cs_building/second floor/exported/unavailable/cs_208_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_208_pending.png'),
 (3, 'Computer Science', 1, 13131, 3131, '131', '133', '', '', ''),
-(4, 'Computer Science', 2, 216, 50, NULL, NULL, 'images/cs_building/second floor/exported/available/cs_216_available.png', 'images/cs_building/second floor/exported/pending/cs_216_pending.png', 'images/cs_building/second floor/exported/unavailable/cs_216_unavailable.png');
+(4, 'Computer Science', 2, 216, 50, NULL, NULL, 'images/cs_building/second floor/exported/available/cs_216_available.png', 'images/cs_building/second floor/exported/unavailable/cs_216_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_216_pending.png');
 
 -- --------------------------------------------------------
 
