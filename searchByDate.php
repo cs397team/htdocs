@@ -30,10 +30,29 @@ function populateOptionList($labelString, $keyName, $floor) {
                               
     while($row = mysql_fetch_array($result))
     {
-        echo "<option value=\"".$row['ID']."\"";
-        if(isset($_POST[$keyName]) && $row['ID'] == $_POST[$keyName])
-            echo " selected=\"selected\"";
-        echo">{$row['buildingName']} {$row['roomNumber']}</option>";
+        $result2 = mysql_query("SELECT r1.Approval from event as e1, reservation as r1 where r1.eventID = e1.id AND r1.primaryRoomNumber = '{$row['ID']}'");
+        
+        $availability = "Available";
+        while($row2 = mysql_fetch_array($result2))
+        {
+            if($row2['Approval'] == "Pending")
+            {
+                $availability = "Pending";
+            }
+            else if($row2['Approval'] == "Approved")
+            {
+                $availability = "Unavailable";
+                break;
+            }
+        }
+        
+        if($availability == "Available" || $availability == "Pending")
+        {
+            echo "<option value=\"".$row['ID']."\"";
+            if(isset($_POST[$keyName]) && $row['ID'] == $_POST[$keyName])
+                echo " selected=\"selected\"";
+            echo">{$row['buildingName']} {$row['roomNumber']} ({$availability})</option>";
+        }
     }
     echo "</select></td></tr>";
 }
