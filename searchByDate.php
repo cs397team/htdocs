@@ -88,36 +88,40 @@ mysql_select_db("r3", $con);
     </td></tr>
     <tr><td>Access Time:</td>
     <td> 
+    <table border='0'>
+    <tr><td>Start</td>
     <?php
-        echo "<input";
+        echo "<td><input";
         if( isset($_POST['accessStart']) )
             echo " value=\"{$_POST['accessStart']}\"";
-        echo " type=\"time\" name=\"accessStart\">"; 
+        echo " type=\"time\" name=\"accessStart\"></td>"; 
         
-        echo " to ";
+        echo "</tr><tr><td>End</td>";
         
-        echo "<input";
+        echo "<td><input";
         if( isset($_POST['accessEnd']) )
             echo " value=\"{$_POST['accessEnd']}\"";
-        echo " type=\"time\" name=\"accessEnd\">";
+        echo " type=\"time\" name=\"accessEnd\"></td>";
         ?>
-    </td></tr>
+    </tr></table></td></tr>
     <tr><td>Event Time:</td>
     <td> 
+    <table border='0'>
+    <tr><td>Start</td>
     <?php
-        echo "<input";
+        echo "<td><input";
         if( isset($_POST['startTime']) )
             echo " value=\"{$_POST['startTime']}\"";
-        echo " type=\"time\" name=\"startTime\">";
+        echo " type=\"time\" name=\"startTime\"></td>";
         
-        echo " to ";
+        echo "</tr><tr><td>End</td>";
         
-        echo "<input";
+        echo "<td><input";
         if( isset($_POST['endTime']) )
             echo " value=\"{$_POST['endTime']}\"";
-        echo " type=\"time\" name=\"endTime\">";
+        echo " type=\"time\" name=\"endTime\"></td>";
         ?>
-    </td></tr>
+    </tr></table></td></tr>
     <tr><td>How often will this event occur?</td><td>
     <select name="recurrence" onChange="this.form.submit()">
     <?php
