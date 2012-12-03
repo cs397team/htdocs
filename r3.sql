@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2012 at 01:42 AM
+-- Generation Time: Dec 03, 2012 at 06:34 PM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS `event` (
   `foodOption` tinyint(1) DEFAULT NULL,
   `typeOfEvent` varchar(256) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=124 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=129 ;
 
 --
 -- Dumping data for table `event`
@@ -140,9 +140,9 @@ CREATE TABLE IF NOT EXISTS `floor` (
 --
 
 INSERT INTO `floor` (`floorNum`, `buildingName`, `floorImageURL`) VALUES
-(1, 'Computer Science', 'images/dummyImage.jpg'),
+(1, 'Computer Science', 'images/cs_building/first floor/exported/cs_1st_floor.png'),
 (1, 'EECH', ''),
-(2, 'Computer Science', 'images/cs_second_floor.png'),
+(2, 'Computer Science', 'images/cs_building/second floor/exported/CS_second_floor_0051_Layer-0.png'),
 (2, 'EECH', ''),
 (15, 'EECH', '');
 
@@ -209,7 +209,7 @@ CREATE TABLE IF NOT EXISTS `reservation` (
   KEY `backupRoomNumber` (`backupRoomNumber`),
   KEY `alternateUser` (`alternateUser`),
   KEY `organization` (`organization`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `reservation`
@@ -242,7 +242,7 @@ CREATE TABLE IF NOT EXISTS `room` (
   UNIQUE KEY `uniqueIDByBuildingFloorRoomNum` (`buildingName`,`floorNum`,`roomNumber`),
   KEY `name` (`buildingName`),
   KEY `floorNum` (`floorNum`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `room`
@@ -250,8 +250,9 @@ CREATE TABLE IF NOT EXISTS `room` (
 
 INSERT INTO `room` (`ID`, `buildingName`, `floorNum`, `roomNumber`, `capacity`, `roomName`, `type`, `availableImageURL`, `notAvailableImageURL`, `pendingAvailableImageURL`) VALUES
 (1, 'Computer Science', 1, 121, 121, '1', '121', '', '', ''),
-(2, 'Computer Science', 2, 208, 54, NULL, 'Classroom', 'images/cs_208_available.png', 'images/cs_208_notavailable.png', 'images/cs_208_pending.png'),
-(3, 'Computer Science', 1, 13131, 3131, '131', '133', '', '', '');
+(2, 'Computer Science', 2, 208, 54, NULL, 'Classroom', 'images/cs_building/second floor/exported/available/cs_208_available.png', 'images/cs_building/second floor/exported/pending/cs_208_pending.png', 'images/cs_building/second floor/exported/unavailable/cs_208_unavailable.png'),
+(3, 'Computer Science', 1, 13131, 3131, '131', '133', '', '', ''),
+(4, 'Computer Science', 2, 216, 50, NULL, NULL, 'images/cs_building/second floor/exported/available/cs_216_available.png', 'images/cs_building/second floor/exported/pending/cs_216_pending.png', 'images/cs_building/second floor/exported/unavailable/cs_216_unavailable.png');
 
 -- --------------------------------------------------------
 
