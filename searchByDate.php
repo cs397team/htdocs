@@ -82,6 +82,53 @@ if(!$con)
 	
 mysql_select_db("r3", $con);
 //****************************
+    
+    $problems['eventDate']  = "None";
+    $problems['accessTime'] = "None";
+    $problems['eventTime']  = "None";
+    $problems['until']      = "None";
+    $problems['building']   = "None";
+    
+    if(isset($_POST['resubmit']) || isset($_POST['checkRoomAvailability']))
+    {
+        if($_POST['date'] == "")
+        {
+            $problems['eventDate'] = "Please select a valid date!";
+        }
+        
+        if($_POST['accessEnd'] == "" || $_POST['accessStart'] == "" )
+        {
+            $problems['accessTime'] = "Please select access times!";
+        }
+        else if(strtotime($_POST['accessEnd']) < strtotime($_POST['accessStart']))
+        {
+            $problems['accessTime'] = "Please select an access end time that is NOT earlier than access start time!";
+        }
+        
+        if($_POST['startTime'] == "" || $_POST['endTime'] == "" )
+        {
+            $problems['eventTime'] = "Please select event times!";
+        }
+        else if(strtotime($_POST['startTime']) > strtotime($_POST['endTime']))
+        {
+            $problems['eventTime'] = "Please select an end time that is NOT earlier than start time!";
+        }
+        else if(strtotime($_POST['accessEnd']) > strtotime($_POST['startTime']))
+        {
+            $problems['eventTime'] = "Please select an access time that is NOT later than your start time!";
+        }
+        
+        if($_POST['building'] == "campusMap.png")
+        {
+            $problems['building'] = "Please select a building!";
+        }
+        
+        if($_POST['recurrence'] != "Once" && !isset($_POST['stopDate']))
+        {
+            $problems['until'] = "Select a stop date for your recurrence!";
+        }
+    }
+
 ?>
 
 <body>
@@ -103,6 +150,11 @@ mysql_select_db("r3", $con);
         if( isset($_POST['date']) )
             echo " value=\"{$_POST['date']}\"";
         echo " type=\"date\" name=\"date\">";
+        
+        if($problems['eventDate'] != "None")
+        {
+            echo "</td></tr><tr><td></td><td><font color=\"red\">{$problems['eventDate']}</font>";
+        }
     ?>
     </td></tr>
     <tr><td>Access Time:</td>
@@ -122,7 +174,13 @@ mysql_select_db("r3", $con);
             echo " value=\"{$_POST['accessEnd']}\"";
         echo " type=\"time\" name=\"accessEnd\"></td>";
         ?>
-    </tr></table></td></tr>
+    </tr></table>
+   <?php 
+       if($problems['accessTime'] != "None")
+       {
+           echo "</td></tr><tr><td></td><td><font color=\"red\">{$problems['accessTime']}</font>";
+       }   
+    ?></td></tr>
     <tr><td>Event Time:</td>
     <td> 
     <table border='0'>
@@ -140,7 +198,14 @@ mysql_select_db("r3", $con);
             echo " value=\"{$_POST['endTime']}\"";
         echo " type=\"time\" name=\"endTime\"></td>";
         ?>
-    </tr></table></td></tr>
+    </tr></table>
+<?php
+    if($problems['eventTime'] != "None")
+    {
+        echo "</td></tr><tr><td></td><td><font color=\"red\">{$problems['eventTime']}</font>";
+    }
+    ?>
+    </td></tr>
     <tr><td>How often will this event occur?</td><td>
     <select name="recurrence" onChange="this.form.submit()">
     <?php
@@ -172,6 +237,10 @@ mysql_select_db("r3", $con);
             if( isset($_POST['stopDate']) )
                 echo " value=\"{$_POST['stopDate']}\"";
             echo " type=\"date\" name=\"stopDate\"></td></tr>";
+            if($problems['until'] != "None")
+            {
+                echo "<tr><td></td><td><font color=\"red\">{$problems['until']}</font></td></tr>";
+            }
         }
     ?>
     <tr><td>Building:</td><td>
@@ -194,6 +263,10 @@ mysql_select_db("r3", $con);
 	}
      
     echo "</select></td></tr>";
+    if($problems['building'] != "None")
+    {
+        echo "<tr><td></td><td><font color=\"red\">{$problems['building']}</font></td></tr>";
+    }
     
     if( isset($_POST['building']) && $_POST['building'] != "campusMap.png" )
     {
@@ -348,65 +421,32 @@ mysql_select_db("r3", $con);
 <?php
 	// The following will NOT execute if the form is blank. (The user just entered the page)
 
-    if( isset($_POST['checkRoomAvailability']) )
+    if( isset($_POST['checkRoomAvailability']) && $problems['eventDate'] == "None" && $problems['accessTime'] == "None" && $problems['eventTime'] == "None" &&
+       $problems['until'] == "None" && $problems['building'] == "None")
     {
         if( isset($_POST['date']) && isset($_POST['accessStart']) && isset($_POST['accessEnd']) && isset($_POST['startTime']) && isset($_POST['endTime']) && 
            isset($_POST['building']) && isset($_POST['recurrence']) && (isset($_POST['stopDate']) || $_POST['recurrence'] == "Once") && isset($_POST['firstChoiceRoom']) && 
            $_POST['firstChoiceRoom'] != "default")
         {
-            $failure = 0;
-            //Do validation here
-            if(strtotime($_POST['accessEnd']) < strtotime($_POST['accessStart']))
-            {
-                echo "<p align=\"center\">Error, access end time is earlier than access start time</p>";
-                $failure = 1;
-            }
         
-            if(strtotime($_POST['startTime']) > strtotime($_POST['endTime']))
-            {
-                echo "<p align=\"center\">Error, end time is earlier than start time</p>";
-                $failure = 1;
-            }
-        
-            if(strtotime($_POST['accessEnd']) > strtotime($_POST['startTime']))
-            {
-                echo "<p align=\"center\">Error, your access time is later than your start time</p>";
-                $failure = 1;
-            }
-        
-            if($_POST['building'] == "campusMap")
-            {
-                echo "<p align=\"center\">Error, you have not selected a building!</p>";
-                $failure = 1;
-            }
-        
-            if($_POST['recurrence'] != "Once" && !isset($_POST['stopDate']))
-            {
-                echo "<p align=\"center\">Error, recurrence is selected, but no stop date is specified{$_POST['recurrence']}</p>";
-                $failure = 1;
-            }
-        
-            if(!$failure)
-            {
-                session_regenerate_id();
-                $_SESSION['SESS_DATE'] = $_POST["date"];
-                $_SESSION['SESS_ACCESSSTART'] = $_POST["accessStart"];
-                $_SESSION['SESS_ACCESSEND'] = $_POST["accessEnd"];
-                $_SESSION['SESS_STARTTIME'] = $_POST["startTime"];
-                $_SESSION['SESS_ENDTIME'] = $_POST["endTime"];
-                $_SESSION['SESS_RECURRENCE'] = $_POST["recurrence"];
-                $_SESSION['SESS_STOPDATE'] = "";
-                $_SESSION['SESS_FIRSTCHOICEROOM'] = $_POST["firstChoiceRoom"];
+            session_regenerate_id();
+            $_SESSION['SESS_DATE'] = $_POST["date"];
+            $_SESSION['SESS_ACCESSSTART'] = $_POST["accessStart"];
+            $_SESSION['SESS_ACCESSEND'] = $_POST["accessEnd"];
+            $_SESSION['SESS_STARTTIME'] = $_POST["startTime"];
+            $_SESSION['SESS_ENDTIME'] = $_POST["endTime"];
+            $_SESSION['SESS_RECURRENCE'] = $_POST["recurrence"];
+            $_SESSION['SESS_STOPDATE'] = "";
+            $_SESSION['SESS_FIRSTCHOICEROOM'] = $_POST["firstChoiceRoom"];
                 
-                if(isset($_POST['stopDate']))
-                {
-                    $_SESSION['SESS_STOPDATE'] = $_POST["stopDate"];
-                }
-            
-                session_write_close();
-                mysql_close($con);
-                header("location: reserve.php");
+            if(isset($_POST['stopDate']))
+            {
+                $_SESSION['SESS_STOPDATE'] = $_POST["stopDate"];
             }
+            
+            session_write_close();
+            mysql_close($con);
+            header("location: reserve.php");
 		}
         else
         {
