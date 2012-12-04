@@ -22,7 +22,7 @@ function selectAndSubmitForm(value)
 <?php //"First Choice of Facility", "firstChoiceRoom", "Room", "Name", "ID"
 function populateOptionList($labelString, $keyName, $floor) {
 
-    $result = mysql_query("SELECT ID, buildingName, roomNumber FROM room WHERE floorNum = '{$floor}' AND buildingName = '{$_POST['building']}'");
+    $result = mysql_query("SELECT ID, buildingName, roomNumber, isReservable FROM room WHERE floorNum = '{$floor}' AND buildingName = '{$_POST['building']}'");
 		
     echo "<tr><td>".$labelString.":</td>
     <td><select name=\"".$keyName."\" onChange=\"this.form.submit()\">
@@ -46,7 +46,7 @@ function populateOptionList($labelString, $keyName, $floor) {
             }
         }
         
-        if($availability == "Available" || $availability == "Pending")
+        if(($availability == "Available" || $availability == "Pending") && $row['isReservable'] == 1)
         {
             echo "<option value=\"".$row['ID']."\"";
             if(isset($_POST[$keyName]) && $row['ID'] == $_POST[$keyName])
@@ -356,9 +356,11 @@ mysql_select_db("r3", $con);
             if( $row['floorNum'] == $floor)
             {
                 echo "<img id=\"theImage\" src=\"{$row['floorImageURL']}\" style=\"position: relative; top: 0; left: 0;\" alt=\"Campus Map\" />";
-                if( isset($_POST['date']) && isset($_POST['accessStart']) && isset($_POST['accessEnd']) && isset($_POST['startTime']) && isset($_POST['endTime']) )
+                if( (isset($_POST['date']) && $_POST['date'] != "") && (isset($_POST['accessStart']) && $_POST['accessStart'] != "") && 
+                    (isset($_POST['accessEnd']) && $_POST['accessEnd'] != "") && (isset($_POST['startTime']) && $_POST['startTime'] != "") && 
+                    (isset($_POST['endTime']) && $_POST['endTime'] != "") )
                 {
-                    $result2 = mysql_query("SELECT ID, availableImageURL, notAvailableImageURL, pendingAvailableImageURL FROM room WHERE 
+                    $result2 = mysql_query("SELECT ID, availableImageURL, notAvailableImageURL, pendingAvailableImageURL, isReservable FROM room WHERE 
                                            buildingName = '{$_POST['building']}' AND floorNum = '{$floor}'");
                     
                     while($row2 = mysql_fetch_array($result2))
@@ -388,15 +390,15 @@ mysql_select_db("r3", $con);
                             }
                         }
 
-                        if( $roomShaded == "Available" )
+                        if( $roomShaded == "Available" && $row2['isReservable'] == 1)
                         {
                             echo "<img src=\"{$row2['availableImageURL']}\" style=\"position: absolute; top: 0; left: 0;\" />";
                         }
-                        else if( $roomShaded == "Not Available" )
+                        else if( $roomShaded == "Not Available" || $row2['isReservable'] == 0)
                         {
                             echo "<img src=\"{$row2['notAvailableImageURL']}\" style=\"position: absolute; top: 0; left: 0;\" />";
                         }
-                        else if( $roomShaded == "Pending" )
+                        else if( $roomShaded == "Pending" && $row2['isReservable'] == 1)
                         {
                             echo "<img src=\"{$row2['pendingAvailableImageURL']}\" style=\"position: absolute; top: 0; left: 0;\" />";
                         }

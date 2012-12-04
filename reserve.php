@@ -189,7 +189,7 @@ echo "
 <tr><td>&nbsp;</td></tr>
 <tr><td>2nd Choice of Facility</td>";
 
-    $result = mysql_query("SELECT ID, buildingName, roomNumber FROM room WHERE ID <> {$firstChoiceRoom}");
+    $result = mysql_query("SELECT ID, buildingName, roomNumber, isReservable FROM room WHERE ID <> {$firstChoiceRoom}");
     
     echo "<td><select name=\"secondChoiceRoom\">
     <option value=\"default\">Select a value</option>";
@@ -216,7 +216,7 @@ echo "
                 }                                                         
             }
         }
-        if($availability == "Available" || $availability == "Pending")
+        if(($availability == "Available" || $availability == "Pending") && $row['isReservable'] == 1)
         {
             echo "<option value=\"{$row['ID']}\"";
             echo">{$row['buildingName']} {$row['roomNumber']} ({$availability})</option>";
