@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2012 at 06:43 PM
+-- Generation Time: Dec 04, 2012 at 11:32 PM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `building` (
   `campusName` varchar(50) NOT NULL,
   `latitude` decimal(10,0) DEFAULT NULL,
   `longitude` decimal(10,0) DEFAULT NULL,
-  `name` varchar(20) NOT NULL,
+  `name` varchar(50) NOT NULL,
   PRIMARY KEY (`name`),
   KEY `campusName` (`campusName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -40,7 +40,25 @@ CREATE TABLE IF NOT EXISTS `building` (
 --
 
 INSERT INTO `building` (`campusName`, `latitude`, `longitude`, `name`) VALUES
-('121', 121, 12, 'Computer Science');
+('Missouri S&T', NULL, NULL, 'Butler-Carlton Civil'),
+('Missouri S&T', NULL, NULL, 'Campus Support Facility'),
+('Missouri S&T', NULL, NULL, 'Castleman Hall'),
+('Missouri S&T', NULL, NULL, 'Centenniel Hall'),
+('Missouri S&T', 121, 12, 'Computer Science'),
+('Missouri S&T', NULL, NULL, 'EECH'),
+('Missouri S&T', NULL, NULL, 'Engineering Management'),
+('Missouri S&T', NULL, NULL, 'Fulton Hall'),
+('Missouri S&T', NULL, NULL, 'Gale Bullman'),
+('Missouri S&T', NULL, NULL, 'Havener Center'),
+('Missouri S&T', NULL, NULL, 'HSS'),
+('Missouri S&T', NULL, NULL, 'IDE Building'),
+('Missouri S&T', NULL, NULL, 'McNutt'),
+('Missouri S&T', NULL, NULL, 'Norwood Hall'),
+('Missouri S&T', NULL, NULL, 'Parker Hall'),
+('Missouri S&T', NULL, NULL, 'Physics Building'),
+('Missouri S&T', NULL, NULL, 'Rolla Building'),
+('Missouri S&T', NULL, NULL, 'Schrenk'),
+('Missouri S&T', NULL, NULL, 'Toomey Hall');
 
 -- --------------------------------------------------------
 
@@ -60,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `campus` (
 --
 
 INSERT INTO `campus` (`campusName`, `longitude`, `latitude`) VALUES
-('121', 1, 1);
+('Missouri S&T', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -137,7 +155,25 @@ CREATE TABLE IF NOT EXISTS `floor` (
 --
 
 INSERT INTO `floor` (`floorNum`, `buildingName`, `floorImageURL`) VALUES
+(1, 'Butler-Carlton Civil', 'images/comingsoon.png'),
+(1, 'Campus Support Facility', 'images/comingsoon.png'),
+(1, 'Castleman Hall', 'images/comingsoon.png'),
+(1, 'Centenniel Hall', 'images/comingsoon.png'),
 (1, 'Computer Science', 'images/cs_building/first floor/exported/cs_1st_floor.png'),
+(1, 'EECH', 'images/comingsoon.png'),
+(1, 'Engineering Management', 'images/comingsoon.png'),
+(1, 'Fulton Hall', 'images/comingsoon.png'),
+(1, 'Gale Bullman', 'images/comingsoon.png'),
+(1, 'Havener Center', 'images/comingsoon.png'),
+(1, 'HSS', 'images/comingsoon.png'),
+(1, 'IDE Building', 'images/comingsoon.png'),
+(1, 'McNutt', 'images/comingsoon.png'),
+(1, 'Norwood Hall', 'images/comingsoon.png'),
+(1, 'Parker Hall', 'images/comingsoon.png'),
+(1, 'Physics Building', 'images/comingsoon.png'),
+(1, 'Rolla Building', 'images/comingsoon.png'),
+(1, 'Schrenk', 'images/comingsoon.png'),
+(1, 'Toomey Hall', 'images/comingsoon.png'),
 (2, 'Computer Science', 'images/cs_building/second floor/exported/CS_second_floor_0051_Layer-0.png'),
 (3, 'Computer Science', 'images/cs_building/third floor/exported/CS_third_floor_0147_Layer-0.png');
 
@@ -214,7 +250,7 @@ CREATE TABLE IF NOT EXISTS `reservation` (
 
 CREATE TABLE IF NOT EXISTS `room` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `buildingName` varchar(20) NOT NULL,
+  `buildingName` varchar(50) NOT NULL,
   `floorNum` int(11) NOT NULL,
   `roomNumber` varchar(30) NOT NULL,
   `capacity` int(10) unsigned NOT NULL,
@@ -227,7 +263,7 @@ CREATE TABLE IF NOT EXISTS `room` (
   UNIQUE KEY `uniqueIDByBuildingFloorRoomNum` (`buildingName`,`floorNum`,`roomNumber`),
   KEY `name` (`buildingName`),
   KEY `floorNum` (`floorNum`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=58 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=103 ;
 
 --
 -- Dumping data for table `room`
@@ -276,7 +312,51 @@ INSERT INTO `room` (`ID`, `buildingName`, `floorNum`, `roomNumber`, `capacity`, 
 (54, 'Computer Science', 2, '208', 0, NULL, 'images/cs_building/second floor/exported/available/cs_208_available.png', 'images/cs_building/second floor/exported/unavailable/cs_208_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_208_pending.png', 0),
 (55, 'Computer Science', 2, '212', 0, NULL, 'images/cs_building/second floor/exported/available/cs_212_available.png', 'images/cs_building/second floor/exported/unavailable/cs_212_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_212_pending.png', 0),
 (56, 'Computer Science', 3, '327', 40, NULL, 'images/cs_building/third floor/exported/available/cs_327_available.png', 'images/cs_building/third floor/exported/unavailable/cs_327_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_327_pending.png', 1),
-(57, 'Computer Science', 3, '324', 10, NULL, 'images/cs_building/third floor/exported/available/cs_324_available.png', 'images/cs_building/third floor/exported/unavailable/cs_324_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_324_pending.png', 1);
+(57, 'Computer Science', 3, '324', 10, NULL, 'images/cs_building/third floor/exported/available/cs_324_available.png', 'images/cs_building/third floor/exported/unavailable/cs_324_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_324_pending.png', 1),
+(58, 'Computer Science', 3, '325', 0, NULL, 'images/cs_building/third floor/exported/available/cs_325_available.png', 'images/cs_building/third floor/exported/unavailable/cs_325_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_325_pending.png', 0),
+(59, 'Computer Science', 3, '325a', 0, NULL, 'images/cs_building/third floor/exported/available/cs_325a_available.png', 'images/cs_building/third floor/exported/unavailable/cs_325a_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_325a_pending.png', 0),
+(60, 'Computer Science', 3, '325b', 0, NULL, 'images/cs_building/third floor/exported/available/cs_325b_available.png', 'images/cs_building/third floor/exported/unavailable/cs_325b_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_325b_pending.png', 0),
+(61, 'Computer Science', 3, '325c', 0, NULL, 'images/cs_building/third floor/exported/available/cs_325c_available.png', 'images/cs_building/third floor/exported/unavailable/cs_325c_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_325c_pending.png', 0),
+(62, 'Computer Science', 3, '325d', 0, NULL, 'images/cs_building/third floor/exported/available/cs_325d_available.png', 'images/cs_building/third floor/exported/unavailable/cs_325d_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_325d_pending.png', 0),
+(63, 'Computer Science', 3, '325e', 0, NULL, 'images/cs_building/third floor/exported/available/cs_325e_available.png', 'images/cs_building/third floor/exported/unavailable/cs_325e_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_325e_pending.png', 0),
+(64, 'Computer Science', 3, '325f', 0, NULL, 'images/cs_building/third floor/exported/available/cs_325f_available.png', 'images/cs_building/third floor/exported/unavailable/cs_325f_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_325f_pending.png', 0),
+(65, 'Computer Science', 3, '325g', 0, NULL, 'images/cs_building/third floor/exported/available/cs_325g_available.png', 'images/cs_building/third floor/exported/unavailable/cs_325g_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_325g_pending.png', 0),
+(66, 'Computer Science', 3, '331', 0, NULL, 'images/cs_building/third floor/exported/available/cs_331_available.png', 'images/cs_building/third floor/exported/unavailable/cs_331_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_331_pending.png', 0),
+(67, 'Computer Science', 3, '332', 0, NULL, 'images/cs_building/third floor/exported/available/cs_332_available.png', 'images/cs_building/third floor/exported/unavailable/cs_332_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_332_pending.png', 0),
+(68, 'Computer Science', 3, '333', 0, NULL, 'images/cs_building/third floor/exported/available/cs_333_available.png', 'images/cs_building/third floor/exported/unavailable/cs_333_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_333_pending.png', 0),
+(69, 'Computer Science', 3, '334', 0, NULL, 'images/cs_building/third floor/exported/available/cs_334_available.png', 'images/cs_building/third floor/exported/unavailable/cs_334_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_334_pending.png', 0),
+(70, 'Computer Science', 3, '335', 0, NULL, 'images/cs_building/third floor/exported/available/cs_335_available.png', 'images/cs_building/third floor/exported/unavailable/cs_335_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_335_pending.png', 0),
+(71, 'Computer Science', 3, '336', 0, NULL, 'images/cs_building/third floor/exported/available/cs_336_available.png', 'images/cs_building/third floor/exported/unavailable/cs_336_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_336_pending.png', 0),
+(72, 'Computer Science', 3, '337', 0, NULL, 'images/cs_building/third floor/exported/available/cs_337_available.png', 'images/cs_building/third floor/exported/unavailable/cs_337_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_337_pending.png', 0),
+(73, 'Computer Science', 3, '338', 0, NULL, 'images/cs_building/third floor/exported/available/cs_338_available.png', 'images/cs_building/third floor/exported/unavailable/cs_338_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_338_pending.png', 0),
+(74, 'Computer Science', 3, '339', 0, NULL, 'images/cs_building/third floor/exported/available/cs_339_available.png', 'images/cs_building/third floor/exported/unavailable/cs_339_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_339_pending.png', 0),
+(75, 'Computer Science', 3, '340', 0, NULL, 'images/cs_building/third floor/exported/available/cs_340_available.png', 'images/cs_building/third floor/exported/unavailable/cs_340_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_340_pending.png', 0),
+(76, 'Computer Science', 3, '341', 0, NULL, 'images/cs_building/third floor/exported/available/cs_341_available.png', 'images/cs_building/third floor/exported/unavailable/cs_341_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_341_pending.png', 0),
+(78, 'Computer Science', 3, '343', 0, NULL, 'images/cs_building/third floor/exported/available/cs_343_available.png', 'images/cs_building/third floor/exported/unavailable/cs_343_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_343_pending.png', 0),
+(79, 'Computer Science', 3, '344', 0, NULL, 'images/cs_building/third floor/exported/available/cs_344_available.png', 'images/cs_building/third floor/exported/unavailable/cs_344_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_344_pending.png', 0),
+(80, 'Computer Science', 3, '345', 0, NULL, 'images/cs_building/third floor/exported/available/cs_345_available.png', 'images/cs_building/third floor/exported/unavailable/cs_345_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_345_pending.png', 0),
+(81, 'Computer Science', 3, '346', 0, NULL, 'images/cs_building/third floor/exported/available/cs_346_available.png', 'images/cs_building/third floor/exported/unavailable/cs_346_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_346_pending.png', 0),
+(82, 'Computer Science', 3, '343a', 0, NULL, 'images/cs_building/third floor/exported/available/cs_343a_available.png', 'images/cs_building/third floor/exported/unavailable/cs_343a_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_343a_pending.png', 0),
+(83, 'Computer Science', 3, '304', 0, NULL, 'images/cs_building/third floor/exported/available/cs_304_available.png', 'images/cs_building/third floor/exported/unavailable/cs_304_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_304_pending.png', 0),
+(84, 'Computer Science', 3, '305', 0, NULL, 'images/cs_building/third floor/exported/available/cs_305_available.png', 'images/cs_building/third floor/exported/unavailable/cs_305_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_305_pending.png', 0),
+(85, 'Computer Science', 3, '306', 0, NULL, 'images/cs_building/third floor/exported/available/cs_306_available.png', 'images/cs_building/third floor/exported/unavailable/cs_306_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_306_pending.png', 0),
+(86, 'Computer Science', 3, '307', 0, NULL, 'images/cs_building/third floor/exported/available/cs_307_available.png', 'images/cs_building/third floor/exported/unavailable/cs_307_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_307_pending.png', 0),
+(87, 'Computer Science', 3, '308', 0, NULL, 'images/cs_building/third floor/exported/available/cs_308_available.png', 'images/cs_building/third floor/exported/unavailable/cs_308_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_308_pending.png', 0),
+(88, 'Computer Science', 3, '309', 0, NULL, 'images/cs_building/third floor/exported/available/cs_309_available.png', 'images/cs_building/third floor/exported/unavailable/cs_309_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_309_pending.png', 0),
+(89, 'Computer Science', 3, '310', 0, NULL, 'images/cs_building/third floor/exported/available/cs_310_available.png', 'images/cs_building/third floor/exported/unavailable/cs_310_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_310_pending.png', 0),
+(90, 'Computer Science', 3, '311', 0, NULL, 'images/cs_building/third floor/exported/available/cs_311_available.png', 'images/cs_building/third floor/exported/unavailable/cs_311_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_311_pending.png', 0),
+(91, 'Computer Science', 3, '312', 0, NULL, 'images/cs_building/third floor/exported/available/cs_312_available.png', 'images/cs_building/third floor/exported/unavailable/cs_312_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_312_pending.png', 0),
+(92, 'Computer Science', 3, '313', 0, NULL, 'images/cs_building/third floor/exported/available/cs_313_available.png', 'images/cs_building/third floor/exported/unavailable/cs_313_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_313_pending.png', 0),
+(93, 'Computer Science', 3, '314', 0, NULL, 'images/cs_building/third floor/exported/available/cs_314_available.png', 'images/cs_building/third floor/exported/unavailable/cs_314_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_314_pending.png', 0),
+(94, 'Computer Science', 3, '315', 0, NULL, 'images/cs_building/third floor/exported/available/cs_315_available.png', 'images/cs_building/third floor/exported/unavailable/cs_315_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_315_pending.png', 0),
+(95, 'Computer Science', 3, '316', 0, NULL, 'images/cs_building/third floor/exported/available/cs_316_available.png', 'images/cs_building/third floor/exported/unavailable/cs_316_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_316_pending.png', 0),
+(96, 'Computer Science', 3, '317', 0, NULL, 'images/cs_building/third floor/exported/available/cs_317_available.png', 'images/cs_building/third floor/exported/unavailable/cs_317_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_317_pending.png', 0),
+(97, 'Computer Science', 3, '318', 0, NULL, 'images/cs_building/third floor/exported/available/cs_318_available.png', 'images/cs_building/third floor/exported/unavailable/cs_318_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_318_pending.png', 0),
+(98, 'Computer Science', 3, '319', 0, NULL, 'images/cs_building/third floor/exported/available/cs_319_available.png', 'images/cs_building/third floor/exported/unavailable/cs_319_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_319_pending.png', 0),
+(99, 'Computer Science', 3, '320', 0, NULL, 'images/cs_building/third floor/exported/available/cs_320_available.png', 'images/cs_building/third floor/exported/unavailable/cs_320_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_320_pending.png', 0),
+(100, 'Computer Science', 3, '321', 0, NULL, 'images/cs_building/third floor/exported/available/cs_321_available.png', 'images/cs_building/third floor/exported/unavailable/cs_321_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_321_pending.png', 0),
+(101, 'Computer Science', 3, '322', 0, NULL, 'images/cs_building/third floor/exported/available/cs_322_available.png', 'images/cs_building/third floor/exported/unavailable/cs_322_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_322_pending.png', 0),
+(102, 'Computer Science', 3, '323', 0, NULL, 'images/cs_building/third floor/exported/available/cs_323_available.png', 'images/cs_building/third floor/exported/unavailable/cs_323_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_323_pending.png', 0);
 
 -- --------------------------------------------------------
 
