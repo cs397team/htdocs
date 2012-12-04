@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2012 at 05:47 AM
+-- Generation Time: Dec 04, 2012 at 06:43 PM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -40,8 +40,7 @@ CREATE TABLE IF NOT EXISTS `building` (
 --
 
 INSERT INTO `building` (`campusName`, `latitude`, `longitude`, `name`) VALUES
-('121', 121, 12, 'Computer Science'),
-('121', NULL, NULL, 'EECH');
+('121', 121, 12, 'Computer Science');
 
 -- --------------------------------------------------------
 
@@ -117,13 +116,7 @@ CREATE TABLE IF NOT EXISTS `event` (
 --
 
 INSERT INTO `event` (`id`, `title`, `eventTimeStart`, `eventTimeEnd`, `accessTimeStart`, `accessTimeEnd`, `date`, `recurrence`, `recurrenceEnd`, `numAttendees`, `decorations`, `alcohol`, `prizes`, `tickets`, `outsideVendors`, `foodOption`, `typeOfEvent`) VALUES
-(121, '1221', '04:00:00', '07:00:00', '03:00:00', '07:00:00', '2012-11-21', 'Once', NULL, 12111111, 1, 1, 1, 1, 1, 0, 'test'),
-(122, 'Event 2', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '0000-00-00', 'Once', NULL, 0, 0, 0, 0, 0, 0, 0, ''),
-(123, 'Event 3', '03:00:00', '04:00:00', '02:30:00', '04:30:00', '2012-11-21', 'Once', NULL, 0, 0, 0, 0, 0, 0, 0, ''),
-(129, 'Meeting of the Minds', '04:00:00', '07:00:00', '01:00:00', '02:00:00', '2012-11-21', 'Once', NULL, 9, 0, 0, 0, 0, 0, 0, 'meeting'),
-(130, 'Meeting of the Minds', '04:00:00', '07:00:00', '01:00:00', '02:00:00', '2012-11-21', 'Once', NULL, 9, 0, 0, 0, 0, 0, 0, 'meeting'),
-(131, '', '03:00:00', '04:00:00', '01:00:00', '02:00:00', '2012-12-12', 'Once', NULL, 0, 0, 0, 0, 0, 0, 0, 'meeting'),
-(132, 'Meeting of the Minds', '03:00:00', '04:00:00', '01:00:00', '02:00:00', '2012-12-12', 'Once', NULL, 9, 0, 0, 0, 0, 0, 0, 'meeting');
+(121, '1221', '04:00:00', '07:00:00', '03:00:00', '07:00:00', '2012-11-21', 'Once', NULL, 12111111, 1, 1, 1, 1, 1, 0, 'test');
 
 -- --------------------------------------------------------
 
@@ -145,10 +138,8 @@ CREATE TABLE IF NOT EXISTS `floor` (
 
 INSERT INTO `floor` (`floorNum`, `buildingName`, `floorImageURL`) VALUES
 (1, 'Computer Science', 'images/cs_building/first floor/exported/cs_1st_floor.png'),
-(1, 'EECH', ''),
 (2, 'Computer Science', 'images/cs_building/second floor/exported/CS_second_floor_0051_Layer-0.png'),
-(2, 'EECH', ''),
-(15, 'EECH', '');
+(3, 'Computer Science', 'images/cs_building/third floor/exported/CS_third_floor_0147_Layer-0.png');
 
 -- --------------------------------------------------------
 
@@ -215,18 +206,6 @@ CREATE TABLE IF NOT EXISTS `reservation` (
   KEY `organization` (`organization`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
---
--- Dumping data for table `reservation`
---
-
-INSERT INTO `reservation` (`ID`, `user`, `alternateUser`, `organization`, `equipmentNeeded`, `eventId`, `primaryRoomNumber`, `backupRoomNumber`, `Approval`) VALUES
-(3, 12269597, 12344567, 'ACM', 'Transparency Projector', 121, 2, 1, 'Pending'),
-(4, 12344567, 12269597, 'ACM', 'Microphones', 122, 3, 2, 'Pending'),
-(5, 14456654, 12269597, 'ACM', 'TV / DVD', 123, 2, 3, 'Pending'),
-(6, 16016314, 12269597, 'ACM', 'Microphones', 121, 2, 1, 'Denied'),
-(11, 12345677, 16016314, 'ACM', NULL, 129, 4, 1, 'Approved'),
-(14, 12269597, 16016314, 'ACM', NULL, 132, 1, 4, 'Pending');
-
 -- --------------------------------------------------------
 
 --
@@ -243,21 +222,61 @@ CREATE TABLE IF NOT EXISTS `room` (
   `availableImageURL` varchar(128) NOT NULL,
   `notAvailableImageURL` varchar(128) NOT NULL,
   `pendingAvailableImageURL` varchar(128) NOT NULL,
+  `isReservable` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`ID`),
   UNIQUE KEY `uniqueIDByBuildingFloorRoomNum` (`buildingName`,`floorNum`,`roomNumber`),
   KEY `name` (`buildingName`),
   KEY `floorNum` (`floorNum`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=58 ;
 
 --
 -- Dumping data for table `room`
 --
 
-INSERT INTO `room` (`ID`, `buildingName`, `floorNum`, `roomNumber`, `capacity`, `type`, `availableImageURL`, `notAvailableImageURL`, `pendingAvailableImageURL`) VALUES
-(1, 'Computer Science', 1, '121', 121, '121', '', '', ''),
-(2, 'Computer Science', 2, '208', 54, 'Classroom', 'images/cs_building/second floor/exported/available/cs_208_available.png', 'images/cs_building/second floor/exported/unavailable/cs_208_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_208_pending.png'),
-(3, 'Computer Science', 1, '13131', 3131, '133', '', '', ''),
-(4, 'Computer Science', 2, '216', 50, NULL, 'images/cs_building/second floor/exported/available/cs_216_available.png', 'images/cs_building/second floor/exported/unavailable/cs_216_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_216_pending.png');
+INSERT INTO `room` (`ID`, `buildingName`, `floorNum`, `roomNumber`, `capacity`, `type`, `availableImageURL`, `notAvailableImageURL`, `pendingAvailableImageURL`, `isReservable`) VALUES
+(15, 'Computer Science', 1, '101', 0, NULL, 'images/cs_building/first floor/exported/available/cs_101_available.png', 'images/cs_building/first floor/exported/unavailable/cs_101_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_101_pending.png', 0),
+(16, 'Computer Science', 1, '102', 0, NULL, 'images/cs_building/first floor/exported/available/cs_102_available.png', 'images/cs_building/first floor/exported/unavailable/cs_102_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_102_pending.png', 0),
+(17, 'Computer Science', 1, '103', 0, NULL, 'images/cs_building/first floor/exported/available/cs_103_available.png', 'images/cs_building/first floor/exported/unavailable/cs_103_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_103_pending.png', 0),
+(18, 'Computer Science', 1, '104', 0, NULL, 'images/cs_building/first floor/exported/available/cs_104_available.png', 'images/cs_building/first floor/exported/unavailable/cs_104_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_104_pending.png', 0),
+(19, 'Computer Science', 1, '105', 0, NULL, 'images/cs_building/first floor/exported/available/cs_105_available.png', 'images/cs_building/first floor/exported/unavailable/cs_105_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_105_pending.png', 0),
+(20, 'Computer Science', 1, '107a1', 0, NULL, 'images/cs_building/first floor/exported/available/cs_107a1_available.png', 'images/cs_building/first floor/exported/unavailable/cs_107a1_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_107a1_pending.png', 0),
+(21, 'Computer Science', 1, '106', 0, NULL, 'images/cs_building/first floor/exported/available/cs_106_available.png', 'images/cs_building/first floor/exported/unavailable/cs_106_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_106_pending.png', 0),
+(22, 'Computer Science', 1, '106a', 0, NULL, 'images/cs_building/first floor/exported/available/cs_106a_available.png', 'images/cs_building/first floor/exported/unavailable/cs_106a_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_101_pending.png', 0),
+(23, 'Computer Science', 1, '106b', 0, NULL, 'images/cs_building/first floor/exported/available/cs_106b_available.png', 'images/cs_building/first floor/exported/unavailable/cs_106b_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_106b_pending.png', 0),
+(24, 'Computer Science', 1, '106c', 0, NULL, 'images/cs_building/first floor/exported/available/cs_106c_available.png', 'images/cs_building/first floor/exported/unavailable/cs_106c_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_106c_pending.png', 0),
+(25, 'Computer Science', 1, '113', 0, NULL, 'images/cs_building/first floor/exported/available/cs_113_available.png', 'images/cs_building/first floor/exported/unavailable/cs_113_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_113_pending.png', 0),
+(26, 'Computer Science', 1, '112', 0, NULL, 'images/cs_building/first floor/exported/available/cs_112_available.png', 'images/cs_building/first floor/exported/unavailable/cs_112_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_112_pending.png', 0),
+(27, 'Computer Science', 1, '111', 0, NULL, 'images/cs_building/first floor/exported/available/cs_111_available.png', 'images/cs_building/first floor/exported/unavailable/cs_111_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_111_pending.png', 0),
+(28, 'Computer Science', 1, '110', 0, NULL, 'images/cs_building/first floor/exported/available/cs_110_available.png', 'images/cs_building/first floor/exported/unavailable/cs_110_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_110_pending.png', 0),
+(29, 'Computer Science', 1, '100a', 0, NULL, 'images/cs_building/first floor/exported/available/cs_100a_available.png', 'images/cs_building/first floor/exported/unavailable/cs_100a_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_100a_pending.png', 0),
+(30, 'Computer Science', 1, '109', 0, NULL, 'images/cs_building/first floor/exported/available/cs_109_available.png', 'images/cs_building/first floor/exported/unavailable/cs_109_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_109_pending.png', 0),
+(31, 'Computer Science', 1, '108', 0, NULL, 'images/cs_building/first floor/exported/available/cs_108_available.png', 'images/cs_building/first floor/exported/unavailable/cs_108_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_108_pending.png', 0),
+(32, 'Computer Science', 1, '107f', 0, NULL, 'images/cs_building/first floor/exported/available/cs_107f_available.png', 'images/cs_building/first floor/exported/unavailable/cs_107f_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_107f_pending.png', 0),
+(33, 'Computer Science', 1, '107', 0, NULL, 'images/cs_building/first floor/exported/available/cs_107_available.png', 'images/cs_building/first floor/exported/unavailable/cs_107_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_107_pending.png', 0),
+(34, 'Computer Science', 1, '107d', 0, NULL, 'images/cs_building/first floor/exported/available/cs_107d_available.png', 'images/cs_building/first floor/exported/unavailable/cs_107d_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_107d_pending.png', 0),
+(35, 'Computer Science', 1, '107a', 0, NULL, 'images/cs_building/first floor/exported/available/cs_107a_available.png', 'images/cs_building/first floor/exported/unavailable/cs_107a_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_107a_pending.png', 0),
+(36, 'Computer Science', 1, '107c', 0, NULL, 'images/cs_building/first floor/exported/available/cs_107c_available.png', 'images/cs_building/first floor/exported/unavailable/cs_107c_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_107c_pending.png', 0),
+(37, 'Computer Science', 1, '107e', 0, NULL, 'images/cs_building/first floor/exported/available/cs_107e_available.png', 'images/cs_building/first floor/exported/unavailable/cs_107e_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_107e_pending.png', 0),
+(38, 'Computer Science', 1, '104e1', 0, NULL, 'images/cs_building/first floor/exported/available/cs_104e1_available.png', 'images/cs_building/first floor/exported/unavailable/cs_104e1_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_104e1_pending.png', 0),
+(39, 'Computer Science', 1, '104e', 0, NULL, 'images/cs_building/first floor/exported/available/cs_104e_available.png', 'images/cs_building/first floor/exported/unavailable/cs_104e_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_104e_pending.png', 0),
+(40, 'Computer Science', 1, '104d', 0, NULL, 'images/cs_building/first floor/exported/available/cs_104d_available.png', 'images/cs_building/first floor/exported/unavailable/cs_104d_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_104d_pending.png', 0),
+(41, 'Computer Science', 1, '104c', 0, NULL, 'images/cs_building/first floor/exported/available/cs_104c_available.png', 'images/cs_building/first floor/exported/unavailable/cs_104c_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_104c_pending.png', 0),
+(42, 'Computer Science', 1, '104b', 0, NULL, 'images/cs_building/first floor/exported/available/cs_104b_available.png', 'images/cs_building/first floor/exported/unavailable/cs_104b_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_104b_pending.png', 0),
+(43, 'Computer Science', 1, '103a', 0, NULL, 'images/cs_building/first floor/exported/available/cs_103a_available.png', 'images/cs_building/first floor/exported/unavailable/cs_103a_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_103a_pending.png', 0),
+(44, 'Computer Science', 1, '1cr5', 0, NULL, 'images/cs_building/first floor/exported/available/cs_1cr5_available.png', 'images/cs_building/first floor/exported/unavailable/cs_1cr5_unavailable.png', 'images/cs_building/first floor/exported/pending/cs_1cr5_pending.png', 0),
+(45, 'Computer Science', 2, '202', 45, NULL, 'images/cs_building/second floor/exported/available/cs_202_available.png', 'images/cs_building/second floor/exported/unavailable/cs_202_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_202_pending.png', 1),
+(46, 'Computer Science', 2, '203', 49, NULL, 'images/cs_building/second floor/exported/available/cs_203_available.png', 'images/cs_building/second floor/exported/unavailable/cs_203_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_203_pending.png', 1),
+(47, 'Computer Science', 2, '204', 39, NULL, 'images/cs_building/second floor/exported/available/cs_204_available.png', 'images/cs_building/second floor/exported/unavailable/cs_204_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_204_pending.png', 1),
+(48, 'Computer Science', 2, '205', 38, NULL, 'images/cs_building/second floor/exported/available/cs_205_available.png', 'images/cs_building/second floor/exported/unavailable/cs_205_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_205_pending.png', 1),
+(49, 'Computer Science', 2, '207', 58, NULL, 'images/cs_building/second floor/exported/available/cs_207_available.png', 'images/cs_building/second floor/exported/unavailable/cs_207_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_207_pending.png', 1),
+(50, 'Computer Science', 2, '216', 49, NULL, 'images/cs_building/second floor/exported/available/cs_216_available.png', 'images/cs_building/second floor/exported/unavailable/cs_216_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_216_pending.png', 1),
+(51, 'Computer Science', 2, '209', 0, NULL, 'images/cs_building/second floor/exported/available/cs_209_available.png', 'images/cs_building/second floor/exported/unavailable/cs_209_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_209_pending.png', 0),
+(52, 'Computer Science', 2, '206', 0, NULL, 'images/cs_building/second floor/exported/available/cs_206_available.png', 'images/cs_building/second floor/exported/unavailable/cs_206_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_206_pending.png', 0),
+(53, 'Computer Science', 2, '213', 0, NULL, 'images/cs_building/second floor/exported/available/cs_213_available.png', 'images/cs_building/second floor/exported/unavailable/cs_213_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_213_pending.png', 0),
+(54, 'Computer Science', 2, '208', 0, NULL, 'images/cs_building/second floor/exported/available/cs_208_available.png', 'images/cs_building/second floor/exported/unavailable/cs_208_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_208_pending.png', 0),
+(55, 'Computer Science', 2, '212', 0, NULL, 'images/cs_building/second floor/exported/available/cs_212_available.png', 'images/cs_building/second floor/exported/unavailable/cs_212_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_212_pending.png', 0),
+(56, 'Computer Science', 3, '327', 40, NULL, 'images/cs_building/third floor/exported/available/cs_327_available.png', 'images/cs_building/third floor/exported/unavailable/cs_327_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_327_pending.png', 1),
+(57, 'Computer Science', 3, '324', 10, NULL, 'images/cs_building/third floor/exported/available/cs_324_available.png', 'images/cs_building/third floor/exported/unavailable/cs_324_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_324_pending.png', 1);
 
 -- --------------------------------------------------------
 
