@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2012 at 11:14 PM
+-- Generation Time: Dec 04, 2012 at 11:32 PM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `building` (
   `campusName` varchar(50) NOT NULL,
   `latitude` decimal(10,0) DEFAULT NULL,
   `longitude` decimal(10,0) DEFAULT NULL,
-  `name` varchar(20) NOT NULL,
+  `name` varchar(50) NOT NULL,
   PRIMARY KEY (`name`),
   KEY `campusName` (`campusName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -40,7 +40,25 @@ CREATE TABLE IF NOT EXISTS `building` (
 --
 
 INSERT INTO `building` (`campusName`, `latitude`, `longitude`, `name`) VALUES
-('121', 121, 12, 'Computer Science');
+('Missouri S&T', NULL, NULL, 'Butler-Carlton Civil'),
+('Missouri S&T', NULL, NULL, 'Campus Support Facility'),
+('Missouri S&T', NULL, NULL, 'Castleman Hall'),
+('Missouri S&T', NULL, NULL, 'Centenniel Hall'),
+('Missouri S&T', 121, 12, 'Computer Science'),
+('Missouri S&T', NULL, NULL, 'EECH'),
+('Missouri S&T', NULL, NULL, 'Engineering Management'),
+('Missouri S&T', NULL, NULL, 'Fulton Hall'),
+('Missouri S&T', NULL, NULL, 'Gale Bullman'),
+('Missouri S&T', NULL, NULL, 'Havener Center'),
+('Missouri S&T', NULL, NULL, 'HSS'),
+('Missouri S&T', NULL, NULL, 'IDE Building'),
+('Missouri S&T', NULL, NULL, 'McNutt'),
+('Missouri S&T', NULL, NULL, 'Norwood Hall'),
+('Missouri S&T', NULL, NULL, 'Parker Hall'),
+('Missouri S&T', NULL, NULL, 'Physics Building'),
+('Missouri S&T', NULL, NULL, 'Rolla Building'),
+('Missouri S&T', NULL, NULL, 'Schrenk'),
+('Missouri S&T', NULL, NULL, 'Toomey Hall');
 
 -- --------------------------------------------------------
 
@@ -60,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `campus` (
 --
 
 INSERT INTO `campus` (`campusName`, `longitude`, `latitude`) VALUES
-('121', 1, 1);
+('Missouri S&T', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -137,7 +155,25 @@ CREATE TABLE IF NOT EXISTS `floor` (
 --
 
 INSERT INTO `floor` (`floorNum`, `buildingName`, `floorImageURL`) VALUES
+(1, 'Butler-Carlton Civil', 'images/comingsoon.png'),
+(1, 'Campus Support Facility', 'images/comingsoon.png'),
+(1, 'Castleman Hall', 'images/comingsoon.png'),
+(1, 'Centenniel Hall', 'images/comingsoon.png'),
 (1, 'Computer Science', 'images/cs_building/first floor/exported/cs_1st_floor.png'),
+(1, 'EECH', 'images/comingsoon.png'),
+(1, 'Engineering Management', 'images/comingsoon.png'),
+(1, 'Fulton Hall', 'images/comingsoon.png'),
+(1, 'Gale Bullman', 'images/comingsoon.png'),
+(1, 'Havener Center', 'images/comingsoon.png'),
+(1, 'HSS', 'images/comingsoon.png'),
+(1, 'IDE Building', 'images/comingsoon.png'),
+(1, 'McNutt', 'images/comingsoon.png'),
+(1, 'Norwood Hall', 'images/comingsoon.png'),
+(1, 'Parker Hall', 'images/comingsoon.png'),
+(1, 'Physics Building', 'images/comingsoon.png'),
+(1, 'Rolla Building', 'images/comingsoon.png'),
+(1, 'Schrenk', 'images/comingsoon.png'),
+(1, 'Toomey Hall', 'images/comingsoon.png'),
 (2, 'Computer Science', 'images/cs_building/second floor/exported/CS_second_floor_0051_Layer-0.png'),
 (3, 'Computer Science', 'images/cs_building/third floor/exported/CS_third_floor_0147_Layer-0.png');
 
@@ -214,7 +250,7 @@ CREATE TABLE IF NOT EXISTS `reservation` (
 
 CREATE TABLE IF NOT EXISTS `room` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `buildingName` varchar(20) NOT NULL,
+  `buildingName` varchar(50) NOT NULL,
   `floorNum` int(11) NOT NULL,
   `roomNumber` varchar(30) NOT NULL,
   `capacity` int(10) unsigned NOT NULL,
