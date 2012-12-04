@@ -5,7 +5,7 @@
 <title>Reservation Time!</title>
 <?php
 
-function populateOptionList($labelString, $keyName, $tableName, $labelFieldName, $valueFieldName) {
+function populateOptionList($labelString, $keyName, $tableName, $labelFieldName, $valueFieldName, $problems) {
     if($labelFieldName != $valueFieldName) {
 	    $result = mysql_query("SELECT ".$labelFieldName.", ".$valueFieldName." FROM ".$tableName);
 	} else {
@@ -24,7 +24,12 @@ function populateOptionList($labelString, $keyName, $tableName, $labelFieldName,
 		}
 		echo">".$row[$labelFieldName]."</option>";
 	}
-	echo "</select></td></tr>";
+	echo "</select>";
+    if($problems != "None")
+    {
+        echo "<font color=\"red\">${problems}</font>";
+    }
+    echo "</td></tr>";
 }
 if($_SERVER['SERVER_PORT'] != '443') 
 { 
@@ -86,11 +91,56 @@ else
 <h1 style="color:rgb(0,133,63)">R<sup>3</sup> Reservation System</h1>
 <br clear="all">
 <hr />
-<h2 align="center" >Add a Reservation</h2>
-<form method="post">
 
-<table border ='0'>
 <?php
+$problems['organization']         = "None";
+$problems['primaryContact']       = "None";
+$problems['altContact']           = "None";
+$problems['eventTitle']           = "None";
+$problems['secondChoiceFacility'] = "None";
+$problems['participants']         = "None";
+
+if(isset($_POST['submit']))
+{
+    if($_POST['organization'] == "default")
+    {
+        $problems['organization'] = "Please select organization!";
+    }
+    
+    if($_POST['primaryContact'] == "default")
+    {
+        $problems['primaryContact'] = "Please select primary contact!";
+    }
+    
+    if($_POST['altContact'] == "default")
+    {
+        $problems['altContact'] = "Please select alternate contact!";
+    }
+    
+    if(!isset($_POST['eventTitle']) || $_POST['eventTitle'] == "")
+    {
+        $problems['eventTitle'] = "Please enter an event title!";
+    }
+    
+    if($_POST['secondChoiceRoom'] == "default")
+    {
+        $problems['secondChoiceFacility'] = "Please select a backup facility!";
+    }
+    
+    if(!isset($_POST['participants']) || $_POST['participants'] == "0" || $_POST['participants'] == "")
+    {
+        $problems['participants'] = "Please select a valid number of participants!";
+    }
+}
+
+if(!isset($_POST['submit']) || !($problems['organization'] == "None" && $problems['primaryContact'] == "None" && $problems['altContact'] == "None"
+                                && $problems['eventTitle'] == "None" && $problems['secondChoiceFacility'] == "None" && $problems['participants'] == "None"))
+{
+    echo "<h2 align=\"center\" >Add a Reservation</h2>";
+    echo "<form method=\"post\">";
+
+    echo "<table border ='0'>";
+
     echo "<input name=\"date\" hidden=\"hidden\" value=\"{$date}\" />";
     echo "<input name=\"accessStart\" hidden=\"hidden\" value=\"{$accessStart}\" />";
     echo "<input name=\"accessEnd\" hidden=\"hidden\" value=\"{$accessEnd}\" />";
@@ -110,31 +160,35 @@ else
 	mysql_select_db("r3", $con);
     //****************************
 
-	populateOptionList("Organization", "organization", "organization", "Name", "Name");
-	populateOptionList("Primary Contact", "primaryContact", "User", "Name", "ID");
-	populateOptionList("Alternate Contact", "altContact", "User", "Name", "ID");
+	populateOptionList("Organization", "organization", "organization", "Name", "Name", $problems['organization']);
+	populateOptionList("Primary Contact", "primaryContact", "User", "Name", "ID", $problems['primaryContact']);
+	populateOptionList("Alternate Contact", "altContact", "User", "Name", "ID", $problems['altContact']);
 	// *******************************************
 	
 	
-?>
 
-<tr><td>Event Title:</td><td> <input type="text" name="eventTitle" maxlength="40"></td></tr>
-<tr><td>Event Type:</td><td> <select name="eventType">
-		<option value="meeting">Meeting</option>
-		<option value="study">Study Session</option>
-		<option value="performance">Performance</option>
-		<option value="meal">Meal</option>
-		<option value="seminar">Seminar</option>
-		<option value="conference">Conference</option>
-		<option value="sportingEvent">Sporting Event</option>
-		<option value="banquet">Banquet</option>
-		<option value="fundraiser">Fundraiser</option>
-		<option value="informationTable">Information Table</option>
-		<option value="other">Other</option>
+echo "<tr><td>Event Title:</td><td> <input type=\"text\" name=\"eventTitle\" maxlength=\"40\">";
+    if($problems['eventTitle'] != "None")
+        echo "<font color=\"red\">{$problems['eventTitle']}</font>";
+
+echo "
+</td></tr>
+<tr><td>Event Type:</td><td> <select name=\"eventType\">
+		<option value=\"meeting\">Meeting</option>
+		<option value=\"study\">Study Session</option>
+		<option value=\"performance\">Performance</option>
+		<option value=\"meal\">Meal</option>
+		<option value=\"seminar\">Seminar</option>
+		<option value=\"conference\">Conference</option>
+		<option value=\"sportingEvent\">Sporting Event</option>
+		<option value=\"banquet\">Banquet</option>
+		<option value=\"fundraiser\">Fundraiser</option>
+		<option value=\"informationTable\">Information Table</option>
+		<option value=\"other\">Other</option>
 	</select></td></tr>
 <tr><td>&nbsp;</td></tr>
-<tr><td>2nd Choice of Facility</td>
-<?php
+<tr><td>2nd Choice of Facility</td>";
+
     $result = mysql_query("SELECT ID, buildingName, roomNumber FROM room WHERE ID <> {$firstChoiceRoom}");
     
     echo "<td><select name=\"secondChoiceRoom\">
@@ -142,56 +196,85 @@ else
     
     while($row = mysql_fetch_array($result))
     {
-        echo "<option value=\"{$row['ID']}\"";
-        echo">{$row['buildingName']} {$row['roomNumber']}</option>";
+        $availability = "Available";
+        $result2 = mysql_query("SELECT r1.Approval, e1.eventTimeStart, e1.eventTimeEnd, e1.date FROM event AS e1, reservation AS r1 WHERE r1.eventId = e1.id AND r1.primaryRoomNumber = {$row['ID']}");
+        while($row2 = mysql_fetch_array($result2))
+        {
+            if( strtotime($row2['date']) == strtotime($_POST['date']) && (
+                (strtotime($row2['eventTimeStart']) >= strtotime($_POST['startTime']) && strtotime($row2['eventTimeStart']) <= strtotime($_POST['endTime'])) ||
+                (strtotime($row2['eventTimeEnd']) >= strtotime($_POST['startTime']) && strtotime($row2['eventTimeEnd']) <= strtotime($_POST['endTime'])) ||
+                (strtotime($row2['eventTimeStart']) <= strtotime($_POST['startTime']) && strtotime($row2['eventTimeEnd']) >= strtotime($_POST['endTime']))))
+            {
+                if( $row2['Approval'] == "Approved" )
+                {
+                    $availability = "Not Available";
+                    break;
+                }
+                else if( $row2['Approval'] == "Pending" )
+                {
+                    $availability = "Pending";
+                }                                                         
+            }
+        }
+        if($availability == "Available" || $availability == "Pending")
+        {
+            echo "<option value=\"{$row['ID']}\"";
+            echo">{$row['buildingName']} {$row['roomNumber']} ({$availability})</option>";
+        }
     }
-    echo "</select></td></tr>";
+    echo "</select>";
+    if($problems['secondChoiceFacility'] != "None")
+        echo "<font color=\"red\">{$problems['secondChoiceFacility']}</font>";
+    echo "</td></tr>";
 
-    ?>
 
+echo "
 <tr><td>&nbsp;</td></tr>
-<tr><td>Expected Number of Participants:</td><td> <input type="number" name="participants"></td></tr>
+<tr><td>Expected Number of Participants:</td><td> <input type=\"number\" name=\"participants\">";
+if($problems['participants'] != "None")
+    echo "<font color=\"red\">{$problems['participants']}</color>";
+echo "
+</td></tr>
 <tr><td>Will tickets be sold?</td><td> 
-	<input type="radio" name="ticketsCheck" value=1> Yes 
-	<input type="radio" name="ticketsCheck" value=0 checked="true"> No</td></tr>
+	<input type=\"radio\" name=\"ticketsCheck\" value=1> Yes 
+	<input type=\"radio\" name=\"ticketsCheck\" value=0 checked=\"true\"> No</td></tr>
 <tr><td>Will prizes be awarded?</td><td>
-	<input type="radio" name="prizesCheck" value=1> Yes 
-	<input type="radio" name="prizesCheck" value=0 checked="true"> No</td></tr>
+	<input type=\"radio\" name=\"prizesCheck\" value=1> Yes 
+	<input type=\"radio\" name=\"prizesCheck\" value=0 checked=\"true\"> No</td></tr>
 <tr><td>Will outside vendors sell goods at your event?</td><td>
-	<input type="radio" name="vendorsCheck" value=1> Yes 
-	<input type="radio" name="vendorsCheck" value=0 checked="true"> No</td></tr>
+	<input type=\"radio\" name=\"vendorsCheck\" value=1> Yes 
+	<input type=\"radio\" name=\"vendorsCheck\" value=0 checked=\"true\"> No</td></tr>
 <tr><td>Will alcohol be served?</td><td>
-	<input type="radio" name="alcoholCheck" value=1> Yes 
-	<input type="radio" name="alcoholCheck" value=0 checked="true"> No</td></tr>
+	<input type=\"radio\" name=\"alcoholCheck\" value=1> Yes 
+	<input type=\"radio\" name=\"alcoholCheck\" value=0 checked=\"true\"> No</td></tr>
 <tr><td>Will you have decorations?</td><td>
-	<input type="radio" name="decorationsCheck" value=1> Yes 
-	<input type="radio" name="decorationsCheck" value=0 checked="true"> No</td></tr>
+	<input type=\"radio\" name=\"decorationsCheck\" value=1> Yes 
+	<input type=\"radio\" name=\"decorationsCheck\" value=0 checked=\"true\"> No</td></tr>
 <tr><td>Will you have food?</td><td>
-<input type="radio" name="foodCheck" value=1> Yes 
-<input type="radio" name="foodCheck" value=0 checked="true"> No</td></tr>
-<tr><td>Equiment Needed</td><td>
-<select name = "equipmentNeeded" multiple="multiple">
-<option value="Transparency Projector">Transparency Projector</option>
-<option value="TV / DVD">TV / DVD</option>
-<option value="Microphones">Microphones</option>
-<option value="Easel">Easel</option>
-<option value="Dry-Erase Board">Dry-Erase Board</option>
-<option value="Tabletop Podium">Tabletop Podium</option>
-<option value="Floor Podium">Floor Podium</option>
-<option value="Dance Floor">Dance Floor</option>
-<option value="Carousel Projector">Carousel Projector</option>
-<option value="U.S. Flag">U.S. Flag</option>
-<option value="MO Flag">MO Flag</option>
-<option value="University Flag">University Flag</option></td></tr>
+<input type=\"radio\" name=\"foodCheck\" value=1> Yes 
+<input type=\"radio\" name=\"foodCheck\" value=0 checked=\"true\"> No</td></tr>
+<tr><td>Equipment Needed</td><td>
+<select name = \"equipmentNeeded\" multiple=\"multiple\">
+<option value=\"Transparency Projector\">Transparency Projector</option>
+<option value=\"TV / DVD\">TV / DVD</option>
+<option value=\"Microphones\">Microphones</option>
+<option value=\"Easel\">Easel</option>
+<option value=\"Dry-Erase Board\">Dry-Erase Board</option>
+<option value=\"Tabletop Podium\">Tabletop Podium</option>
+<option value=\"Floor Podium\">Floor Podium</option>
+<option value=\"Dance Floor\">Dance Floor</option>
+<option value=\"Carousel Projector\">Carousel Projector</option>
+<option value=\"U.S. Flag\">U.S. Flag</option>
+<option value=\"MO Flag\">MO Flag</option>
+<option value=\"University Flag\">University Flag</option></td></tr>
 </select>
 
 
 </table>
-<input type="submit" name = "submit" value = "Submit Request" />
+<input type=\"submit\" name = \"submit\" value = \"Submit Request\" />
 	
-</form>
-
-<?php
+</form>";
+}
     function clean($str) {
 		$str = @trim($str);
 		if(get_magic_quotes_gpc()) {
@@ -200,50 +283,15 @@ else
 		return mysql_real_escape_string($str);
 	}
 	// The following will NOT execute if the form is blank. (The user just entered the page)
-	if(isset($_POST["submit"]))// == "Submit Query")
+	if(isset($_POST['submit']) && ($problems['organization'] == "None" && $problems['primaryContact'] == "None" && $problems['altContact'] == "None"
+                                     && $problems['eventTitle'] == "None" && $problems['secondChoiceFacility'] == "None" && $problems['participants'] == "None"))// == "Submit Query")
 	{
-        if(!isset($_POST["primaryContact"]) || $_POST["primaryContact"] == "default")
-        {
-            $userID = "NULL";
-        }
-        else
-        {
-            $userID = clean($_POST["primaryContact"]);
-            $userID = "'{$userID}'";
-        }
         
-        if(!isset($_POST["altContact"]) || $_POST["altContact"] == "default")
-        {
-            $altUserID = "NULL";
-        }
-        else
-        {
-            $altUserID = clean($_POST["altContact"]);
-            $altUserID = "'{$altUserID}'";
-        }
-
-	    // Initialize variables with user entered information
-        if(!isset($_POST["organization"]) || $_POST["organization"] == "default")
-        {
-            $organization = "NULL";
-        }
-        else
-        {
-            $organization = clean($_POST["organization"]);
-            $organization = "'{$organization}'";
-        }
-        
-        if(!isset($_POST["eventTitle"]) || $_POST["eventTitle"] == "")
-        {
-            $eventTitle = "NULL";
-        }
-        else
-        {
-            $eventTitle = clean($_POST["eventTitle"]);
-            $eventTitle = "'{$eventTitle}'";
-        }
-        
-		$eventType = clean($_POST["eventType"]);
+        $userID = clean($_POST["primaryContact"]);
+        $altUserID = clean($_POST["altContact"]);
+        $organization = clean($_POST["organization"]);
+        $eventTitle = clean($_POST["eventTitle"]);
+        $eventType = clean($_POST["eventType"]);
 
         if( $stopDate == "" )
         {
@@ -254,24 +302,11 @@ else
             $stopDate = "'{$stopDate}'";
         }
         
-        if( !isset($_POST['secondChoiceRoom']) || $_POST['secondChoiceRoom'] == "default" )
-        {
-            $secondChoiceRoom = "NULL";
-        }
-        else
-        {
-            $secondChoiceRoom = "'{$_POST['secondChoiceRoom']}'";
-        }
-        
-        if(!isset($_POST["participants"]) || $_POST["participants"] == "")
-        {
-            $participants = "NULL";
-        }
-        else
-        {
-            $participants = clean($_POST["participants"]);
-            $participants = "'{$participants}'";
-        }
+
+        $secondChoiceRoom = "'{$_POST['secondChoiceRoom']}'";
+        $participants = clean($_POST["participants"]);
+
+
 		$ticketsCheck = clean($_POST["ticketsCheck"]);
 		$prizesCheck = clean($_POST["prizesCheck"]);
 		$vendorsCheck = clean($_POST["vendorsCheck"]);
@@ -299,29 +334,25 @@ else
 
 	    mysql_select_db("r3", $con);
 		
-		$failure = 0;
-		//Do validation here
-		
-		if(!$failure)
-		{
-		    $sql = "INSERT INTO event VALUES (NULL, {$eventTitle}, '{$startTime}', '{$endTime}', '{$accessStart}', '{$accessEnd}', '{$date}', '{$recurrence}', {$stopDate}, {$participants}, 
+        $sql = "INSERT INTO event VALUES (NULL, '{$eventTitle}', '{$startTime}', '{$endTime}', '{$accessStart}', '{$accessEnd}', '{$date}', '{$recurrence}', {$stopDate}, '{$participants}', 
                      '{$decorationsCheck}', '{$alcoholCheck}', '{$prizesCheck}', '{$ticketsCheck}', '{$vendorsCheck}', '{$foodCheck}', '{$eventType}' )";
 
-			if (!mysql_query($sql,$con))
- 	        {
- 	            die('Error on Insert into Event: ' . mysql_error());
- 	        }
+		if (!mysql_query($sql,$con))
+ 	    {
+ 	        die('Error on Insert into Event: ' . mysql_error());
+ 	    }
 
-            $result = mysql_query("SELECT MAX(ID) AS ID FROM event");
-            $row = mysql_fetch_array($result);
+        $result = mysql_query("SELECT MAX(ID) AS ID FROM event");
+        $row = mysql_fetch_array($result);
             
-            $sql = "INSERT INTO reservation VALUE ( NULL, {$userID}, {$altUserID}, {$organization}, {$equipmentNeeded}, '{$row['ID']}', '{$firstChoiceRoom}', {$secondChoiceRoom}, 'Pending')";
-            if (!mysql_query($sql,$con))
- 	        {
- 	            die('Error on Insert into Reservation: ' . mysql_error());
- 	        }
-	        echo "Reservation Successfully Added <br>";
-		}
+        $sql = "INSERT INTO reservation VALUE ( NULL, '{$userID}', '{$altUserID}', '{$organization}', {$equipmentNeeded}, '{$row['ID']}', '{$firstChoiceRoom}', {$secondChoiceRoom}, 'Pending')";
+        if (!mysql_query($sql,$con))
+ 	    {
+ 	        die('Error on Insert into Reservation: ' . mysql_error());
+ 	    }
+	    echo "<h2 align=\"center\" >Reservation Successfully Added!!!</h2>";
+        echo "<p><a href=\"member-index.php\">Go Home</a></p>";
+        echo "<p><a href=\"pending.php\">View Pending Requests</a></p>";
 		
 		mysql_close($con);
 	}
