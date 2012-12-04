@@ -1,7 +1,27 @@
+<link rel="stylesheet" type="text/css" href="mystyles.css" media="screen" />
+<script type="text/javascript" src="fix_page_height.js"></script>
+
 <html>
 <head>
 <title>Edit Event</title>
 </head>
+<body>
+<div id="wrap">
+
+<img src="images/Logo_Reverse__356.jpg" height="116" width="131" alt="S&T logo" align="left" style="padding-right:30px;"/>
+</br>
+<h1 style="color:rgb(0,133,63)">R<sup>3</sup> Reservation System</h1>
+<br clear="all">
+<div class="container" id="navbar">
+	<ul id="sprite">
+	<li id="b0" class="a0"><a class="navlink" href="member-index.php">Home</a></li>
+	<li id="b1"><a class="navlink" href="reservations.php">Approved Reservations</a></li>
+	<li id="b2"><a class="navlink" href="pending.php">Pending Reservations</a></li>
+	<li id="b3"><a class="navlink" href="searchByDate.php">Reserve</a></li>
+	<li id="b4" style="border-right:1px solid #1f1f1f;"><a class="navlink" href="logout.php">Log Out</a></li>
+	</ul>
+</div>
+
 
 <div align="center">
 
@@ -89,65 +109,65 @@ else if($_SESSION['SESS_ISADMIN'] == 0)
 				</tr>
 				<tr align='center'>
 					<td>Title</td>
-					<td><input type="text" name="title" value="<?php=($row['title'])?>"></td>
+					<td><input type="text" name="title" value="<?php echo $row['title']?>"></td>
 				</tr>
 				<tr align='center'>
 					<td>Event start time</td>
-					<td><input type="time" name="eventStart" value="<?php= $row['eventTimeStart']?>"></td>
+					<td><input type="time" name="eventStart" value="<?php echo $row['eventTimeStart']?>"></td>
 				</tr>
 				<tr align='center'>
 					<td>Event end time</td>
-					<td><input type="time" name="eventEnd" value="<?php= $row['eventTimeEnd']?>"></td>
+					<td><input type="time" name="eventEnd" value="<?php echo $row['eventTimeEnd']?>"></td>
 				</tr>
 				<tr align='center'>
 					<td>Access start time</td>
-					<td><input type="time" name="accessStart" value="<?php= $row['accessTimeStart']?>"></td>
+					<td><input type="time" name="accessStart" value="<?php echo $row['accessTimeStart']?>"></td>
 				</tr>
 				<tr align='center'>
 					<td>Access end time</td>
-					<td><input type="time" name="accessEnd" value="<?php= $row['accessTimeEnd']?>"></td>
+					<td><input type="time" name="accessEnd" value="<?php echo $row['accessTimeEnd']?>"></td>
 				</tr>
 				<tr align='center'>
 					<td>Date</td>
-					<td><input type="date" name="date" value="<?php=($row['date'])?>"></td
+					<td><input type="date" name="date" value="<?php echo $row['date']?>"></td
 				</tr>
 				<tr align='center'>
 					<td>Number of Attendees</td>
-					<td><input type="text" name="numAttend" value="<?php=($row['numAttendees'])?>"></td>
+					<td><input type="text" name="numAttend" value="<?php echo $row['numAttendees']?>"></td>
 				</tr>
 				<tr align='center'>
 					<td>Decorations?</td>
-					<td><input type="checkbox" name="decorations" <?php=( ($row['decorations']) ? ' checked="checked"' : '')?>></td>
+					<td><input type="checkbox" name="decorations" <?php echo ( ($row['decorations']) ? ' checked="checked"' : '')?>></td>
 				</tr>
 				<tr align='center'>
 					<td>Alcohol?</td>
-					<td><input type="checkbox" name="alcohol" <?php=( ($row['alcohol']) ? ' checked="checked"' : '')?>></td>
+					<td><input type="checkbox" name="alcohol" <?php echo ( ($row['alcohol']) ? ' checked="checked"' : '')?>></td>
 				</tr>
 				<tr align='center'>
 					<td>Prizes?</td>
-					<td><input type="checkbox" name="prizes" <?php=( ($row['prizes']) ? ' checked="checked"' : '')?>></td>
+					<td><input type="checkbox" name="prizes" <?php echo ( ($row['prizes']) ? ' checked="checked"' : '')?>></td>
 				</tr>
 				<tr align='center'>
 					<td>Tickets?</td>
-					<td><input type="checkbox" name="tickets" <?php=( ($row['tickets']) ? ' checked="checked"' : '')?>></td>
+					<td><input type="checkbox" name="tickets" <?php echo ( ($row['tickets']) ? ' checked="checked"' : '')?>></td>
 				</tr>
 				<tr align='center'>
 					<td>Outside Vendors?</td>
-					<td><input type="checkbox" name="outsideVendors" <?php=( ($row['outsideVendors']) ? ' checked="checked"' : '')?>></td>
+					<td><input type="checkbox" name="outsideVendors" <?php echo ( ($row['outsideVendors']) ? ' checked="checked"' : '')?>></td>
 				</tr>
 				
 				<tr align='center'>
 					<td>Food Option</td>
 					<td><select name="food">
-						<option value="0" <?php=( $row['foodOption'] == '0' ? ' selected="selected" ' : '' )?>">Chartwell's Catering</option>
-						<option value="1" <?php=( $row['foodOption'] == '1' ? ' selected="selected" ' : '' )?>">Bringing in Food</option>
-						<option value="2" <?php=( $row['foodOption'] == '2' ? ' selected="selected" ' : '' )?>">No Food will be served</option>
+						<option value="0" <?php echo ( $row['foodOption'] == '0' ? ' selected="selected" ' : '' )?>">Chartwell's Catering</option>
+						<option value="1" <?php echo ( $row['foodOption'] == '1' ? ' selected="selected" ' : '' )?>">Bringing in Food</option>
+						<option value="2" <?php echo ( $row['foodOption'] == '2' ? ' selected="selected" ' : '' )?>">No Food will be served</option>
 					</select></td>
 				</tr>
 				
 				<tr align='center'>
 					<td>Type of Event</td>
-					<td><input type="text" name="typeEvent" value="<?php=($row['typeOfEvent'])?>"></td>
+					<td><input type="text" name="typeEvent" value="<?php echo ($row['typeOfEvent'])?>"></td>
 				</tr>
 				<tr align='center'>
 					<td><input type="submit" name="submit" value="Submit Event"></td>
