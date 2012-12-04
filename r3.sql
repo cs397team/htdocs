@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2012 at 10:28 PM
+-- Generation Time: Dec 04, 2012 at 11:14 PM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -296,7 +296,6 @@ INSERT INTO `room` (`ID`, `buildingName`, `floorNum`, `roomNumber`, `capacity`, 
 (74, 'Computer Science', 3, '339', 0, NULL, 'images/cs_building/third floor/exported/available/cs_339_available.png', 'images/cs_building/third floor/exported/unavailable/cs_339_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_339_pending.png', 0),
 (75, 'Computer Science', 3, '340', 0, NULL, 'images/cs_building/third floor/exported/available/cs_340_available.png', 'images/cs_building/third floor/exported/unavailable/cs_340_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_340_pending.png', 0),
 (76, 'Computer Science', 3, '341', 0, NULL, 'images/cs_building/third floor/exported/available/cs_341_available.png', 'images/cs_building/third floor/exported/unavailable/cs_341_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_341_pending.png', 0),
-(77, 'Computer Science', 3, '342', 0, NULL, 'images/cs_building/third floor/exported/available/cs_342_available.png', 'images/cs_building/third floor/exported/unavailable/cs_342_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_342_pending.png', 0),
 (78, 'Computer Science', 3, '343', 0, NULL, 'images/cs_building/third floor/exported/available/cs_343_available.png', 'images/cs_building/third floor/exported/unavailable/cs_343_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_343_pending.png', 0),
 (79, 'Computer Science', 3, '344', 0, NULL, 'images/cs_building/third floor/exported/available/cs_344_available.png', 'images/cs_building/third floor/exported/unavailable/cs_344_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_344_pending.png', 0),
 (80, 'Computer Science', 3, '345', 0, NULL, 'images/cs_building/third floor/exported/available/cs_345_available.png', 'images/cs_building/third floor/exported/unavailable/cs_345_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_345_pending.png', 0),
