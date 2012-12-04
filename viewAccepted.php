@@ -7,12 +7,20 @@
 
 <body>
 <div id="wrap">
-<img src="images/Logo_Reverse__356.jpg" height="116" width="131" alt="S&T logo" align="left" style="padding-right:30px;" />
+
+<img src="images/Logo_Reverse__356.jpg" height="116" width="131" alt="S&T logo" align="left" style="padding-right:30px;"/>
 </br>
 <h1 style="color:rgb(0,133,63)">R<sup>3</sup> Reservation System</h1>
 <br clear="all">
-<hr />
-<h2 align="center">Accepted Requests</h2>
+<div class="container" id="navbar">
+	<ul id="sprite">
+	<li id="b0" class="a0"><a class="navlink" href="member-index.php">Home</a></li>
+	<li id="b1"><a class="navlink" href="reservations.php">Approved Reservations</a></li>
+	<li id="b2"><a class="navlink" href="pending.php">Pending Reservations</a></li>
+	<li id="b3"><a class="navlink" href="searchByDate.php">Reserve</a></li>
+	<li id="b4" style="border-right:1px solid #1f1f1f;"><a class="navlink" href="logout.php">Log Out</a></li>
+	</ul>
+</div>
 
 <?php
 if($_SERVER['SERVER_PORT'] != '443') 
