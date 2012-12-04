@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 03, 2012 at 07:04 PM
+-- Generation Time: Dec 04, 2012 at 05:47 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -93,24 +93,24 @@ INSERT INTO `department` (`Name`, `ChairID`) VALUES
 
 CREATE TABLE IF NOT EXISTS `event` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(20) DEFAULT NULL,
-  `eventTimeStart` time DEFAULT NULL,
-  `eventTimeEnd` time DEFAULT NULL,
-  `accessTimeStart` time DEFAULT NULL,
-  `accessTimeEnd` time DEFAULT NULL,
+  `title` varchar(20) NOT NULL,
+  `eventTimeStart` time NOT NULL,
+  `eventTimeEnd` time NOT NULL,
+  `accessTimeStart` time NOT NULL,
+  `accessTimeEnd` time NOT NULL,
   `date` date NOT NULL,
   `recurrence` enum('Once','Daily','Weekly','Bi-Weekly') NOT NULL,
   `recurrenceEnd` date DEFAULT NULL,
-  `numAttendees` int(10) unsigned DEFAULT NULL,
-  `decorations` tinyint(1) DEFAULT NULL,
-  `alcohol` tinyint(1) DEFAULT NULL,
-  `prizes` tinyint(1) DEFAULT NULL,
-  `tickets` tinyint(1) DEFAULT NULL,
-  `outsideVendors` tinyint(1) DEFAULT NULL,
-  `foodOption` tinyint(1) DEFAULT NULL,
+  `numAttendees` int(10) unsigned NOT NULL,
+  `decorations` tinyint(1) NOT NULL DEFAULT '0',
+  `alcohol` tinyint(1) NOT NULL DEFAULT '0',
+  `prizes` tinyint(1) NOT NULL DEFAULT '0',
+  `tickets` tinyint(1) NOT NULL DEFAULT '0',
+  `outsideVendors` tinyint(1) NOT NULL DEFAULT '0',
+  `foodOption` tinyint(1) NOT NULL DEFAULT '0',
   `typeOfEvent` varchar(256) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=129 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=133 ;
 
 --
 -- Dumping data for table `event`
@@ -118,8 +118,12 @@ CREATE TABLE IF NOT EXISTS `event` (
 
 INSERT INTO `event` (`id`, `title`, `eventTimeStart`, `eventTimeEnd`, `accessTimeStart`, `accessTimeEnd`, `date`, `recurrence`, `recurrenceEnd`, `numAttendees`, `decorations`, `alcohol`, `prizes`, `tickets`, `outsideVendors`, `foodOption`, `typeOfEvent`) VALUES
 (121, '1221', '04:00:00', '07:00:00', '03:00:00', '07:00:00', '2012-11-21', 'Once', NULL, 12111111, 1, 1, 1, 1, 1, 0, 'test'),
-(122, 'Event 2', NULL, NULL, NULL, NULL, '0000-00-00', 'Once', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, ''),
-(123, 'Event 3', '03:00:00', '04:00:00', '02:30:00', '04:30:00', '2012-11-21', 'Once', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '');
+(122, 'Event 2', '00:00:00', '00:00:00', '00:00:00', '00:00:00', '0000-00-00', 'Once', NULL, 0, 0, 0, 0, 0, 0, 0, ''),
+(123, 'Event 3', '03:00:00', '04:00:00', '02:30:00', '04:30:00', '2012-11-21', 'Once', NULL, 0, 0, 0, 0, 0, 0, 0, ''),
+(129, 'Meeting of the Minds', '04:00:00', '07:00:00', '01:00:00', '02:00:00', '2012-11-21', 'Once', NULL, 9, 0, 0, 0, 0, 0, 0, 'meeting'),
+(130, 'Meeting of the Minds', '04:00:00', '07:00:00', '01:00:00', '02:00:00', '2012-11-21', 'Once', NULL, 9, 0, 0, 0, 0, 0, 0, 'meeting'),
+(131, '', '03:00:00', '04:00:00', '01:00:00', '02:00:00', '2012-12-12', 'Once', NULL, 0, 0, 0, 0, 0, 0, 0, 'meeting'),
+(132, 'Meeting of the Minds', '03:00:00', '04:00:00', '01:00:00', '02:00:00', '2012-12-12', 'Once', NULL, 9, 0, 0, 0, 0, 0, 0, 'meeting');
 
 -- --------------------------------------------------------
 
@@ -209,7 +213,7 @@ CREATE TABLE IF NOT EXISTS `reservation` (
   KEY `backupRoomNumber` (`backupRoomNumber`),
   KEY `alternateUser` (`alternateUser`),
   KEY `organization` (`organization`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 --
 -- Dumping data for table `reservation`
@@ -219,7 +223,9 @@ INSERT INTO `reservation` (`ID`, `user`, `alternateUser`, `organization`, `equip
 (3, 12269597, 12344567, 'ACM', 'Transparency Projector', 121, 2, 1, 'Pending'),
 (4, 12344567, 12269597, 'ACM', 'Microphones', 122, 3, 2, 'Pending'),
 (5, 14456654, 12269597, 'ACM', 'TV / DVD', 123, 2, 3, 'Pending'),
-(6, 16016314, 12269597, 'ACM', 'Microphones', 121, 2, 1, 'Denied');
+(6, 16016314, 12269597, 'ACM', 'Microphones', 121, 2, 1, 'Denied'),
+(11, 12345677, 16016314, 'ACM', NULL, 129, 4, 1, 'Approved'),
+(14, 12269597, 16016314, 'ACM', NULL, 132, 1, 4, 'Pending');
 
 -- --------------------------------------------------------
 
@@ -231,9 +237,8 @@ CREATE TABLE IF NOT EXISTS `room` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `buildingName` varchar(20) NOT NULL,
   `floorNum` int(11) NOT NULL,
-  `roomNumber` int(10) unsigned NOT NULL,
+  `roomNumber` varchar(30) NOT NULL,
   `capacity` int(10) unsigned NOT NULL,
-  `roomName` varchar(20) DEFAULT NULL,
   `type` varchar(20) DEFAULT NULL,
   `availableImageURL` varchar(128) NOT NULL,
   `notAvailableImageURL` varchar(128) NOT NULL,
@@ -248,11 +253,11 @@ CREATE TABLE IF NOT EXISTS `room` (
 -- Dumping data for table `room`
 --
 
-INSERT INTO `room` (`ID`, `buildingName`, `floorNum`, `roomNumber`, `capacity`, `roomName`, `type`, `availableImageURL`, `notAvailableImageURL`, `pendingAvailableImageURL`) VALUES
-(1, 'Computer Science', 1, 121, 121, '1', '121', '', '', ''),
-(2, 'Computer Science', 2, 208, 54, NULL, 'Classroom', 'images/cs_building/second floor/exported/available/cs_208_available.png', 'images/cs_building/second floor/exported/unavailable/cs_208_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_208_pending.png'),
-(3, 'Computer Science', 1, 13131, 3131, '131', '133', '', '', ''),
-(4, 'Computer Science', 2, 216, 50, NULL, NULL, 'images/cs_building/second floor/exported/available/cs_216_available.png', 'images/cs_building/second floor/exported/unavailable/cs_216_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_216_pending.png');
+INSERT INTO `room` (`ID`, `buildingName`, `floorNum`, `roomNumber`, `capacity`, `type`, `availableImageURL`, `notAvailableImageURL`, `pendingAvailableImageURL`) VALUES
+(1, 'Computer Science', 1, '121', 121, '121', '', '', ''),
+(2, 'Computer Science', 2, '208', 54, 'Classroom', 'images/cs_building/second floor/exported/available/cs_208_available.png', 'images/cs_building/second floor/exported/unavailable/cs_208_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_208_pending.png'),
+(3, 'Computer Science', 1, '13131', 3131, '133', '', '', ''),
+(4, 'Computer Science', 2, '216', 50, NULL, 'images/cs_building/second floor/exported/available/cs_216_available.png', 'images/cs_building/second floor/exported/unavailable/cs_216_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_216_pending.png');
 
 -- --------------------------------------------------------
 
@@ -332,8 +337,8 @@ ALTER TABLE `reservation`
 -- Constraints for table `room`
 --
 ALTER TABLE `room`
-  ADD CONSTRAINT `room_ibfk_2` FOREIGN KEY (`floorNum`) REFERENCES `floor` (`floorNum`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `room_ibfk_1` FOREIGN KEY (`buildingName`) REFERENCES `building` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `room_ibfk_1` FOREIGN KEY (`buildingName`) REFERENCES `building` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `room_ibfk_2` FOREIGN KEY (`floorNum`) REFERENCES `floor` (`floorNum`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
