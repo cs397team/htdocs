@@ -8,22 +8,10 @@
 <body>
 <div id="wrap">
 
-<img src="images/Logo_Reverse__356.jpg" height="116" width="131" alt="S&T logo" align="left" style="padding-right:30px;"/>
+<a href="index.php"><img src="images/Logo_Reverse__356.jpg" height="136" width="151" alt="S&T logo" align="left" style="padding-right:30px;" /></a>
 </br>
 <h1 style="color:rgb(0,133,63)">R<sup>3</sup> Reservation System</h1>
 <br clear="all">
-<div class="container" id="navbar">
-	<ul id="sprite">
-	<li id="b0" class="a0"><a class="navlink" href="member-index.php">Home</a></li>
-	<li id="b1"><a class="navlink" href="reservations.php">Approved Reservations</a></li>
-	<li id="b2"><a class="navlink" href="pending.php">Pending Reservations</a></li>
-	<li id="b3"><a class="navlink" href="searchByDate.php">Reserve</a></li>
-	<li id="b4" style="border-right:1px solid #1f1f1f;"><a class="navlink" href="logout.php">Log Out</a></li>
-	</ul>
-</div>
-
-
-<div align="center">
 
 <?php
 if($_SERVER['SERVER_PORT'] != '443') 
@@ -36,15 +24,31 @@ session_start();
 	
 //Check whether the session variable SESS_MEMBER_ID is present or not
 if(!isset($_SESSION['SESS_STUDENT_ID']) || (trim($_SESSION['SESS_STUDENT_ID']) == '')) {
-	echo "<p>Hey, you're not logged in!!!!</p>";
-    echo "<p>Click <a href=\"login.php\">here</a> to get logged in.</p>";
-	exit();
+	header("location: login.php");
 }
 else if($_SESSION['SESS_ISADMIN'] == 0)
 {
-    echo "<p>You are trying to access an Admin only page<br>";
-	echo "You are NOT an Admin!</p>";
-	exit();
+	echo "<div class=\"container\" id=\"navbar\">
+			<ul id=\"anim\">
+			<li id=\"b0\" class=\"a0\"><a class=\"navlink\" href=\"member-index.php\">Home</a></li>
+			<li id=\"b1\"><a class=\"navlink\" href=\"reservations.php\">Approved Reservations</a></li>
+			<li id=\"b2\"><a class=\"navlink\" href=\"pending.php\">Pending Reservations</a></li>
+			<li id=\"b3\"><a class=\"navlink\" href=\"searchByDate.php\">Reserve</a></li>
+			<li id=\"b4\" style=\"border-right:1px solid #1f1f1f;\"><a class=\"navlink\" href=\"logout.php\">Log Out</a></li>
+			</ul>
+		 </div>";
+}
+else
+{
+	echo "<div class=\"container\" id=\"navbar\">
+			<ul id=\"anim\">
+			<li id=\"b0\" class=\"a0\"><a class=\"navlink\" href=\"admin-index.php\">Home</a></li>
+			<li id=\"b2\"><a class=\"navlink\" href=\"viewPending.php\">Pending Reservations</a></li>
+			<li id=\"b1\"><a class=\"navlink\" href=\"viewAccepted.php\">Accepted Reservations</a></li>
+			<li id=\"b3\"><a class=\"navlink\" href=\"viewDenied.php\">Denied Reservations</a></li>
+			<li id=\"b4\" style=\"border-right:1px solid #1f1f1f;\"><a class=\"navlink\" href=\"logout.php\">Log Out</a></li>
+			</ul>
+		 </div>";
 }
 
 	// Connect to the sql database
@@ -52,6 +56,9 @@ else if($_SESSION['SESS_ISADMIN'] == 0)
 	if(!$con){
 		die('Could not connect: ' . mysql_error());
 	}
+	
+	echo "<div id=\"content\" align=\"center\" style=\"padding-top:80px;\">
+		  <h2 align=\"center\">Event Details</h2>";
 	
 	mysql_select_db("r3", $con);
 	
@@ -273,11 +280,14 @@ else if($_SESSION['SESS_ISADMIN'] == 0)
 					<td>Type of Event</td>
 					<td><?php echo $row['typeOfEvent']; ?></td>
 				</tr>
-				<tr align='center'>
-					<form action="" method="post">
-						<td><input type="submit" name="editEvent" value="Edit Event"></td>
-					</form>
-				</tr>
+				<?php
+				if($_SESSION['SESS_ISADMIN'] == 1)
+				echo "<tr align='center'>
+						<form action=\"\" method\"post\">
+							<td><input type=\"submit\" name=\"editEvent\" value=\"Edit Event\"></td>
+						</form>
+					</tr>";
+				?>
 			</table>
 
 <?php		

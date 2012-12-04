@@ -8,14 +8,22 @@
 
 <body>
 <div id="wrap">
-<img src="images/Logo_Reverse__356.jpg" height="116" width="131" alt="S&T logo" align="left" style="padding-right:30px;" />
+<a href="index.php"><img src="images/Logo_Reverse__356.jpg" height="136" width="151" alt="S&T logo" align="left" style="padding-right:30px;" /></a>
 </br>
 <h1 style="color:rgb(0,133,63)">R<sup>3</sup> Reservation System</h1>
-<br clear="all">
-<hr />
 
-<div id="content">
-<!--<h2 style="color:rgb(0,133,63)">Approved Reservations</h2>-->
+<div class="container" id="navbar">
+	<ul id="anim">
+	<li id="b0"><a class="navlink" href="member-index.php">Home</a></li>
+	<li id="b1"><a class="navlink" href="viewProfile.php">View Profile</a></li>
+	<li id="b2" class="a0"><a class="navlink" href="reservations.php">Approved Reservations</a></li>
+	<li id="b3"><a class="navlink" href="pending.php">Pending Reservations</a></li>
+	<li id="b4"><a class="navlink" href="searchByDate.php">Make a Reservation</a></li>
+	<li id="b5" style="border-right:1px solid #1f1f1f;"><a class="navlink" href="logout.php">Log Out</a></li>
+	</ul>
+</div>
+
+<div id="content" style="padding-top:100px;">
 
 <?php
 if($_SERVER['SERVER_PORT'] != '443') 
@@ -28,9 +36,7 @@ session_start();
 	
 //Check whether the session variable SESS_MEMBER_ID is present or not
 if(!isset($_SESSION['SESS_STUDENT_ID']) || (trim($_SESSION['SESS_STUDENT_ID']) == '')) {
-	echo "<p align=\"center\"> Hey, you're not logged in!!!! </p>";
-    echo "<p align=\"center\"> Click <a href=\"login.php\">here</a> to get logged in. </p>";
-	exit();
+	header("location: login.php");
 }
 
 // Connect to the sql database
