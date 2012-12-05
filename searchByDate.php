@@ -122,10 +122,15 @@ mysql_select_db("r3", $con);
         {
             $problems['eventTime'] = "Please select an end time that is NOT earlier than start time!";
         }
-        else if(strtotime($_POST['accessEnd']) > strtotime($_POST['startTime']))
+        else if(strtotime($_POST['accessStart']) > strtotime($_POST['startTime']))
         {
-            $problems['eventTime'] = "Please select an access time that is NOT later than your start time!";
+            $problems['eventTime'] = "Please select an access start time that IS earlier than your event start time!";
         }
+        else if(strtotime($_POST['accessEnd']) < strtotime($_POST['endTime']))
+        {
+            $problems['eventTime'] = "Please select an access end time that IS later than your event end time!";
+        }
+
         
         if($_POST['building'] == "campusMap.png")
         {
