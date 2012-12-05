@@ -58,7 +58,7 @@ if(!isset($_SESSION['SESS_STUDENT_ID']) || (trim($_SESSION['SESS_STUDENT_ID']) =
 	{
 		$name = $_POST['name'];
 		$email = $_POST['email'];
-		$sql = "UPDATE user
+		$sql = "UPDATE user WHERE ID = {$_SESSION['SESS_STUDENT_ID']}
 				SET Name='{$name}', Email='{$email}'";
 		$result = mysql_query($sql);
 		if( !$result )
