@@ -38,6 +38,12 @@ session_start();
 if(!isset($_SESSION['SESS_STUDENT_ID']) || (trim($_SESSION['SESS_STUDENT_ID']) == '')) {
 	header("location: login.php");
 }
+else if($_SESSION['SESS_ISADMIN'] == 0)
+{
+    echo "<h2>You are trying to access the Admin Page<br>";
+    echo "You are NOT an Admin!</h2>";
+    exit();
+}
 
 	// Connect to the sql database
 	$con = mysql_connect("localhost","root");
@@ -45,7 +51,7 @@ if(!isset($_SESSION['SESS_STUDENT_ID']) || (trim($_SESSION['SESS_STUDENT_ID']) =
 		die('Could not connect: ' . mysql_error());
 	}
 	
-	echo "<h2 align=\"center\" style=\"color:rgb(0,133,63)\">Reservations for Approvoal/Denial:</h2>";	
+	echo "<h2 align=\"center\" style=\"color:rgb(0,133,63)\">Reservations for Approval/Denial:</h2>";	
 	
 	mysql_select_db("r3", $con);
 	
