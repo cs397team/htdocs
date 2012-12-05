@@ -450,7 +450,6 @@ mysql_select_db("r3", $con);
            isset($_POST['building']) && isset($_POST['recurrence']) && (isset($_POST['stopDate']) || $_POST['recurrence'] == "Once") && isset($_POST['firstChoiceRoom']) && 
            $_POST['firstChoiceRoom'] != "default")
         {
-            //session_regenerate_id();
             $_SESSION['SESS_DATE'] = $_POST["date"];
             $_SESSION['SESS_ACCESSSTART'] = $_POST["accessStart"];
             $_SESSION['SESS_ACCESSEND'] = $_POST["accessEnd"];
