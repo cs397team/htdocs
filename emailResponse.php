@@ -49,7 +49,7 @@ require("PHPMailer\class.phpmailer.php");
 		}
 		
 		if( isset($_POST["reason"]) ){
-			$body .= "\n\nAdministrator comments:\n {$_POST["reason"]}";
+			$body .= "\n\nAdministrator comments:\n{$_POST["reason"]}";
 		}
 		$mail->Body = $body;
 		

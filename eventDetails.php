@@ -280,13 +280,16 @@ else
 					<td>Type of Event</td>
 					<td><?php echo $row['typeOfEvent']; ?></td>
 				</tr>
+				<?php if(($_SESSION['SESS_ISADMIN'] == 1) )
+				{
+				?>
+					<tr align='center'>
+					<form action="" method="post">
+						<td colspan='2'><input type="submit" name="editEvent" value="Edit Event"></td>
+					</form>
+					</tr>
 				<?php
-				if($_SESSION['SESS_ISADMIN'] == 1)
-				echo "<tr align='center'>
-						<form action=\"\" method\"post\">
-							<td><input type=\"submit\" name=\"editEvent\" value=\"Edit Event\"></td>
-						</form>
-					</tr>";
+				}
 				?>
 			</table>
 

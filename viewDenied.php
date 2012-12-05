@@ -73,7 +73,7 @@ if(!isset($_SESSION['SESS_STUDENT_ID']) || (trim($_SESSION['SESS_STUDENT_ID']) =
 ?>
 			<tr align='center'>
 				<form action="eventDetails.php" method="post">
-					<td><a href="eventDetails.php?reserveID=<? print $row['id']?>" >
+					<td><a href="eventDetails.php?reserveID=<?php echo $row['id']?>" >
 					<?php echo $row['title']; ?>
 					</a></td>
 				</form>

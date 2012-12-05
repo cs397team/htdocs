@@ -76,7 +76,7 @@ if(!isset($_SESSION['SESS_STUDENT_ID']) || (trim($_SESSION['SESS_STUDENT_ID']) =
 ?>
 			<tr align='center'>
 				<form action="eventDetails.php" method="post">
-					<td rowspan="2"><a href="eventDetails.php?reserveID=<?php print $row['id']?>" >
+					<td rowspan="2"><a href="eventDetails.php?reserveID=<?php echo $row['id']?>" >
 					<?php echo $row['title']; ?>
 					</a></td>
 				</form>
@@ -88,14 +88,14 @@ if(!isset($_SESSION['SESS_STUDENT_ID']) || (trim($_SESSION['SESS_STUDENT_ID']) =
 				<form action="emailResponse.php" method="post">
 					<td align='left' rowspan="2"><textarea name="reason" rows="3" col="50"></textarea></td>
 					<td><input type="submit" name="approve" value="Approve" style="width:100%"></td>
-					<input type="hidden" name="reservationID" value="<?php=intval($row['id'])?>" >
+					<input type="hidden" name="reservationID" value="<?php echo intval($row['id'])?>" >
 				</form>
 				
 			</tr>
 			<tr align ='center'>
 				<form action="emailResponse.php" method="post">
 					<td><input type="submit" name="deny" value="Deny" style="width:100%"></td>
-					<input type="hidden" name="reservationID" value="<?php=intval($row['id'])?>" >
+					<input type="hidden" name="reservationID" value="<?php echo intval($row['id'])?>" >
 				</form>
 			</tr>
 <?php
