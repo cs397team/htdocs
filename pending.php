@@ -8,11 +8,22 @@
 
 <body>
 <div id="wrap">
-<img src="images/Logo_Reverse__356.jpg" height="116" width="131" alt="S&T logo" align="left" style="padding-right:30px;" />
+<a href="index.php"><img src="images/Logo_Reverse__356.jpg" height="136" width="151" alt="S&T logo" align="left" style="padding-right:30px;" /></a>
 </br>
 <h1 style="color:rgb(0,133,63)">R<sup>3</sup> Reservation System</h1>
-<br clear="all">
-<hr />
+
+<div class="container" id="navbar">
+	<ul id="anim">
+	<li id="b0"><a class="navlink" href="member-index.php">Home</a></li>
+	<li id="b1"><a class="navlink" href="viewProfile.php">View Profile</a></li>
+	<li id="b2"><a class="navlink" href="reservations.php">Approved Reservations</a></li>
+	<li id="b3" class="a0"><a class="navlink" href="pending.php">Pending Reservations</a></li>
+	<li id="b4"><a class="navlink" href="searchByDate.php">Make a Reservation</a></li>
+	<li id="b5" style="border-right:1px solid #1f1f1f;"><a class="navlink" href="logout.php">Log Out</a></li>
+	</ul>
+</div>
+
+<div id="content" style="padding-top:100px;">
 
 <?php
 if($_SERVER['SERVER_PORT'] != '443') 
@@ -25,9 +36,7 @@ session_start();
 	
 //Check whether the session variable SESS_MEMBER_ID is present or not
 if(!isset($_SESSION['SESS_STUDENT_ID']) || (trim($_SESSION['SESS_STUDENT_ID']) == '')) {
-	echo "<p align=\"center\"> Hey, you're not logged in!!!! </p>";
-    echo "<p align=\"center\"> Click <a href=\"login.php\">here</a> to get logged in. </p>";
-	exit();
+	header("location: login.php");
 }
 
 // Connect to the sql database
@@ -43,11 +52,12 @@ echo "<h2 align=\"center\" style=\"color:rgb(0,133,63)\">Pending Reservations fo
 mysql_select_db("r3", $con);
 
 
-$result = mysql_query("SELECT r1.id, r2.buildingName, r2.roomNumber, r3.buildingName, r3.roomNumber, e1.title, e1.date, e1.eventTimeStart, e1.eventTimeEnd 
+$result = mysql_query("SELECT r1.id, r2.buildingName AS building1, r2.roomNumber AS room1, r3.buildingName AS building2, 
+						r3.roomNumber AS room2, e1.title, e1.date, e1.eventTimeStart, e1.eventTimeEnd 
 						FROM reservation AS r1, event AS e1, room AS r2, room as r3
 						WHERE r1.Approval = 'Pending' AND r1.user = {$_SESSION['SESS_STUDENT_ID']} 
-						AND r1.eventid = e1.id AND r1.primaryRoomNumber = r2.roomNumber AND r1.backupRoomNumber = r3.roomNumber");						
-
+						AND r1.eventid = e1.id AND r1.primaryRoomNumber = r2.id AND r1.backupRoomNumber = r3.id");						
+						
 if (mysql_num_rows($result) != 0)
 {															
 	echo	"<table align=\"center\" rules=\"all\" style=\"border:1 solid rgb(0,133,63);\" cellpadding=\"4\">
@@ -71,10 +81,10 @@ if (mysql_num_rows($result) != 0)
 			 <td>{$row['date']}</td>
 			 <td>{$row['eventTimeStart']}</td>
 			 <td>{$row['eventTimeEnd']}</td>
-			 <td>{$row['buildingName']}</td>
-			 <td>{$row['roomNumber']}</td>
-			 <td>{$row['buildingName']}</td>
-			 <td>{$row['roomNumber']}</td>
+			 <td>{$row['building1']}</td>
+			 <td>{$row['room1']}</td>
+			 <td>{$row['building2']}</td>
+			 <td>{$row['room2']}</td>
 			 </tr>";		
 	}
 
@@ -84,6 +94,7 @@ else { echo "<p align=\"center\"> You do not have any pending reservation reques
 
 ?>
 
+</div>
 </div>
 </body>
 </html>

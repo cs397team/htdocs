@@ -10,14 +10,14 @@ $(document).ready(function(){
 	var selected=check*($("#b0").outerWidth());
 	var position;
 		
-	$("#sprite").css({backgroundPosition:''+selected+'px 4px'});
+	$("#anim").css({backgroundPosition:''+selected+'px 4px'});
 		
-	$("#b0,#b1,#b2,#b3,#b4).css({backgroundPosition:'0px 0px'}).mouseover(function(){
+	$("#b0,#b1,#b2,#b3,#b4,#b5).css({backgroundPosition:'0px 0px'}).mouseover(function(){
 	position=$(this).attr("id").slice(1,2)*($("#b0").outerWidth())/*width of your list item*/;
-	$("#sprite").stop().animate({backgroundPosition:''+position+'px 4px'},{duration:300});
+	$("#anim").stop().animate({backgroundPosition:''+position+'px 4px'},{duration:300});
 	});
 	
-	$("#b0,#b1,#b2,#b3,#b4).css({backgroundPosition:'0px 0px'}).mouseout(function(){
-	$("#sprite").stop().animate({backgroundPosition:''+selected+'px 4px'},{duration:300});
+	$("#b0,#b1,#b2,#b3,#b4,#b5).css({backgroundPosition:'0px 0px'}).mouseout(function(){
+	$("#anim").stop().animate({backgroundPosition:''+selected+'px 4px'},{duration:300});
 	});
 });

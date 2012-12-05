@@ -3,27 +3,27 @@
 
 <html>
 <head>
-<title>Admin Area</title>
+<title>R3 Admin Area</title>
 </head>
 
 <body>
 <div id="wrap">
 
-<img src="images/Logo_Reverse__356.jpg" height="116" width="131" alt="S&T logo" align="left" style="padding-right:30px;"/>
+<a href="index.php"><img src="images/Logo_Reverse__356.jpg" height="136" width="151" alt="S&T logo" align="left" style="padding-right:30px;" /></a>
 </br>
 <h1 style="color:rgb(0,133,63)">R<sup>3</sup> Reservation System</h1>
 <br clear="all">
 <div class="container" id="navbar">
-	<ul id="sprite">
-	<li id="b0" class="a0"><a class="navlink" href="member-index.php">Home</a></li>
-	<li id="b1"><a class="navlink" href="reservations.php">Approved Reservations</a></li>
-	<li id="b2"><a class="navlink" href="pending.php">Pending Reservations</a></li>
-	<li id="b3"><a class="navlink" href="searchByDate.php">Reserve</a></li>
+	<ul id="anim">
+	<li id="b0" class="a0"><a class="navlink" href="admin-index.php">Home</a></li>
+	<li id="b1"><a class="navlink" href="viewPending.php">Pending Reservations</a></li>
+	<li id="b2"><a class="navlink" href="viewAccepted.php">Accepted Reservations</a></li>
+	<li id="b3"><a class="navlink" href="viewDenied.php">Denied Reservations</a></li>
 	<li id="b4" style="border-right:1px solid #1f1f1f;"><a class="navlink" href="logout.php">Log Out</a></li>
 	</ul>
 </div>
 
-<div align="center">
+<div id="content" align="center" style="padding-top:100px;">
 
 <?php
 if($_SERVER['SERVER_PORT'] != '443') 
@@ -36,9 +36,7 @@ session_start();
 	
 //Check whether the session variable SESS_MEMBER_ID is present or not
 if(!isset($_SESSION['SESS_STUDENT_ID']) || (trim($_SESSION['SESS_STUDENT_ID']) == '')) {
-	echo "<p align=\"center\"> Hey, you're not logged in!!!! </p>";
-    echo "<p align=\"center\"> Click <a href=\"login.php\">here</a> to get logged in. </p>";
-	exit();
+	header("location: login.php");
 }
 else if($_SESSION['SESS_ISADMIN'] == 0)
 {
@@ -46,25 +44,15 @@ else if($_SESSION['SESS_ISADMIN'] == 0)
 	echo "You are NOT an Admin!</p>";
 	exit();
 }
+
+echo "<h2 align=\"center\">Welcome back to the Admin Area, ".$_SESSION['SESS_NAME']."!</h2>";
 ?>
 	
-
-
-<form action=viewPending.php method = "post">
-	<input type = "submit" name = "viewPending" style="width:200px; height:32px; font-size:22px;" value = "View Pending" /><br>
-</form>
-<form action=viewAccepted.php method = "post">
-	<input type = "submit" name = "viewAccepted" style="width:200px; height:32px; font-size:22px;" value = "View Accepted" /><br>
-</form>
-<form action=viewDenied.php method = "post">
-	<input type = "submit" name = "viewDenied" style="width:200px; height:32px; font-size:22px;" value = "View Denied" />
-</form>
-Search For Event
+</br>
+<p>Search For Event by Title or ID#</p>
 <form action=searchForEvent.php method = "post">
 	<input type = "text" name = "searchName" style="width:200px; height:32px; font-size:22px;" />
 </form>
-
-<p>Click <a href="logout.php">here</a> to logout.</p>
 
 </body>
 </html>
