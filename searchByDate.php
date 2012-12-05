@@ -430,8 +430,7 @@ mysql_select_db("r3", $con);
            isset($_POST['building']) && isset($_POST['recurrence']) && (isset($_POST['stopDate']) || $_POST['recurrence'] == "Once") && isset($_POST['firstChoiceRoom']) && 
            $_POST['firstChoiceRoom'] != "default")
         {
-        
-            session_regenerate_id();
+            //session_regenerate_id();
             $_SESSION['SESS_DATE'] = $_POST["date"];
             $_SESSION['SESS_ACCESSSTART'] = $_POST["accessStart"];
             $_SESSION['SESS_ACCESSEND'] = $_POST["accessEnd"];
@@ -446,9 +445,10 @@ mysql_select_db("r3", $con);
                 $_SESSION['SESS_STOPDATE'] = $_POST["stopDate"];
             }
             
-            session_write_close();
+            //session_write_close();
             mysql_close($con);
-            header("location: reserve.php");
+            //header("location: reserve.php");
+            echo "<meta HTTP-EQUIV=\"REFRESH\" content=\"0; url=reserve.php\">";
 		}
         else
         {
@@ -456,7 +456,7 @@ mysql_select_db("r3", $con);
         }
 		
 	}
-    mysql_close($con);
+    //mysql_close($con);
 ?>
 </div>
 </body>
