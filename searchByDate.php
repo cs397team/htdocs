@@ -32,19 +32,28 @@ function populateOptionList($labelString, $keyName, $floor) {
                               
     while($row = mysql_fetch_array($result))
     {
-        $result2 = mysql_query("SELECT r1.Approval from event as e1, reservation as r1 where r1.eventID = e1.id AND r1.primaryRoomNumber = '{$row['ID']}'");
+        $result2 = mysql_query("SELECT r1.Approval, e1.eventTimeStart, e1.eventTimeEnd, e1.accessTimeStart, e1.accessTimeEnd, 
+                               e1.date from event as e1, reservation as r1 where r1.eventID = e1.id AND r1.primaryRoomNumber = '{$row['ID']}'");
         
         $availability = "Available";
         while($row2 = mysql_fetch_array($result2))
         {
-            if($row2['Approval'] == "Pending")
+            if( strtotime($row2['date']) == strtotime($_POST['date']) && (
+                (strtotime($row2['eventTimeStart']) >= strtotime($_POST['startTime']) && strtotime($row2['eventTimeStart']) <= strtotime($_POST['endTime'])) ||
+                (strtotime($row2['eventTimeEnd']) >= strtotime($_POST['startTime']) && strtotime($row2['eventTimeEnd']) <= strtotime($_POST['endTime'])) ||
+                (strtotime($row2['eventTimeStart']) <= strtotime($_POST['startTime']) && strtotime($row2['eventTimeEnd']) >= strtotime($_POST['endTime']))
+                                                                                              /*Add stuff for access time*/
+                                                                            ))
             {
-                $availability = "Pending";
-            }
-            else if($row2['Approval'] == "Approved")
-            {
-                $availability = "Unavailable";
-                break;
+                if($row2['Approval'] == "Pending")
+                {
+                    $availability = "Pending";
+                }
+                else if($row2['Approval'] == "Approved")
+                {
+                    $availability = "Unavailable";
+                    break;
+                }
             }
         }
         
@@ -456,9 +465,7 @@ mysql_select_db("r3", $con);
                 $_SESSION['SESS_STOPDATE'] = $_POST["stopDate"];
             }
             
-            //session_write_close();
             mysql_close($con);
-            //header("location: reserve.php");
             echo "<meta HTTP-EQUIV=\"REFRESH\" content=\"0; url=reserve.php\">";
 		}
         else
@@ -467,7 +474,7 @@ mysql_select_db("r3", $con);
         }
 		
 	}
-    //mysql_close($con);
+    mysql_close($con);
 ?>
 </div>
 </body>
