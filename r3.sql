@@ -26,6 +26,9 @@ SET time_zone = "+00:00";
 -- Table structure for table `building`
 --
 
+CREATE DATABASE `r3` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `r3`;
+
 CREATE TABLE IF NOT EXISTS `building` (
   `campusName` varchar(50) NOT NULL,
   `latitude` decimal(10,0) DEFAULT NULL,
