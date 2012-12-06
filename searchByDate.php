@@ -156,7 +156,7 @@ mysql_select_db("r3", $con);
 	<li id="b0"><a class="navlink" href="member-index.php">Home</a></li>
 	<li id="b1"><a class="navlink" href="viewProfile.php">View Profile</a></li>
 	<li id="b2"><a class="navlink" href="reservations.php">Approved Reservations</a></li>
-	<li id="b3" class="a0"><a class="navlink" href="pending.php">Pending Reservations</a></li>
+	<li id="b3" class="a3"><a class="navlink" href="pending.php">Pending Reservations</a></li>
 	<li id="b4"><a class="navlink" href="searchByDate.php">Make a Reservation</a></li>
 	<li id="b5" style="border-right:1px solid #1f1f1f;"><a class="navlink" href="logout.php">Log Out</a></li>
 	</ul>

@@ -16,7 +16,7 @@
 <div class="container" id="navbar">
 	<ul id="anim">
 	<li id="b0"><a class="navlink" href="member-index.php">Home</a></li>
-	<li id="b1" class="a0"><a class="navlink" href="viewProfile.php">View Profile</a></li>
+	<li id="b1" class="a1"><a class="navlink" href="viewProfile.php">View Profile</a></li>
 	<li id="b2"><a class="navlink" href="reservations.php">Approved Reservations</a></li>
 	<li id="b3"><a class="navlink" href="pending.php">Pending Reservations</a></li>
 	<li id="b4"><a class="navlink" href="searchByDate.php">Make a Reservation</a></li>

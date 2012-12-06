@@ -63,11 +63,10 @@ a.navlink:active{
     background:url(images/navbar_bg.png);
 }
 #navbar ul{
+	float:left;
     height:36px;
     margin-left:auto;
     color:black;
-}
-#navbar ul{
     background: url(images/anim_2.png) no-repeat;
     background-position:1px 4px;
 }

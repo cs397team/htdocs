@@ -1,4 +1,5 @@
 <link rel="stylesheet" type="text/css" href="mystyles.css" media="screen" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript" src="fix_page_height.js"></script>
 
 <html>
@@ -16,7 +17,7 @@
 	<ul id="anim">
 	<li id="b0"><a class="navlink" href="member-index.php">Home</a></li>
 	<li id="b1"><a class="navlink" href="viewProfile.php">View Profile</a></li>
-	<li id="b2" class="a0"><a class="navlink" href="reservations.php">Approved Reservations</a></li>
+	<li id="b2" class="a2"><a class="navlink" href="reservations.php">Approved Reservations</a></li>
 	<li id="b3"><a class="navlink" href="pending.php">Pending Reservations</a></li>
 	<li id="b4"><a class="navlink" href="searchByDate.php">Make a Reservation</a></li>
 	<li id="b5" style="border-right:1px solid #1f1f1f;"><a class="navlink" href="logout.php">Log Out</a></li>

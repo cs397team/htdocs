@@ -18,7 +18,7 @@
 	<li id="b0"><a class="navlink" href="admin-index.php">Home</a></li>
 	<li id="b1"><a class="navlink" href="viewPending.php">Pending Reservations</a></li>
 	<li id="b2"><a class="navlink" href="viewAccepted.php">Accepted Reservations</a></li>
-	<li id="b3" class="a0"><a class="navlink" href="viewDenied.php">Denied Reservations</a></li>
+	<li id="b3" class="a3"><a class="navlink" href="viewDenied.php">Denied Reservations</a></li>
 	<li id="b4" style="border-right:1px solid #1f1f1f;"><a class="navlink" href="logout.php">Log Out</a></li>
 	</ul>
 </div>

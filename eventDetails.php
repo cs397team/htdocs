@@ -33,7 +33,7 @@ else if($_SESSION['SESS_ISADMIN'] == 0)
 {
 	echo "<div class=\"container\" id=\"navbar\">
 			<ul id=\"anim\">
-			<li id=\"b0\" class=\"a0\"><a class=\"navlink\" href=\"member-index.php\">Home</a></li>
+			<li id=\"b0\"><a class=\"navlink\" href=\"member-index.php\">Home</a></li>
 			<li id=\"b1\"><a class=\"navlink\" href=\"reservations.php\">Approved Reservations</a></li>
 			<li id=\"b2\"><a class=\"navlink\" href=\"pending.php\">Pending Reservations</a></li>
 			<li id=\"b3\"><a class=\"navlink\" href=\"searchByDate.php\">Reserve</a></li>
@@ -45,7 +45,7 @@ else
 {
 	echo "<div class=\"container\" id=\"navbar\">
 			<ul id=\"anim\">
-			<li id=\"b0\" class=\"a0\"><a class=\"navlink\" href=\"admin-index.php\">Home</a></li>
+			<li id=\"b0\"><a class=\"navlink\" href=\"admin-index.php\">Home</a></li>
 			<li id=\"b2\"><a class=\"navlink\" href=\"viewPending.php\">Pending Reservations</a></li>
 			<li id=\"b1\"><a class=\"navlink\" href=\"viewAccepted.php\">Accepted Reservations</a></li>
 			<li id=\"b3\"><a class=\"navlink\" href=\"viewDenied.php\">Denied Reservations</a></li>
