@@ -40,8 +40,8 @@ if(!isset($_SESSION['SESS_STUDENT_ID']) || (trim($_SESSION['SESS_STUDENT_ID']) =
 }
 else if($_SESSION['SESS_ISADMIN'] == 0)
 {
-    echo "<p>You are trying to access the Admin Page<br>";
-	echo "You are NOT an Admin!</p>";
+    header("location: index.php");
+    
 	exit();
 }
 

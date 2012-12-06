@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2012 at 11:32 PM
+-- Generation Time: Dec 06, 2012 at 05:26 PM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -99,8 +99,7 @@ CREATE TABLE IF NOT EXISTS `department` (
 --
 
 INSERT INTO `department` (`Name`, `ChairID`) VALUES
-('Computer Science', 12269597),
-('ECE', 12344567);
+('Computer Science', 87654321);
 
 -- --------------------------------------------------------
 
@@ -127,14 +126,7 @@ CREATE TABLE IF NOT EXISTS `event` (
   `foodOption` tinyint(1) NOT NULL DEFAULT '0',
   `typeOfEvent` varchar(256) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=133 ;
-
---
--- Dumping data for table `event`
---
-
-INSERT INTO `event` (`id`, `title`, `eventTimeStart`, `eventTimeEnd`, `accessTimeStart`, `accessTimeEnd`, `date`, `recurrence`, `recurrenceEnd`, `numAttendees`, `decorations`, `alcohol`, `prizes`, `tickets`, `outsideVendors`, `foodOption`, `typeOfEvent`) VALUES
-(121, '1221', '04:00:00', '07:00:00', '03:00:00', '07:00:00', '2012-11-21', 'Once', NULL, 12111111, 1, 1, 1, 1, 1, 0, 'test');
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=144 ;
 
 -- --------------------------------------------------------
 
@@ -191,6 +183,13 @@ CREATE TABLE IF NOT EXISTS `member_of` (
   KEY `org_name` (`org_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `member_of`
+--
+
+INSERT INTO `member_of` (`UserID`, `org_name`, `rank`) VALUES
+(12345678, 'ACM', 'President');
+
 -- --------------------------------------------------------
 
 --
@@ -214,8 +213,7 @@ CREATE TABLE IF NOT EXISTS `organization` (
 --
 
 INSERT INTO `organization` (`Name`, `department`, `president`, `advisor`, `description`) VALUES
-('ACM', 'Computer Science', 12269597, 12344567, NULL),
-('IEEE', 'ECE', 12345677, 14456654, NULL);
+('ACM', 'Computer Science', 12345678, 98765432, 'Association for Computing Machinery');
 
 -- --------------------------------------------------------
 
@@ -240,7 +238,7 @@ CREATE TABLE IF NOT EXISTS `reservation` (
   KEY `backupRoomNumber` (`backupRoomNumber`),
   KEY `alternateUser` (`alternateUser`),
   KEY `organization` (`organization`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=26 ;
 
 -- --------------------------------------------------------
 
@@ -306,11 +304,11 @@ INSERT INTO `room` (`ID`, `buildingName`, `floorNum`, `roomNumber`, `capacity`, 
 (48, 'Computer Science', 2, '205', 38, NULL, 'images/cs_building/second floor/exported/available/cs_205_available.png', 'images/cs_building/second floor/exported/unavailable/cs_205_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_205_pending.png', 1),
 (49, 'Computer Science', 2, '207', 58, NULL, 'images/cs_building/second floor/exported/available/cs_207_available.png', 'images/cs_building/second floor/exported/unavailable/cs_207_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_207_pending.png', 1),
 (50, 'Computer Science', 2, '216', 49, NULL, 'images/cs_building/second floor/exported/available/cs_216_available.png', 'images/cs_building/second floor/exported/unavailable/cs_216_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_216_pending.png', 1),
-(51, 'Computer Science', 2, '209', 0, NULL, 'images/cs_building/second floor/exported/available/cs_209_available.png', 'images/cs_building/second floor/exported/unavailable/cs_209_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_209_pending.png', 0),
-(52, 'Computer Science', 2, '206', 0, NULL, 'images/cs_building/second floor/exported/available/cs_206_available.png', 'images/cs_building/second floor/exported/unavailable/cs_206_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_206_pending.png', 0),
-(53, 'Computer Science', 2, '213', 0, NULL, 'images/cs_building/second floor/exported/available/cs_213_available.png', 'images/cs_building/second floor/exported/unavailable/cs_213_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_213_pending.png', 0),
-(54, 'Computer Science', 2, '208', 0, NULL, 'images/cs_building/second floor/exported/available/cs_208_available.png', 'images/cs_building/second floor/exported/unavailable/cs_208_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_208_pending.png', 0),
-(55, 'Computer Science', 2, '212', 0, NULL, 'images/cs_building/second floor/exported/available/cs_212_available.png', 'images/cs_building/second floor/exported/unavailable/cs_212_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_212_pending.png', 0),
+(51, 'Computer Science', 2, '209', 0, NULL, 'images/cs_building/second floor/exported/available/cs_209_available.png', 'images/cs_building/second floor/exported/unavailable/cs_209_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_209_pending.png', 1),
+(52, 'Computer Science', 2, '206', 0, NULL, 'images/cs_building/second floor/exported/available/cs_206_available.png', 'images/cs_building/second floor/exported/unavailable/cs_206_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_206_pending.png', 1),
+(53, 'Computer Science', 2, '213', 0, NULL, 'images/cs_building/second floor/exported/available/cs_213_available.png', 'images/cs_building/second floor/exported/unavailable/cs_213_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_213_pending.png', 1),
+(54, 'Computer Science', 2, '208', 0, NULL, 'images/cs_building/second floor/exported/available/cs_208_available.png', 'images/cs_building/second floor/exported/unavailable/cs_208_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_208_pending.png', 1),
+(55, 'Computer Science', 2, '212', 0, NULL, 'images/cs_building/second floor/exported/available/cs_212_available.png', 'images/cs_building/second floor/exported/unavailable/cs_212_unavailable.png', 'images/cs_building/second floor/exported/pending/cs_212_pending.png', 1),
 (56, 'Computer Science', 3, '327', 40, NULL, 'images/cs_building/third floor/exported/available/cs_327_available.png', 'images/cs_building/third floor/exported/unavailable/cs_327_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_327_pending.png', 1),
 (57, 'Computer Science', 3, '324', 10, NULL, 'images/cs_building/third floor/exported/available/cs_324_available.png', 'images/cs_building/third floor/exported/unavailable/cs_324_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_324_pending.png', 1),
 (58, 'Computer Science', 3, '325', 0, NULL, 'images/cs_building/third floor/exported/available/cs_325_available.png', 'images/cs_building/third floor/exported/unavailable/cs_325_unavailable.png', 'images/cs_building/third floor/exported/pending/cs_325_pending.png', 0),
@@ -367,7 +365,7 @@ INSERT INTO `room` (`ID`, `buildingName`, `floorNum`, `roomNumber`, `capacity`, 
 CREATE TABLE IF NOT EXISTS `user` (
   `ID` int(8) unsigned zerofill NOT NULL,
   `Name` varchar(20) DEFAULT NULL,
-  `Email` varchar(20) DEFAULT NULL,
+  `Email` varchar(50) DEFAULT NULL,
   `isAdmin` tinyint(1) NOT NULL,
   `password_SHA256_hash` char(64) NOT NULL,
   PRIMARY KEY (`ID`)
@@ -378,11 +376,11 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`ID`, `Name`, `Email`, `isAdmin`, `password_SHA256_hash`) VALUES
-(12269597, 'Andrew Schrader', 'arstk8@mst.edu', 0, '2fe93ebff8af32d75b4de8283b8e2bfecc725336cfc37b09b06a629ea49c24a9'),
-(12344567, 'Bobby', 'bobby@mst.edu', 1, '2fe93ebff8af32d75b4de8283b8e2bfecc725336cfc37b09b06a629ea49c24a9'),
-(12345677, 'Andrew', 'r3@mst.edu', 1, '2fe93ebff8af32d75b4de8283b8e2bfecc725336cfc37b09b06a629ea49c24a9'),
-(14456654, 'Bob', 'bob@mst.edu', 1, '9a125785bef6c04b1847934facfb53854f8acf04ead8bb6fb5ee1cb0cf68953c'),
-(16016314, 'Neil Patel', 'nsp2t5@mst.edu', 1, '81b637d8fcd2c6da6359e6963113a1170de795e4b725b84d1e0b4cfd9ec58ce9');
+(09876543, 'Tiffany Werckmann', 'tmwq53@mst.edu', 0, '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5'),
+(12345678, 'Andrew Schrader', 'arstk8@mst.edu', 0, '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5'),
+(34561234, 'Neil Patel', 'nsp2t5@mst.edu', 0, '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5'),
+(87654321, 'Admin', 'mstroomreservationsystem@gmail.com', 1, '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5'),
+(98765432, 'Nathan Stechschulte', 'nwsd76@mst.edu', 0, '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5');
 
 --
 -- Constraints for dumped tables
@@ -410,25 +408,25 @@ ALTER TABLE `floor`
 -- Constraints for table `member_of`
 --
 ALTER TABLE `member_of`
-  ADD CONSTRAINT `member_of_ibfk_5` FOREIGN KEY (`UserID`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `member_of_ibfk_4` FOREIGN KEY (`org_name`) REFERENCES `organization` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `member_of_ibfk_4` FOREIGN KEY (`org_name`) REFERENCES `organization` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `member_of_ibfk_5` FOREIGN KEY (`UserID`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `organization`
 --
 ALTER TABLE `organization`
-  ADD CONSTRAINT `organization_ibfk_4` FOREIGN KEY (`advisor`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `organization_ibfk_2` FOREIGN KEY (`department`) REFERENCES `department` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `organization_ibfk_3` FOREIGN KEY (`president`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `organization_ibfk_3` FOREIGN KEY (`president`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `organization_ibfk_4` FOREIGN KEY (`advisor`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `reservation`
 --
 ALTER TABLE `reservation`
-  ADD CONSTRAINT `reservation_ibfk_13` FOREIGN KEY (`organization`) REFERENCES `organization` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `reservation_ibfk_10` FOREIGN KEY (`primaryRoomNumber`) REFERENCES `room` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `reservation_ibfk_11` FOREIGN KEY (`backupRoomNumber`) REFERENCES `room` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `reservation_ibfk_12` FOREIGN KEY (`alternateUser`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `reservation_ibfk_13` FOREIGN KEY (`organization`) REFERENCES `organization` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `reservation_ibfk_6` FOREIGN KEY (`eventId`) REFERENCES `event` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `reservation_ibfk_9` FOREIGN KEY (`user`) REFERENCES `user` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 

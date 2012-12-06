@@ -3,7 +3,7 @@
 
 <html>
 <head>
-<title>Pending Requests</title>
+<title>View Profile</title>
 </head>
 
 <body>
@@ -58,8 +58,7 @@ if(!isset($_SESSION['SESS_STUDENT_ID']) || (trim($_SESSION['SESS_STUDENT_ID']) =
 	{
 		$name = $_POST['name'];
 		$email = $_POST['email'];
-		$sql = "UPDATE user WHERE ID = {$_SESSION['SESS_STUDENT_ID']}
-				SET Name='{$name}', Email='{$email}'";
+		$sql = "UPDATE user SET Name='{$name}', Email='{$email}' WHERE ID = '{$_SESSION['SESS_STUDENT_ID']}'";
 		$result = mysql_query($sql);
 		if( !$result )
 		{
