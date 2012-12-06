@@ -1,6 +1,6 @@
 var isIE5=navigator.userAgent.toUpperCase().indexOf("MSIE 5")!=-1;
 
-var targetElementID="wrap", targetElementStyleOffset=80;
+var targetElementID="wrap", targetElementStyleOffset=10;
 
 function adjustHeight() {
   if (document.getElementById) {
