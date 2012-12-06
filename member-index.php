@@ -28,7 +28,7 @@
 	</ul>
 </div>
 
-<div id="content" style="padding-top:100px;">
+<div id="content" style="padding-top:100px;" align="center">
 
 
 <?php
@@ -54,37 +54,12 @@
     echo "<h2 align=\"center\">Welcome back to the system, ".$_SESSION['SESS_NAME']."!</h2>";
 ?>
 
-<!--
-<p>
-<table border='1'>
-<tr><td>
-<h3>Menu</h3>
-</td></tr>
+</br>
+<p>Search For Event by Title or ID#</p>
+<form action=searchForEvent.php method = "post">
+	<input type = "text" name = "searchName" style="width:200px; height:32px; font-size:22px;" />
+</form>
 
-<tr><td>
-<a href="reservations.php">Approved Reservations</a>
-</td></tr>
-
-<tr><td>
-<a href="pending.php">Pending Reservations</a>
-</td></tr>
-
-<tr><td>
-<a href="searchByDate.php">Search for Room by Date</a>
-</td></tr>
-
-<tr><td>
-<a href="addUser.php">Add a User</a>
-</td></tr>
-
-<tr><td>
-<a href="reserve.php">Freakishly Long/Incomplete Form</a>
-</td></tr>
-</table>
-</p>
-
-<p>Click <a href="logout.php">here</a> to logout.</p>
--->
 
 </div> <!-- content -->
 </div> <!-- wrap -->

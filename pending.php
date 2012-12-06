@@ -75,19 +75,26 @@ if (mysql_num_rows($result) != 0)
 				
 	while($row = mysql_fetch_array($result))
 	{
+
 		echo "<tr>
 			 <td>{$row['id']}</td>
-			 <td>{$row['title']}</td>
-			 <td>{$row['date']}</td>
+			 <td>";
+?>
+				<form action="eventDetails.php" method="post">
+					<a href="eventDetails.php?reserveID=<?php echo $row['id']?>">
+					<?php echo $row['title']; ?>
+					</a></td>
+				</form>
+<?php
+		echo "<td>{$row['date']}</td>
 			 <td>{$row['eventTimeStart']}</td>
 			 <td>{$row['eventTimeEnd']}</td>
 			 <td>{$row['building1']}</td>
 			 <td>{$row['room1']}</td>
 			 <td>{$row['building2']}</td>
 			 <td>{$row['room2']}</td>
-			 </tr>";		
+			 </tr>";
 	}
-
 	echo "</table>";
 }
 else { echo "<p align=\"center\"> You do not have any pending reservation requests at this time. </p>"; }

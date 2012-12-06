@@ -59,7 +59,7 @@ $result = mysql_query("SELECT r1.id, r2.buildingName, r2.roomNumber, e1.title, e
 
 if (mysql_num_rows($result) != 0)
 {													
-	echo	"<table align=\"center\" rules=\"all\" style=\"border:1 solid rgb(0,133,63);\" cellpadding=\"4\">
+	echo	"<table align=\"center\" rules=\"all\" style=\"border:1 solid rgb(0,133,63); text-align:center;\" cellpadding=\"4\">
 			<tr>
 			<td><b>Reservation ID</b></td>
 			<td><b>Event Title</b></td>
@@ -74,8 +74,15 @@ if (mysql_num_rows($result) != 0)
 	{
 		echo	"<tr>
 				<td>{$row['id']}</td>
-				<td>{$row['title']}</td>
-				<td>{$row['date']}</td>
+				<td>";
+?>
+				<form action="eventDetails.php" method="post">
+					<a href="eventDetails.php?reserveID=<?php echo $row['id']?>">
+					<?php echo $row['title']; ?>
+					</a></td>
+				</form>
+<?php
+		echo "	<td>{$row['date']}</td>
 				<td>{$row['eventTimeStart']}</td>
 				<td>{$row['eventTimeEnd']}</td>
 				<td>{$row['buildingName']}</td>

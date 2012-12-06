@@ -3,8 +3,9 @@
 
 <html>
 <head>
-<title>Edit Event</title>
+<title>Event Details</title>
 </head>
+
 <body>
 <div id="wrap">
 
@@ -12,6 +13,8 @@
 </br>
 <h1 style="color:rgb(0,133,63)">R<sup>3</sup> Reservation System</h1>
 <br clear="all">
+
+<div id="content" align="center">
 
 <?php
 if($_SERVER['SERVER_PORT'] != '443') 
@@ -301,5 +304,10 @@ else
 		echo "Event not found";
 	}
 ?>
+</br>
+
+
+</div>
+</div>
 </body>
 </html>

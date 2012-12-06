@@ -37,12 +37,12 @@ session_start();
 if(!isset($_SESSION['SESS_STUDENT_ID']) || (trim($_SESSION['SESS_STUDENT_ID']) == '')) {
 	header("location: login.php");
 }
-else if($_SESSION['SESS_ISADMIN'] == 0)
+/*else if($_SESSION['SESS_ISADMIN'] == 0)
 {
     echo "<p>You are trying to access an Administrator page<br>";
 	echo "You are NOT an Admin!</p>";
 	exit();
-}
+}*/
 
 	// Connect to the sql database
 	$con = mysql_connect("localhost","root");
