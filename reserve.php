@@ -200,10 +200,12 @@ echo "
         $result2 = mysql_query("SELECT r1.Approval, e1.eventTimeStart, e1.eventTimeEnd, e1.date FROM event AS e1, reservation AS r1 WHERE r1.eventId = e1.id AND r1.primaryRoomNumber = {$row['ID']}");
         while($row2 = mysql_fetch_array($result2))
         {
-            if( strtotime($row2['date']) == strtotime($_POST['date']) && (
-                (strtotime($row2['eventTimeStart']) >= strtotime($_POST['startTime']) && strtotime($row2['eventTimeStart']) <= strtotime($_POST['endTime'])) ||
-                (strtotime($row2['eventTimeEnd']) >= strtotime($_POST['startTime']) && strtotime($row2['eventTimeEnd']) <= strtotime($_POST['endTime'])) ||
-                (strtotime($row2['eventTimeStart']) <= strtotime($_POST['startTime']) && strtotime($row2['eventTimeEnd']) >= strtotime($_POST['endTime']))))
+            if( strtotime($row2['date']) == strtotime($date) && (
+                (strtotime($row2['eventTimeStart']) >= strtotime($startTime) && strtotime($row2['eventTimeStart']) <= strtotime($endTime)) ||
+                (strtotime($row2['eventTimeEnd']) >= strtotime($startTime) && strtotime($row2['eventTimeEnd']) <= strtotime($endTime)) ||
+                (strtotime($row2['eventTimeStart']) <= strtotime($startTime) && strtotime($row2['eventTimeEnd']) >= strtotime($endTime))
+                /*Add stuff for access time*/
+               ))
             {
                 if( $row2['Approval'] == "Approved" )
                 {
