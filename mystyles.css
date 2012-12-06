@@ -11,7 +11,12 @@ html,body{
 }
 
 h1,h2{
-	color:rgb(0,133,63);
+	color:rgb(0,133,63); /* S&T green */
+}
+
+table.green{
+	border:2 solid rgb(0,133,63); 
+	text-align:center;
 }
 
 ul, li {

@@ -66,14 +66,14 @@ else if($_SESSION['SESS_ISADMIN'] == 0)
 	if(mysql_num_rows($result) != 0)
 	{
 ?>
-		<table border='1' id='table'>
+		<table rules="all" cellpadding="4" class="green">
 		<tr align='center'>
-			<td>Event title</td>
-			<td>Event Location </td>
-			<td>Event Start</td>
-			<td>Organizer's Name</td>
-			<td bgcolor="#000000" width="2"></td>
-			<td>Reason For Decision</td>
+			<td><b>Event Title</b></td>
+			<td><b>Event Location</b></td>
+			<td><b>Event Start</b></td>
+			<td><b>Organizer's Name</b></td>
+			<td><b>Reason For Decision</b></td>
+			<td><b>Decision</b></td>
 		</tr>
 		
 <?php
@@ -90,13 +90,11 @@ else if($_SESSION['SESS_ISADMIN'] == 0)
 				<td rowspan="2"><?php echo $row['roomNumber']; ?></td>
 				<td rowspan="2"><?php echo date_format(date_create($row['eventTimeStart']), 'F jS Y g:ia'); ?></td>
 				<td rowspan="2"><?php echo $row['name']; ?></td>
-				<td rowspan="2" bgcolor="#000000" width="2"></td>
 				<form action="emailResponse.php" method="post">
 					<td align='left' rowspan="2"><textarea name="reason" rows="3" col="50"></textarea></td>
 					<td><input type="submit" name="approve" value="Approve" style="width:100%"></td>
 					<input type="hidden" name="reservationID" value="<?php echo intval($row['id'])?>" >
-				</form>
-				
+				</form>				
 			</tr>
 			<tr align ='center'>
 				<form action="emailResponse.php" method="post">

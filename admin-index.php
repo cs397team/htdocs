@@ -54,5 +54,6 @@ echo "<h2 align=\"center\">Welcome back to the Admin Area, ".$_SESSION['SESS_NAM
 	<input type = "text" name = "searchName" style="width:200px; height:32px; font-size:22px;" />
 </form>
 
+</div>
 </body>
 </html>

@@ -65,12 +65,12 @@ else if($_SESSION['SESS_ISADMIN'] == 0)
 	{
 ?>
 		
-		<table border='1' id='table' align="center">
+		<table align="center" rules="all" cellpadding="4" class="green">
 		<tr align='center'>
-			<td>Event title</td>
-			<td>Event Location </td>
-			<td>Event Start</td>
-			<td>Organizer's Name</td>
+			<td><b>Event Title</b></td>
+			<td><b>Event Location</b></td>
+			<td><b>Event Start</b></td>
+			<td><b>Organizer's Name</b></td>
 		</tr>
 		
 <?php
