@@ -60,7 +60,7 @@ $result = mysql_query("SELECT r1.id, r2.buildingName AS building1, r2.roomNumber
 						
 if (mysql_num_rows($result) != 0)
 {															
-	echo	"<table align=\"center\" rules=\"all\" style=\"border:1 solid rgb(0,133,63);\" cellpadding=\"4\">
+	echo	"<table align=\"center\" rules=\"all\" class=\"green\" cellpadding=\"4\">
 				<tr>
 				<td><b>Reservation ID</b></td>
 				<td><b>Event Title</b></td>

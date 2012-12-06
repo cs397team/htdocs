@@ -32,17 +32,17 @@ if($_SERVER['SERVER_PORT'] != '443')
 <p align="center">Please Enter Your Information:</p>
 
 <form method="post">
-	<table border ='1' align="center">
-	
-	<tr>
-	<td>Email Address </td> <td><input type="email" name="emailAddr" /> </td>
-	</tr>
-
-	<tr>
-	<td>Password </td>  <td><input type="password" name="passwd" /> </td>
-	</tr>
-	
+	<table align="center" rules="all" cellpadding="4" class="green">	
+		<tr>
+			<td><b>Email Address</b></td> 
+			<td><input type="email" name="emailAddr" /></td>
+		</tr>
+		<tr>
+			<td><b>Password</b></td>  
+			<td><input type="password" name="passwd" /></td>
+		</tr>
 	</table>
+	
 	<p align="center">
 	<input type="submit" name="submit" value="Log In" /> </p>
 </form>

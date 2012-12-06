@@ -112,75 +112,75 @@ else
 		{
 	?>
 			<form method="post">
-			<table border='1'>
+			<table rules="all" cellpadding="4" class="green">
 				<tr align='center'>
-					<td>Event ID:</td>
+					<td><b>Event ID</b></td>
 					<td><?php echo $row['id']; ?></td>
 				</tr>
 				<tr align='center'>
-					<td>Title</td>
+					<td><b>Title</b></td>
 					<td><input type="text" name="title" value="<?php echo $row['title']?>"></td>
 				</tr>
 				<tr align='center'>
-					<td>Event start time</td>
+					<td><b>Event start time</b></td>
 					<td><input type="time" name="eventStart" value="<?php echo $row['eventTimeStart']?>"></td>
 				</tr>
 				<tr align='center'>
-					<td>Event end time</td>
+					<td><b>Event end time</b></td>
 					<td><input type="time" name="eventEnd" value="<?php echo $row['eventTimeEnd']?>"></td>
 				</tr>
 				<tr align='center'>
-					<td>Access start time</td>
+					<td><b>Access start time</b></td>
 					<td><input type="time" name="accessStart" value="<?php echo $row['accessTimeStart']?>"></td>
 				</tr>
 				<tr align='center'>
-					<td>Access end time</td>
+					<td><b>Access end time</b></td>
 					<td><input type="time" name="accessEnd" value="<?php echo $row['accessTimeEnd']?>"></td>
 				</tr>
 				<tr align='center'>
-					<td>Date</td>
+					<td><b>Date</b></td>
 					<td><input type="date" name="date" value="<?php echo $row['date']?>"></td
 				</tr>
 				<tr align='center'>
-					<td>Number of Attendees</td>
+					<td><b>Number of Attendees</b></td>
 					<td><input type="text" name="numAttend" value="<?php echo $row['numAttendees']?>"></td>
 				</tr>
 				<tr align='center'>
-					<td>Decorations?</td>
+					<td><b>Decorations?</b></td>
 					<td><input type="checkbox" name="decorations" <?php echo ( ($row['decorations']) ? ' checked="checked"' : '')?>></td>
 				</tr>
 				<tr align='center'>
-					<td>Alcohol?</td>
+					<td><b>Alcohol?</b></td>
 					<td><input type="checkbox" name="alcohol" <?php echo ( ($row['alcohol']) ? ' checked="checked"' : '')?>></td>
 				</tr>
 				<tr align='center'>
-					<td>Prizes?</td>
+					<td><b>Prizes?</b></td>
 					<td><input type="checkbox" name="prizes" <?php echo ( ($row['prizes']) ? ' checked="checked"' : '')?>></td>
 				</tr>
 				<tr align='center'>
-					<td>Tickets?</td>
+					<td><b>Tickets?</b></td>
 					<td><input type="checkbox" name="tickets" <?php echo ( ($row['tickets']) ? ' checked="checked"' : '')?>></td>
 				</tr>
 				<tr align='center'>
-					<td>Outside Vendors?</td>
+					<td><b>Outside Vendors?</b></td>
 					<td><input type="checkbox" name="outsideVendors" <?php echo ( ($row['outsideVendors']) ? ' checked="checked"' : '')?>></td>
 				</tr>
 				
 				<tr align='center'>
-					<td>Food Option</td>
+					<td><b>Food Option</b></td>
 					<td><select name="food">
-						<option value="0" <?php echo ( $row['foodOption'] == '0' ? ' selected="selected" ' : '' )?>">Chartwell's Catering</option>
-						<option value="1" <?php echo ( $row['foodOption'] == '1' ? ' selected="selected" ' : '' )?>">Bringing in Food</option>
-						<option value="2" <?php echo ( $row['foodOption'] == '2' ? ' selected="selected" ' : '' )?>">No Food will be served</option>
+						<option value="0" <?php echo ( $row['foodOption'] == '0' ? ' selected="selected" ' : '' )?> >Chartwell's Catering</option>
+						<option value="1" <?php echo ( $row['foodOption'] == '1' ? ' selected="selected" ' : '' )?> >Bringing in Food</option>
+						<option value="2" <?php echo ( $row['foodOption'] == '2' ? ' selected="selected" ' : '' )?> >No Food will be served</option>
 					</select></td>
 				</tr>
 				
 				<tr align='center'>
-					<td>Type of Event</td>
+					<td><b>Type of Event</b></td>
 					<td><input type="text" name="typeEvent" value="<?php echo ($row['typeOfEvent'])?>"></td>
 				</tr>
 				<tr align='center'>
-					<td><input type="submit" name="submit" value="Submit Event"></td>
+					<td colspan="2"><input type="submit" name="submit" value="Submit Event Edits"></td>
 				</tr>
 			</table>
 			</form>
@@ -189,17 +189,17 @@ else
 		else
 		{
 	?>
-			<table border='1'>
+			<table rules="all" cellpadding="4" class="green">
 				<tr align='center'>
-					<td>Event ID:</td>
+					<td><b>Event ID</b></td>
 					<td><?php echo $row['id']; ?></td>
 				</tr>
 				<tr align='center'>
-					<td>Title</td>
+					<td><b>Title</b></td>
 					<td><?php echo $row['title']; ?></td>
 				</tr>
 				<tr align='center'>
-					<td>Event start time</td>
+					<td><b>Event start time</b></td>
 					<?php
 					$sql = "SELECT TIME_FORMAT( '{$row['eventTimeStart']}','%l:%i:%S %p' )";
 					$timeFrmt = mysql_query( $sql );
@@ -208,7 +208,7 @@ else
 					<td><?php echo $rowFrmt[0]; ?></td>
 				</tr>
 				<tr align='center'>
-					<td>Event end time</td>
+					<td><b>Event end time</b></td>
 					<?php
 					$sql = "SELECT TIME_FORMAT( '{$row['eventTimeEnd']}','%l:%i:%S %p' )";
 					$timeFrmt = mysql_query( $sql );
@@ -217,7 +217,7 @@ else
 					<td><?php echo $rowFrmt[0]; ?></td>
 				</tr>
 				<tr align='center'>
-					<td>Access start time</td>
+					<td><b>Access start time</b></td>
 					<?php
 					$sql = "SELECT TIME_FORMAT( '{$row['accessTimeStart']}','%l:%i:%S %p' )";
 					$timeFrmt = mysql_query( $sql );
@@ -226,7 +226,7 @@ else
 					<td><?php echo $rowFrmt[0]; ?></td>
 				</tr>
 				<tr align='center'>
-					<td>Access end time</td>
+					<td><b>Access end time</b></td>
 					<?php
 					$sql = "SELECT TIME_FORMAT( '{$row['accessTimeEnd']}','%l:%i:%S %p' )";
 					$timeFrmt = mysql_query( $sql );
@@ -235,35 +235,35 @@ else
 					<td><?php echo $rowFrmt[0]; ?></td>
 				</tr>
 				<tr align='center'>
-					<td>Date</td>
+					<td><b>Date</b></td>
 					<td><?php echo date_format(date_create($row['date']), 'F jS Y'); ?></td>
 				</tr>
 				<tr align='center'>
-					<td>Number of Attendees</td>
+					<td><b>Number of Attendees</b></td>
 					<td><?php echo $row['numAttendees']; ?></td>
 				</tr>
 				<tr align='center'>
-					<td>Decorations?</td>
+					<td><b>Decorations?</b></td>
 					<td><?php echo $row['decorations'] ? 'Yes' : 'No'; ?></td>
 				</tr>
 				<tr align='center'>
-					<td>Alcohol?</td>
+					<td><b>Alcohol?</b></td>
 					<td><?php echo $row['alcohol'] ? 'Yes' : 'No'; ?></td>
 				</tr>
 				<tr align='center'>
-					<td>Prizes?</td>
+					<td><b>Prizes?</b></td>
 					<td><?php echo $row['prizes'] ? 'Yes' : 'No'; ?></td>
 				</tr>
 				<tr align='center'>
-					<td>Tickets?</td>
+					<td><b>Tickets?</b></td>
 					<td><?php echo $row['tickets'] ? 'Yes' : 'No'; ?></td>
 				</tr>
 				<tr align='center'>
-					<td>Outside Vendors?</td>
+					<td><b>Outside Vendors?</b></td>
 					<td><?php echo $row['outsideVendors'] ? 'Yes' : 'No'; ?></td>
 				</tr>
 				<tr align='center'>
-					<td>Food Option</td>
+					<td><b>Food Option</b></td>
 					<td><?php 
 						switch( $row['foodOption'] ) {
 							case 0:
@@ -280,7 +280,7 @@ else
 						?></td>
 				</tr>
 				<tr align='center'>
-					<td>Type of Event</td>
+					<td><b>Type of Event</b></td>
 					<td><?php echo $row['typeOfEvent']; ?></td>
 				</tr>
 				<?php if(($_SESSION['SESS_ISADMIN'] == 1) )

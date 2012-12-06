@@ -19,7 +19,7 @@
 	<li id="b1" class="a0"><a class="navlink" href="viewProfile.php">View Profile</a></li>
 	<li id="b2"><a class="navlink" href="reservations.php">Approved Reservations</a></li>
 	<li id="b3"><a class="navlink" href="pending.php">Pending Reservations</a></li>
-	<li id="b4"><a class="navlink" href="searchByDate.php">Reserve</a></li>
+	<li id="b4"><a class="navlink" href="searchByDate.php">Make a Reservation</a></li>
 	<li id="b5" style="border-right:1px solid #1f1f1f;"><a class="navlink" href="logout.php">Log Out</a></li>
 	</ul>
 </div>
@@ -74,21 +74,21 @@ if(!isset($_SESSION['SESS_STUDENT_ID']) || (trim($_SESSION['SESS_STUDENT_ID']) =
 		{
 ?>
 			<form method="post">
-			<table border ="1">
+			<table rules="all" cellpadding="4" class="green">
 				<tr align='center'>
-					<td>User ID:</td>
+					<td><b>User ID</b></td>
 					<td><?php echo $row['ID']; ?></td>
 				</tr>
 				<tr align='center'>
-					<td>Name</td>
+					<td><b>Name</b></td>
 					<td><input type="text" name="name" value="<?php echo $row['Name']?>"></td>
 				</tr>
 				<tr align='center'>
-					<td>Email</td>
+					<td><b>Email</b></td>
 					<td><input type="text" name="email" value="<?php echo $row['Email']?>"></td>
 				</tr>
 				<tr align='center'>
-					<td colspan="2"><input type="submit" name="submit" value="Submit"></td>
+					<td colspan="2"><input type="submit" name="submit" value="Submit Edits"></td>
 				</tr>
 			</table>
 			</form>
@@ -100,21 +100,21 @@ if(!isset($_SESSION['SESS_STUDENT_ID']) || (trim($_SESSION['SESS_STUDENT_ID']) =
 		while( $row = mysql_fetch_array($result) )
 		{
 ?>
-			<table border='1' id='table'>
+			<table rules="all" cellpadding="4" class="green">
 				<tr align='center'>
-					<td>User ID</td>
+					<td><b>User ID</b></td>
 					<td><?php echo $row['ID']; ?></td>
 				</tr>
 				<tr align='center'>
-					<td>Name</td>
+					<td><b>Name</b></td>
 					<td><?php echo $row['Name'] ?></td>
 				</tr>
 				<tr align='center'>
-					<td>Email</td>
+					<td><b>Email</b></td>
 					<td><?php echo $row['Email']; ?></td>
 				</tr>
 				<tr align='center'>
-					<td>Organizations</td>
+					<td><b>Organizations</b></td>
 					<td>
 					<?php
 						$sql = "SELECT *

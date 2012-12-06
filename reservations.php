@@ -54,12 +54,11 @@ mysql_select_db("r3", $con);
 $result = mysql_query("SELECT r1.id, r2.buildingName, r2.roomNumber, e1.title, e1.date, e1.eventTimeStart, e1.eventTimeEnd 
 						FROM reservation AS r1, event AS e1, room AS r2 
 						WHERE r1.Approval = 'Approved' AND r1.user = {$_SESSION['SESS_STUDENT_ID']} 
-						AND r1.eventid = e1.id AND ((r1.primaryRoomNumber = r2.ID AND r1.primaryRoomNumber IS NOT NULL) OR 
-													(r1.backupRoomNumber = r2.ID AND r1.backupRoomNumber IS NOT NULL))");						
+						AND r1.eventid = e1.id AND r1.primaryRoomNumber = r2.ID");						
 
 if (mysql_num_rows($result) != 0)
 {													
-	echo	"<table align=\"center\" rules=\"all\" style=\"border:1 solid rgb(0,133,63); text-align:center;\" cellpadding=\"4\">
+	echo	"<table align=\"center\" rules=\"all\" cellpadding=\"4\" class=\"green\">
 			<tr>
 			<td><b>Reservation ID</b></td>
 			<td><b>Event Title</b></td>
